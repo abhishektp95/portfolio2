@@ -14,12 +14,29 @@
             --muted-gold: #c6ac8f;
             --earthy-brown: #5e503f;
 
+            /* New colors from user's palette */
+            --light-mint-green: #CFFFE2;
+            --medium-sea-green: #A2D5C6;
+            --very-light-gray: #F6F6F6; /* Included for completeness, though not used for shapes */
+            --black: #000000; /* Included for completeness, though not used for shapes */
+
             /* Mapped to existing variable names for consistency */
             --primary: var(--muted-gold);
             --secondary: var(--earthy-brown);
             --bg: var(--darkest-grey);
             --text: var(--light-cream);
             --card-bg: var(--dark-blue-grey); /* New variable for card/navbar background */
+        }
+
+        /* Helper for RGBA conversion in JS */
+        :root {
+            --light-cream-rgb: 234, 224, 213; /* For text-shadow rgba() */
+            --dark-blue-grey-rgb: 34, 51, 59;
+            --muted-gold-rgb: 198, 172, 143;
+            --darkest-grey-rgb: 10, 9, 8;
+            /* New RGBs for dynamic use */
+            --light-mint-green-rgb: 207, 255, 226;
+            --medium-sea-green-rgb: 162, 213, 198;
         }
 
         body {
@@ -75,12 +92,7 @@
             transform: scale(0.9);
             animation: popIn 1s 0.3s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        /* Helper for RGBA conversion in JS */
-        :root {
-            --light-cream-rgb: 234, 224, 213; /* For text-shadow rgba() */
-        }
-
-
+        
         .bio {
             max-width: 500px;
             line-height: 1.6;
@@ -125,11 +137,7 @@
             border-bottom: 1px solid rgba(var(--light-cream-rgb),0.08); /* Subtle border with cream */
             box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* Soft shadow */
         }
-        /* Helper for RGBA conversion in JS */
-        :root {
-            --dark-blue-grey-rgb: 34, 51, 59;
-        }
-
+        
         .nav-links {
             display: flex;
             gap: 2.5rem; /* Slightly more space */
@@ -220,12 +228,7 @@
             animation: glow 3s infinite alternate;
             z-index: -1;
         }
-         /* Helper for RGBA conversion in JS */
-        :root {
-            --muted-gold-rgb: 198, 172, 143;
-        }
-
-
+         
         @keyframes glow {
             0% { opacity: 0.08; } /* Subtler glow */
             100% { opacity: 0.18; }
@@ -337,11 +340,7 @@
             opacity: 1;
             transition: opacity 0.3s ease-in-out; /* Slightly slower overlay transition */
         }
-        /* Helper for RGBA conversion in JS */
-        :root {
-            --darkest-grey-rgb: 10, 9, 8;
-        }
-
+        
         .video-overlay i {
             font-size: 2.5rem; /* Larger icon */
             margin-bottom: 0.6rem;
@@ -486,6 +485,26 @@
             animation: float 11s ease-in-out infinite reverse; /* Slightly longer float */
         }
 
+        /* New shapes for "blue" animation */
+        .shape-3 {
+            width: 300px;
+            height: 300px;
+            background: var(--light-mint-green); /* Light Mint Green */
+            top: 5%;
+            left: 5%;
+            animation: float 10s ease-in-out infinite;
+        }
+
+        .shape-4 {
+            width: 200px;
+            height: 200px;
+            background: var(--medium-sea-green); /* Medium Sea Green */
+            bottom: 10%;
+            right: 5%;
+            animation: float 13s ease-in-out infinite reverse;
+        }
+
+
         /* Animations */
         @keyframes float {
             0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -530,8 +549,7 @@
 
     <div class="shape shape-1"></div>
     <div class="shape shape-2"></div>
-    
-    <nav class="navbar">
+    <div class="shape shape-3"></div> <div class="shape shape-4"></div> <nav class="navbar">
         <div class="nav-links">
             <a href="#services">Services</a>
             <a href="#contact">Connect</a>
@@ -702,6 +720,10 @@
         document.documentElement.style.setProperty('--muted-gold-rgb', hexToRgb('#c6ac8f'));
         document.documentElement.style.setProperty('--dark-blue-grey-rgb', hexToRgb('#22333b'));
         document.documentElement.style.setProperty('--darkest-grey-rgb', hexToRgb('#0a0908'));
+        // New RGB variables for the added colors
+        document.documentElement.style.setProperty('--light-mint-green-rgb', hexToRgb('#CFFFE2'));
+        document.documentElement.style.setProperty('--medium-sea-green-rgb', hexToRgb('#A2D5C6'));
+
 
         // Scroll progress bar
         window.addEventListener('scroll', () => {
