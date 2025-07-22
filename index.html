@@ -128,7 +128,7 @@
             opacity: 1;
         }
 
-        /* Services - 3D cards */
+        /* Services - 3D cards with bars */
         .services {
             padding: 10rem 10%;
             background: var(--bg);
@@ -163,6 +163,67 @@
             backdrop-filter: blur(12px); /* Slightly stronger blur */
             opacity: 0;
             transform: translateY(30px);
+        }
+
+        /* 3D Skill Bars */
+        .skill-bar-container {
+            margin-top: 1.5rem;
+            perspective: 500px;
+        }
+
+        .skill-bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem; /* Slightly larger label */
+            opacity: 0.9; /* Slightly more visible label */
+        }
+
+        .skill-bar {
+            height: 7px; /* Slightly thicker bar */
+            background: rgba(255,255,255,0.15); /* Slightly more visible bar background */
+            border-radius: 4px; /* Slightly more rounded */
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transform: rotateX(20deg); /* Slightly less steep rotation */
+            box-shadow: 0 5px 12px rgba(0,0,0,0.25); /* Slightly stronger shadow */
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            position: relative;
+            transform-origin: left;
+            transform: scaleX(0);
+            transition: transform 1.3s cubic-bezier(0.165, 0.84, 0.44, 1); /* Slightly faster animation */
+        }
+
+        .skill-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg,
+                            transparent,
+                            rgba(255,255,255,0.35), /* Slightly stronger shine */
+                            transparent);
+            animation: shine 1.8s infinite; /* Slightly faster shine */
+        }
+
+        /* Service-specific bar levels */
+        .service-card.music .skill-progress {
+            transform: scaleX(0.95); /* Ensure initial width is set correctly if JS hasn't run yet */
+        }
+        .service-card.motion .skill-progress {
+            transform: scaleX(0.90);
+        }
+        .service-card.social .skill-progress {
+            transform: scaleX(0.85);
+        }
+        .service-card.reels .skill-progress {
+            transform: scaleX(0.88);
         }
 
         /* Video Showcase */
@@ -509,21 +570,57 @@
             <div class="service-card animate-on-scroll" data-service="music" style="animation-delay: 0.2s">
                 <h3>Music Visualization</h3>
                 <p>Audio-reactive animations that bring your tracks to life</p>
+                <div class="skill-bar-container">
+                    <div class="skill-bar-label">
+                        <span>Expertise</span>
+                        <span>95%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress"></div>
+                    </div>
+                </div>
             </div>
 
             <div class="service-card animate-on-scroll" data-service="motion" style="animation-delay: 0.4s">
                 <h3>Motion Graphics</h3>
                 <p>Cinematic titles and dynamic branding elements</p>
+                <div class="skill-bar-container">
+                    <div class="skill-bar-label">
+                        <span>Expertise</span>
+                        <span>90%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress"></div>
+                    </div>
+                </div>
             </div>
 
             <div class="service-card animate-on-scroll" data-service="social" style="animation-delay: 0.6s">
                 <h3>Social Media Edits</h3>
                 <p>Trending edits optimized for maximum engagement</p>
+                <div class="skill-bar-container">
+                    <div class="skill-bar-label">
+                        <span>Expertise</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress"></div>
+                    </div>
+                </div>
             </div>
 
             <div class="service-card animate-on-scroll" data-service="reels" style="animation-delay: 0.8s">
                 <h3>Video Reels</h3>
                 <p>High-energy content designed to go viral</p>
+                <div class="skill-bar-container">
+                    <div class="skill-bar-label">
+                        <span>Expertise</span>
+                        <span>88%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -674,6 +771,22 @@
 
         animateElements.forEach(element => {
             observer.observe(element);
+        });
+
+        // Animate skill bars when visible
+        const skillBars = document.querySelectorAll('.skill-progress');
+        
+        const barObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.transform = 'scaleX(1)';
+                    barObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        skillBars.forEach(bar => {
+            barObserver.observe(bar);
         });
 
         // Auto-play videos when visible
