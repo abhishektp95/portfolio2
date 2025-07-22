@@ -480,3 +480,143 @@
     </script>
 </body>
 </html>
+
+<!-- Add this section below your services section and above the contact section -->
+<section class="video-showcase">
+    <h2 class="section-title animate-on-scroll">My Work</h2>
+    
+    <div class="video-grid">
+        <!-- Music Visualization -->
+        <div class="video-card animate-on-scroll" style="animation-delay: 0.2s">
+            <div class="video-container">
+                <video muted loop playsinline>
+                    <source src="videos/background.mp4" type="video/mp4">
+                </video>
+                <div class="video-overlay">
+                    <i class="fas fa-music"></i>
+                    <h3>Music Visualization</h3>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Motion Graphics 1 -->
+        <div class="video-card animate-on-scroll" style="animation-delay: 0.4s">
+            <div class="video-container">
+                <video muted loop playsinline>
+                    <source src="videos/Motion Graphics.mp4" type="video/mp4">
+                </video>
+                <div class="video-overlay">
+                    <i class="fas fa-film"></i>
+                    <h3>Motion Graphics</h3>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Motion Graphics 2 -->
+        <div class="video-card animate-on-scroll" style="animation-delay: 0.6s">
+            <div class="video-container">
+                <video muted loop playsinline>
+                    <source src="videos/Motion Graphics 1.mp4" type="video/mp4">
+                </video>
+                <div class="video-overlay">
+                    <i class="fas fa-film"></i>
+                    <h3>Motion Graphics</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Video Showcase Styles */
+    .video-showcase {
+        padding: 8rem 10%;
+        background: rgba(0,0,0,0.3);
+    }
+    
+    .video-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+    
+    .video-card {
+        border-radius: 12px;
+        overflow: hidden;
+        transform: translateY(20px);
+        opacity: 0;
+        animation: fadeInUp 0.8s forwards;
+    }
+    
+    .video-container {
+        position: relative;
+        padding-top: 56.25%; /* 16:9 aspect ratio */
+        background: #000;
+    }
+    
+    .video-container video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s;
+    }
+    
+    .video-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0,0,0,0.5);
+        opacity: 1;
+        transition: opacity 0.3s;
+    }
+    
+    .video-overlay i {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: white;
+    }
+    
+    .video-overlay h3 {
+        color: white;
+        font-size: 1.5rem;
+        margin: 0;
+    }
+    
+    /* Hover effects */
+    .video-card:hover .video-overlay {
+        opacity: 0;
+    }
+    
+    .video-card:hover video {
+        transform: scale(1.05);
+    }
+</style>
+
+<script>
+    // Auto-play videos when visible
+    const videoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const video = entry.target.querySelector('video');
+            if (entry.isIntersecting) {
+                video.play();
+            } else {
+                video.pause();
+                video.currentTime = 0;
+            }
+        });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.video-card').forEach(card => {
+        videoObserver.observe(card);
+    });
+</script>
