@@ -14,12 +14,6 @@
             --muted-gold: #c6ac8f;
             --earthy-brown: #5e503f;
 
-            /* New colors from user's palette */
-            --light-mint-green: #CFFFE2;
-            --medium-sea-green: #A2D5C6;
-            --very-light-gray: #F6F6F6; /* Included for completeness, though not used for shapes */
-            --black: #000000; /* Included for completeness, though not used for shapes */
-
             /* Mapped to existing variable names for consistency */
             --primary: var(--muted-gold);
             --secondary: var(--earthy-brown);
@@ -35,10 +29,6 @@
             --muted-gold-rgb: 198, 172, 143;
             --earthy-brown-rgb: 94, 80, 63; /* Added for the button hover */
             --darkest-grey-rgb: 10, 9, 8;
-            /* New RGBs for dynamic use */
-            --light-mint-green-rgb: 207, 255, 226;
-            --medium-sea-green-rgb: 162, 213, 198;
-            --white-rgb: 255, 255, 255;
         }
 
         body {
@@ -278,9 +268,11 @@
             font-size: 2.2rem; /* Consistent with section title */
             font-weight: 600;
             color: var(--text);
+            /* ENHANCED GLOW EFFECT */
             text-shadow:
-                0 0 12px rgba(var(--light-cream-rgb),0.7),
-                0 0 25px rgba(var(--light-cream-rgb),0.4); /* Enhanced cream glow */
+                0 0 15px rgba(var(--light-cream-rgb),0.8), /* More intense, slightly wider */
+                0 0 30px rgba(var(--light-cream-rgb),0.5), /* More intense, wider */
+                0 0 45px rgba(var(--light-cream-rgb),0.2); /* New, subtle, even wider layer for a true glow */
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.8s forwards;
@@ -357,6 +349,8 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            /* Added transform to slightly scale video to cover any rendering gaps */
+            transform: scale(1.005); 
             transition: transform 0.4s ease-in-out;
         }
 
@@ -519,25 +513,26 @@
             animation: float 11s ease-in-out infinite reverse; /* Slightly longer float */
         }
 
-        /* New shapes for "blue" animation */
-        .shape-3 {
-            width: 300px;
-            height: 300px;
-            background: var(--light-mint-green); /* Light Mint Green */
-            top: 5%;
-            left: 5%;
-            animation: float 10s ease-in-out infinite;
+        /* Moving White Gradient Overlay */
+        .moving-gradient-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(var(--light-cream-rgb), 0.05) 0%, transparent 70%); /* Subtle cream gradient */
+            background-size: 300% 300%; /* Larger size for movement */
+            background-position: 50% 50%; /* Start at center */
+            pointer-events: none;
+            z-index: -1; /* Ensure it stays behind content */
+            opacity: 0.8; /* Overall transparency */
+            animation: moveSubtleGradient 60s linear infinite alternate; /* Very slow, linear, alternating movement */
         }
 
-        .shape-4 {
-            width: 200px;
-            height: 200px;
-            background: var(--medium-sea-green); /* Medium Sea Green */
-            bottom: 10%;
-            right: 5%;
-            animation: float 13s ease-in-out infinite reverse;
+        @keyframes moveSubtleGradient {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
         }
-
 
         /* Animations */
         @keyframes float {
@@ -583,10 +578,10 @@
 
     <div class="shape shape-1"></div>
     <div class="shape shape-2"></div>
-    <div class="shape shape-3"></div> <div class="shape shape-4"></div> <nav class="navbar">
+    
+    <nav class="navbar">
         <div class="nav-links">
             <a href="#services">Services</a>
-            <a href="#portfolio">My Works</a>
             <a href="#contact">Connect</a>
         </div>
     </nav>
@@ -629,8 +624,16 @@
         </div>
     </section>
 
+    <section id="tools" class="services"> <h2 class="section-title animate-on-scroll">My Toolkit</h2>
+        <div class="services-grid"> <div class="service-card animate-on-scroll" style="animation-delay: 0.2s">
+                <h3><i class="fas fa-laptop-code"></i> Adobe After Effects</h3>
+                <p>Mastery in advanced motion graphics, visual effects, and compositing. (AE 2025 Ready)</p>
+            </div>
+            </div>
+    </section>
+
     <section class="video-showcase" id="portfolio">
-        <h2 class="section-title animate-on-scroll">My Work</h2>
+        <div class="moving-gradient-overlay"></div> <h2 class="section-title animate-on-scroll">My Work</h2>
         
         <div class="video-sections">
             <h3 class="category-heading animate-on-scroll" style="animation-delay: 0.2s;">9:16 Edits</h3>
@@ -649,17 +652,7 @@
                 </div>
                 
                 <div class="video-card animate-on-scroll" style="animation-delay: 0.6s">
-                    <div class="video-container vertical"> <video muted loop playsinline>
-                            <source src="videos/timelss.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-overlay">
-                            <i class="fas fa-camera"></i>
-                            <h3>Modeling Edit</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="video-card animate-on-scroll" style="animation-delay: 0.8s"> <div class="video-container vertical">
+                    <div class="video-container vertical">
                         <video muted loop playsinline>
                             <source src="videos/Motion Graphics.mp4" type="video/mp4">
                         </video>
@@ -669,10 +662,25 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="video-card animate-on-scroll" style="animation-delay: 0.8s">
+                    <div class="video-container vertical">
+                        <video muted loop playsinline>
+                            <source src="videos/timelss.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-overlay">
+                            <i class="fas fa-camera"></i>
+                            <h3>Modeling Edit</h3>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <h3 class="category-heading animate-on-scroll" style="animation-delay: 1.0s;">16:9 Edits</h3> <div class="video-grid">
-                <div class="video-card animate-on-scroll" style="animation-delay: 1.2s"> <div class="video-container">
+            <h3 class="category-heading animate-on-scroll" style="animation-delay: 1.0s;">16:9 Edits</h3>
+            <div class="video-grid">
+                
+                <div class="video-card animate-on-scroll" style="animation-delay: 1.2s">
+                    <div class="video-container">
                         <video muted loop playsinline>
                             <source src="videos/don.mp4" type="video/mp4">
                         </video>
@@ -683,7 +691,8 @@
                     </div>
                 </div>
                 
-                <div class="video-card animate-on-scroll" style="animation-delay: 1.4s"> <div class="video-container">
+                <div class="video-card animate-on-scroll" style="animation-delay: 1.4s">
+                    <div class="video-container">
                         <video muted loop playsinline>
                             <source src="videos/hiddid.mp4" type="video/mp4">
                         </video>
@@ -694,7 +703,8 @@
                     </div>
                 </div>
 
-                <div class="video-card animate-on-scroll" style="animation-delay: 1.6s"> <div class="video-container">
+                <div class="video-card animate-on-scroll" style="animation-delay: 1.6s">
+                    <div class="video-container">
                         <video muted loop playsinline>
                             <source src="videos/arya.mp4" type="video/mp4">
                         </video>
@@ -709,7 +719,7 @@
     </section>
 
     <section id="contact">
-        <h2 class="section-title animate-on-scroll" style="animation-delay: 0.2s">Let's Create Together</h2>
+        <div class="moving-gradient-overlay"></div> <h2 class="section-title animate-on-scroll" style="animation-delay: 0.2s">Let's Create Together</h2>
         <div class="contact-info">
             <p class="animate-on-scroll" style="animation-delay: 0.4s">
                 Have a project in mind or want to discuss potential collaboration? Feel free to reach out directly via email, phone, or social media.
@@ -750,10 +760,6 @@
         document.documentElement.style.setProperty('--dark-blue-grey-rgb', hexToRgb('#22333b'));
         document.documentElement.style.setProperty('--darkest-grey-rgb', hexToRgb('#0a0908'));
         document.documentElement.style.setProperty('--earthy-brown-rgb', hexToRgb('#5e503f')); /* Ensure this is set */
-        // New RGB variables for the added colors
-        document.documentElement.style.setProperty('--light-mint-green-rgb', hexToRgb('#CFFFE2'));
-        document.documentElement.style.setProperty('--medium-sea-green-rgb', hexToRgb('#A2D5C6'));
-        document.documentElement.style.setProperty('--white-rgb', hexToRgb('#FFFFFF'));
 
 
         // Scroll progress bar
