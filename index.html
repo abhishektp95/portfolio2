@@ -15,11 +15,63 @@
 
         body {
             font-family: 'SF Pro Display', -apple-system, sans-serif;
-            background: var(--bg);
             color: var(--text);
             margin: 0;
             min-height: 100vh;
             overflow-x: hidden;
+        }
+
+        /* Hero section with video background */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 10%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: blur(8px) brightness(0.6);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .name {
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+            line-height: 0.9;
+            color: white;
+            text-shadow: 
+                0 0 15px rgba(255,255,255,0.5),
+                0 0 30px rgba(255,255,255,0.3);
+            opacity: 0;
+            transform: scale(0.9);
+            animation: popIn 1s 0.3s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .bio {
+            max-width: 500px;
+            line-height: 1.6;
+            opacity: 0;
+            font-size: 1.1rem;
+            transform: translateY(20px);
+            animation: fadeInUp 1s 0.8s forwards;
         }
 
         /* Scroll progress indicator */
@@ -51,6 +103,8 @@
             opacity: 0;
             transform: translateY(-20px);
             animation: fadeInDown 0.8s 0.5s forwards;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
         }
 
         .nav-links {
@@ -71,45 +125,11 @@
             opacity: 1;
         }
 
-        /* Hero section */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 10%;
-            position: relative;
-        }
-
-        .name {
-            font-size: clamp(3rem, 10vw, 6rem);
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            margin-bottom: 1rem;
-            line-height: 0.9;
-            color: white;
-            text-shadow: 
-                0 0 15px rgba(255,255,255,0.5),
-                0 0 30px rgba(255,255,255,0.3);
-            opacity: 0;
-            transform: scale(0.9);
-            animation: popIn 1s 0.3s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .bio {
-            max-width: 500px;
-            line-height: 1.6;
-            opacity: 0;
-            font-size: 1.1rem;
-            transform: translateY(20px);
-            animation: fadeInUp 1s 0.8s forwards;
-        }
-
         /* Services - 3D cards with bars */
         .services {
             padding: 10rem 10%;
+            background: var(--bg);
+            position: relative;
         }
 
         .section-title {
@@ -226,8 +246,12 @@
         
         .video-container {
             position: relative;
-            padding-top: 56.25%; /* 16:9 aspect ratio */
+            padding-top: 56.25%; /* 16:9 ratio */
             background: #000;
+        }
+
+        .video-container.vertical {
+            padding-top: 177.78%; /* 9:16 ratio */
         }
         
         .video-container video {
@@ -401,12 +425,17 @@
         </div>
     </nav>
     
-    <!-- Hero content -->
+    <!-- Hero content with video background -->
     <section class="hero">
-        <h1 class="name">Abh1shyk</h1>
-        <p class="bio">
-            21 y/o motion designer specializing in music visualization, dynamic motion graphics, and viral social media content.
-        </p>
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="videos/background.mp4" type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <h1 class="name">Abh1shyk</h1>
+            <p class="bio">
+                21 y/o motion designer specializing in music visualization, dynamic motion graphics, and viral social media content.
+            </p>
+        </div>
     </section>
 
     <!-- Services -->
@@ -476,22 +505,9 @@
         <h2 class="section-title animate-on-scroll">My Work</h2>
         
         <div class="video-grid">
-            <!-- Music Visualization -->
+            <!-- Motion Graphics 1 (9:16) -->
             <div class="video-card animate-on-scroll" style="animation-delay: 0.2s">
-                <div class="video-container">
-                    <video muted loop playsinline>
-                        <source src="videos/background.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-overlay">
-                        <i class="fas fa-music"></i>
-                        <h3>Music Visualization</h3>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Motion Graphics 1 -->
-            <div class="video-card animate-on-scroll" style="animation-delay: 0.4s">
-                <div class="video-container">
+                <div class="video-container vertical">
                     <video muted loop playsinline>
                         <source src="videos/Motion Graphics.mp4" type="video/mp4">
                     </video>
@@ -502,9 +518,9 @@
                 </div>
             </div>
             
-            <!-- Motion Graphics 2 -->
-            <div class="video-card animate-on-scroll" style="animation-delay: 0.6s">
-                <div class="video-container">
+            <!-- Motion Graphics 2 (9:16) -->
+            <div class="video-card animate-on-scroll" style="animation-delay: 0.4s">
+                <div class="video-container vertical">
                     <video muted loop playsinline>
                         <source src="videos/Motion Graphics 1.mp4" type="video/mp4">
                     </video>
@@ -600,8 +616,8 @@
             });
         }, { threshold: 0.5 });
 
-        document.querySelectorAll('.video-card').forEach(card => {
-            videoObserver.observe(card);
+        document.querySelectorAll('.video-card, .hero').forEach(element => {
+            videoObserver.observe(element);
         });
 
         // Smooth scroll for anchor links
