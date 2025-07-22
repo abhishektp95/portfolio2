@@ -6,42 +6,35 @@
     <title>Abh1shyk | Motion Designer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Define your new color palette using CSS variables */
+        /* New Theme: Ethereal Light */
         :root {
-            --darkest-grey: #0a0908;
-            --dark-blue-grey: #22333b;
-            --light-cream: #eae0d5;
-            --muted-gold: #c6ac8f;
-            --earthy-brown: #5e503f;
+            --bg-light: #F8F8F8; /* Very light grey background */
+            --bg-medium-light: #EFEFEF; /* Slightly darker light grey for cards/sections */
+            --text-dark: #333333; /* Dark grey for main text */
+            --accent-green: #6A994E; /* Muted dusty green for primary accents */
+            --accent-peach: #D4A59A; /* Soft peach for secondary accents */
+            --border-soft: rgba(0, 0, 0, 0.08); /* Soft black border for elements */
+            --shadow-soft: rgba(0, 0, 0, 0.08); /* Soft shadow */
 
-            /* Mapped to existing variable names for consistency */
-            --primary: var(--muted-gold);
-            --secondary: var(--earthy-brown);
-            --bg: var(--darkest-grey);
-            --text: var(--light-cream);
-            --card-bg: var(--dark-blue-grey); /* New variable for card/navbar background */
-        }
-
-        /* Helper for RGBA conversion in JS */
-        :root {
-            --light-cream-rgb: 234, 224, 213; /* For text-shadow rgba() */
-            --dark-blue-grey-rgb: 34, 51, 59;
-            --muted-gold-rgb: 198, 172, 143;
-            --earthy-brown-rgb: 94, 80, 63; /* Added for the button hover */
-            --darkest-grey-rgb: 10, 9, 8;
+            /* RGB values for JS dynamic calculations (for rgba colors) */
+            --text-dark-rgb: 51, 51, 51;
+            --accent-green-rgb: 106, 153, 78;
+            --accent-peach-rgb: 212, 165, 154;
+            --bg-light-rgb: 248, 248, 248;
+            --bg-medium-light-rgb: 239, 239, 239;
         }
 
         body {
-            font-family: 'SF Pro Display', -apple-system, sans-serif;
-            color: var(--text);
+            font-family: 'Open Sans', 'SF Pro Display', -apple-system, sans-serif;
+            color: var(--text-dark);
             margin: 0;
             min-height: 100vh;
             overflow-x: hidden;
-            background-color: var(--bg);
-            line-height: 1.6; /* Slightly improved line height for readability */
+            background-color: var(--bg-light);
+            line-height: 1.7;
         }
 
-        /* Hero section with video background */
+        /* Hero section */
         .hero {
             height: 100vh;
             display: flex;
@@ -49,9 +42,10 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 0 10%;
+            padding: 0 5%;
             position: relative;
             overflow: hidden;
+            background-color: var(--bg-light); /* Ensure light background for hero */
         }
 
         .hero-video {
@@ -62,65 +56,62 @@
             height: 100%;
             object-fit: cover;
             z-index: -1;
-            filter: blur(8px) brightness(0.4); /* Slightly darker video for better contrast */
+            filter: brightness(0.7) grayscale(0.5); /* Lighter, desaturated video */
+            opacity: 0.6; /* More subtle video background */
+            transform: scale(1.02); 
         }
 
         .hero-content {
             position: relative;
             z-index: 1;
-            display: flex; /* Added for vertical alignment of button */
-            flex-direction: column; /* Added for vertical alignment of button */
-            align-items: center; /* Added for horizontal alignment of button */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem; /* Reduced gap */
         }
 
         .name {
             font-size: clamp(3rem, 10vw, 6rem);
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            margin-bottom: 1rem;
-            line-height: 0.9;
-            color: var(--text); /* Use light cream for name */
-            text-shadow:
-                0 0 20px rgba(var(--light-cream-rgb),0.5), /* Glow from light cream */
-                0 0 40px rgba(var(--light-cream-rgb),0.3);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            color: var(--text-dark); /* Dark text on light background */
+            text-shadow: 0 5px 15px var(--shadow-soft); /* Soft shadow */
             opacity: 0;
             transform: scale(0.9);
             animation: popIn 1s 0.3s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
         .bio {
-            max-width: 500px;
-            line-height: 1.6;
-            opacity: 0;
+            max-width: 600px;
             font-size: 1.1rem;
+            color: var(--text-dark);
+            opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 1s 0.8s forwards;
-            color: var(--text);
-            margin-bottom: 2.5rem; /* Added space between bio and button */
+            margin-bottom: 2rem;
         }
 
-        /* New button style */
         .hero-button {
             display: inline-block;
-            padding: 1rem 2.5rem; /* Adjusted padding */
-            background-color: white; /* White background as requested */
-            color: var(--darkest-grey); /* Dark text for contrast */
+            padding: 1rem 2.5rem;
+            background-color: var(--accent-green); /* Green button */
+            color: white; /* White text */
             text-decoration: none;
-            border-radius: 50px; /* Fully rounded button */
+            border-radius: 50px; /* Fully rounded */
             font-weight: 600;
-            font-size: 1.1rem; /* Slightly larger font */
+            font-size: 1.1rem;
             transition: all 0.3s ease-in-out;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Soft shadow */
+            box-shadow: 0 8px 20px var(--shadow-soft);
             opacity: 0;
             transform: translateY(20px);
-            animation: fadeInUp 1s 1s forwards; /* Animated to appear after bio */
+            animation: fadeInUp 1s 1s forwards;
         }
 
         .hero-button:hover {
-            background-color: var(--primary); /* Muted gold on hover */
-            color: var(--text); /* Light text on hover */
-            transform: translateY(-5px) scale(1.05); /* Lift and slight scale */
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+            background-color: var(--accent-peach); /* Peach on hover */
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
         }
 
         /* Scroll progress bar */
@@ -136,7 +127,7 @@
 
         .progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-peach));
             width: 0%;
             transition: width 0.1s;
         }
@@ -144,135 +135,141 @@
         /* Navigation */
         .navbar {
             display: flex;
-            justify-content: space-between;
-            padding: 2rem 5%;
+            justify-content: flex-end;
+            padding: 1.2rem 5%; /* Slightly less padding */
             position: fixed;
             width: 90%;
             z-index: 100;
             opacity: 0;
             transform: translateY(-20px);
             animation: fadeInDown 0.8s 0.5s forwards;
-            background: rgba(var(--dark-blue-grey-rgb),0.7); /* Use dark-blue-grey with opacity */
-            backdrop-filter: blur(15px); /* Stronger blur */
-            border-bottom: 1px solid rgba(var(--light-cream-rgb),0.08); /* Subtle border with cream */
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* Soft shadow */
+            background: rgba(var(--bg-light-rgb),0.9); /* Light, semi-transparent */
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-soft);
+            box-shadow: 0 3px 10px var(--shadow-soft);
+            border-radius: 0 0 8px 8px; /* Softer rounded bottom corners */
         }
         
         .nav-links {
             display: flex;
-            gap: 2.5rem; /* Slightly more space */
+            gap: 2.5rem;
         }
 
         .nav-links a {
-            color: var(--text);
+            color: var(--text-dark);
             text-decoration: none;
             font-weight: 500;
             position: relative;
             opacity: 0.9;
-            transition: opacity 0.3s, color 0.3s;
+            transition: opacity 0.3s, color 0.3s, transform 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-green);
+            transition: width 0.3s ease-out;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .nav-links a:hover {
             opacity: 1;
-            color: var(--primary); /* Highlight on hover */
+            color: var(--accent-green);
+            transform: translateY(-2px);
         }
 
-        /* Services - 3D cards */
-        .services {
-            padding: 10rem 10%;
-            background: var(--bg);
+        /* General Section Styles */
+        section {
+            padding: 8rem 10%; /* Reduced padding */
+            background: var(--bg-light);
             position: relative;
         }
 
         .section-title {
             text-align: center;
-            margin-bottom: 3.5rem; /* More space */
-            font-size: 2.5rem; /* Larger section title */
-            font-weight: 600;
-            color: var(--text);
+            margin-bottom: 3rem;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            color: var(--text-dark);
+            text-shadow: 0 5px 15px rgba(0,0,0,0.05); /* Very subtle shadow */
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.8s forwards;
         }
 
-        .services-grid {
+        /* Grid for cards (Services/Toolkit) */
+        .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjusted min width */
-            gap: 3rem; /* Larger gap */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
             perspective: 1000px;
         }
 
-        .service-card {
-            background: var(--card-bg); /* Use dark-blue-grey */
-            border-radius: 16px;
-            padding: 2.5rem; /* More padding */
-            border: 1px solid rgba(var(--light-cream-rgb),0.1); /* Subtle border with cream */
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        .card {
+            background: var(--bg-medium-light);
+            border-radius: 10px;
+            padding: 2.5rem;
+            border: 1px solid var(--border-soft);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             transform-style: preserve-3d;
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 25px var(--shadow-soft);
             opacity: 0;
-            transform: translateY(30px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2); /* Deeper shadow */
+            transform: translateY(25px);
         }
-        .service-card:hover {
-            transform: translateY(-15px) rotateX(0deg) rotateY(0deg) scale(1.02); /* More pronounced lift */
-            box-shadow: 0 15px 40px rgba(0,0,0,0.35); /* Stronger shadow on hover */
+        .card:hover {
+            transform: translateY(-10px) rotateX(0deg) rotateY(0deg) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            border-color: rgba(var(--accent-green-rgb), 0.5); /* Green border on hover */
         }
-        .service-card h3 {
-            color: var(--primary); /* Muted gold for headings */
+        .card h3 {
+            color: var(--accent-green);
             font-size: 1.6rem;
             margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
         }
-        .service-card p {
-            color: rgba(var(--light-cream-rgb),0.8); /* Slightly less opaque text */
+        .card h3 i {
+            color: var(--accent-peach); /* Peach icon */
+            font-size: 2rem;
+        }
+        .card p {
+            color: var(--text-dark);
+            font-size: 1rem;
         }
 
         /* Video Showcase */
         .video-showcase {
-            padding: 8rem 0;
-            background-color: var(--darkest-grey); /* Pure black background */
+            padding: 6rem 0; /* Reduced vertical padding */
+            background-color: var(--bg-medium-light);
             position: relative;
+            border-top: 1px solid var(--border-soft);
+            border-bottom: 1px solid var(--border-soft);
         }
 
-        .video-showcase::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle, rgba(var(--muted-gold-rgb), 0.1) 10%, transparent 70%); /* Subtle gold glow */
-            opacity: 0;
-            animation: glow 3s infinite alternate;
-            z-index: -1;
-        }
-         
-        @keyframes glow {
-            0% { opacity: 0.08; } /* Subtler glow */
-            100% { opacity: 0.18; }
-        }
-
-        /* Container for categorized videos and their headings */
         .video-sections {
             display: flex;
             flex-direction: column;
-            gap: 5rem; /* More space between sections */
-            margin-top: 3.5rem;
+            gap: 4rem; /* Reduced space */
+            margin-top: 3rem;
         }
 
         .category-heading {
             text-align: left;
-            margin-bottom: 1.5rem; /* Reduced margin, as grid padding handles spacing below */
-            font-size: 2.2rem; /* Consistent with section title */
+            margin-bottom: 1.5rem;
+            font-size: clamp(1.6rem, 4vw, 2.5rem);
             font-weight: 600;
-            color: var(--text);
-            /* ENHANCED GLOW EFFECT */
-            text-shadow:
-                0 0 15px rgba(var(--light-cream-rgb),0.8), /* More intense, slightly wider */
-                0 0 30px rgba(var(--light-cream-rgb),0.5), /* More intense, wider */
-                0 0 45px rgba(var(--light-cream-rgb),0.2); /* New, subtle, even wider layer for a true glow */
+            color: var(--text-dark);
+            text-shadow: 0 3px 10px rgba(0,0,0,0.03);
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.8s forwards;
@@ -288,28 +285,27 @@
 
         .video-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjusted min width */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             grid-auto-rows: minmax(auto, 300px);
-            gap: 2.5rem; /* More gap */
+            gap: 2rem;
             padding: 0 10%;
         }
 
-        /* Media query for larger screens to apply specific grid layout */
         @media (min-width: 992px) {
             .video-grid {
                 grid-template-columns: repeat(3, 1fr);
                 grid-auto-rows: minmax(auto, 280px);
             }
              /* Custom grid positioning for 9:16 section to make some videos taller */
-            .video-grid.vertical-videos .video-card:nth-child(1) { /* Motion Graphics 1.mp4 */
+            .video-grid.vertical-videos .video-card:nth-child(1) {
                 grid-column: 1 / span 1;
                 grid-row: 1 / span 2;
             }
-            .video-grid.vertical-videos .video-card:nth-child(2) { /* timelss.mp4 */
+            .video-grid.vertical-videos .video-card:nth-child(2) {
                 grid-column: 2 / span 1;
                 grid-row: 1 / span 2;
             }
-             .video-grid.vertical-videos .video-card:nth-child(3) { /* Motion Graphics.mp4 */
+             .video-grid.vertical-videos .video-card:nth-child(3) {
                 grid-column: 3 / span 1;
                 grid-row: 1 / span 2;
             }
@@ -317,18 +313,20 @@
 
 
         .video-card {
-            border-radius: 12px;
+            border-radius: 8px;
             overflow: hidden;
             transform: translateY(20px);
             opacity: 0;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4); /* Deeper shadow */
-            transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
-            background: var(--card-bg); /* Use dark blue-grey for video cards too */
+            box-shadow: 0 5px 20px var(--shadow-soft);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-color 0.3s;
+            background: var(--bg-light);
+            border: 1px solid var(--border-soft);
         }
 
         .video-card:hover {
-            transform: translateY(-8px) scale(1.02); /* Slightly more lift and scale */
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+            border-color: rgba(var(--accent-green-rgb), 0.5);
         }
 
         .video-container {
@@ -349,9 +347,8 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* Added transform to slightly scale video to cover any rendering gaps */
             transform: scale(1.005); 
-            transition: transform 0.4s ease-in-out;
+            transition: transform 0.3s ease-in-out;
         }
 
         .video-overlay {
@@ -364,20 +361,20 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: rgba(var(--darkest-grey-rgb),0.7); /* Use darkest-grey for overlay */
+            background: rgba(var(--bg-medium-light-rgb),0.8); /* Light overlay */
             opacity: 1;
-            transition: opacity 0.3s ease-in-out; /* Slightly slower overlay transition */
+            transition: opacity 0.3s ease-in-out;
         }
         
         .video-overlay i {
-            font-size: 2.5rem; /* Larger icon */
+            font-size: 2.5rem;
             margin-bottom: 0.6rem;
-            color: var(--primary); /* Muted gold icon */
+            color: var(--accent-green);
         }
 
         .video-overlay h3 {
-            color: var(--text); /* Cream text */
-            font-size: 1.5rem; /* Slightly larger heading */
+            color: var(--text-dark);
+            font-size: 1.5rem;
             margin: 0;
             font-weight: 500;
         }
@@ -388,90 +385,89 @@
         }
 
         .video-card:hover video {
-            transform: scale(1.05); /* More zoom on hover */
+            transform: scale(1.05);
         }
 
-        /* Contact section with black background */
+        /* Contact section */
         #contact {
-            padding: 10rem 10%;
+            padding: 8rem 10%;
             text-align: center;
-            background: var(--darkest-grey); /* Pure black background */
+            background: var(--bg-light);
             position: relative;
         }
 
-        /* Contact Info Styles */
         .contact-info {
-            margin-top: 2.5rem; /* More space */
+            margin-top: 2.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1.8rem; /* More space between contact items */
+            gap: 1.8rem;
         }
 
         .contact-info p {
-            font-size: 1.1rem; /* Slightly larger text */
-            line-height: 1.7;
+            font-size: 1.1rem;
+            line-height: 1.8;
             max-width: 650px;
-            margin-bottom: 1.5rem; /* More space below introductory text */
-            color: rgba(var(--light-cream-rgb),0.9); /* Slightly less opaque */
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
         }
 
         .contact-info a {
-            color: var(--primary); /* Use primary color for links */
+            color: var(--accent-green);
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.2rem; /* Larger font size */
+            font-size: 1.2rem;
             transition: color 0.3s ease-in-out;
             display: flex;
             align-items: center;
-            gap: 0.6rem; /* More space between icon and text */
+            gap: 0.6rem;
         }
 
         .contact-info a:hover {
-            color: var(--secondary); /* Change color to earthy brown on hover */
+            color: var(--accent-peach);
             text-decoration: underline;
         }
 
         .contact-social-links {
             display: flex;
-            gap: 2rem; /* More space between social icons */
+            gap: 2rem;
             margin-top: 1.5rem;
         }
 
         .contact-social-links .social-icon {
-            font-size: 2rem; /* Larger social icons */
-            color: var(--text); /* Default icon color */
-            transition: color 0.3s ease-in-out;
+            font-size: 2rem;
+            color: var(--text-dark);
+            transition: color 0.3s ease-in-out, transform 0.3s;
         }
 
         .contact-social-links .social-icon:hover {
-            color: var(--primary); /* Hover color to muted gold */
+            color: var(--accent-green);
+            transform: translateY(-3px) scale(1.05);
         }
-
 
         /* Social links (fixed) */
         .social-links {
             position: fixed;
-            bottom: 2.5rem; /* Slightly higher */
-            right: 2.5rem; /* Slightly further from edge */
+            bottom: 2.5rem;
+            right: 2.5rem;
             display: flex;
             flex-direction: column;
-            gap: 1.2rem; /* Slightly more space */
+            gap: 1.2rem;
             z-index: 100;
         }
 
         .social-link {
-            width: 55px; /* Slightly larger */
-            height: 55px; /* Slightly larger */
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(45deg, var(--primary), var(--secondary)); /* Muted gold to earthy brown */
+            background: linear-gradient(45deg, var(--accent-green), var(--accent-peach));
             color: white;
             text-decoration: none;
-            font-size: 1.3rem; /* Larger icon */
-            box-shadow: 0 8px 20px rgba(0,0,0,0.35); /* Stronger shadow */
+            font-size: 1.3rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
             transition: transform 0.3s ease-in-out;
             opacity: 0;
             transform: translateY(20px);
@@ -480,66 +476,17 @@
         .social-link:nth-child(1) { animation: fadeInUp 0.8s 1.0s forwards; }
         .social-link:nth-child(2) { animation: fadeInUp 0.8s 1.2s forwards; }
 
-
         .social-link:hover {
-            transform: translateY(-8px) scale(1.1); /* More pronounced lift and scale */
-            box-shadow: 0 12px 25px rgba(0,0,0,0.45);
+            transform: translateY(-8px) scale(1.1);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.2);
         }
 
-        /* Floating shapes */
-        .shape {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(80px); /* More blur */
-            opacity: 0.15; /* More visible */
-            z-index: -1;
-        }
-
-        .shape-1 {
-            width: 350px; /* Larger */
-            height: 350px;
-            background: var(--primary); /* Muted gold */
-            top: 20%;
-            right: 10%;
-            animation: float 9s ease-in-out infinite; /* Slightly longer float */
-        }
-
-        .shape-2 {
-            width: 250px; /* Larger */
-            height: 250px;
-            background: var(--secondary); /* Earthy brown */
-            bottom: 20%;
-            left: 10%;
-            animation: float 11s ease-in-out infinite reverse; /* Slightly longer float */
-        }
-
-        /* Moving White Gradient Overlay */
-        .moving-gradient-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, rgba(var(--light-cream-rgb), 0.05) 0%, transparent 70%); /* Subtle cream gradient */
-            background-size: 300% 300%; /* Larger size for movement */
-            background-position: 50% 50%; /* Start at center */
-            pointer-events: none;
-            z-index: -1; /* Ensure it stays behind content */
-            opacity: 0.8; /* Overall transparency */
-            animation: moveSubtleGradient 60s linear infinite alternate; /* Very slow, linear, alternating movement */
-        }
-
-        @keyframes moveSubtleGradient {
-            0% { background-position: 0% 0%; }
-            100% { background-position: 100% 100%; }
+        /* Removed floating shapes and moving gradient overlay for cleaner light theme */
+        .shape, .moving-gradient-overlay {
+            display: none;
         }
 
         /* Animations */
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); } /* More movement and slight rotation */
-        }
-
         @keyframes popIn {
             0% { opacity: 0; transform: scale(0.9); }
             80% { transform: scale(1.04); }
@@ -547,12 +494,12 @@
         }
 
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(25px); } /* More pronounced initial movement */
+            from { opacity: 0; transform: translateY(25px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-25px); } /* More pronounced initial movement */
+            from { opacity: 0; transform: translateY(-25px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -575,13 +522,12 @@
             <i class="fab fa-whatsapp"></i>
         </a>
     </div>
-
-    <div class="shape shape-1"></div>
-    <div class="shape shape-2"></div>
     
     <nav class="navbar">
         <div class="nav-links">
             <a href="#services">Services</a>
+            <a href="#tools">Toolkit</a>
+            <a href="#portfolio">Work</a>
             <a href="#contact">Connect</a>
         </div>
     </nav>
@@ -593,50 +539,52 @@
         <div class="hero-content">
             <h1 class="name">Abh1shyk</h1>
             <p class="bio">
-                21 y/o motion designer specializing in music visualization, dynamic motion graphics, and viral social media content.
+                A passionate motion designer crafting stunning visual stories through dynamic graphics, immersive music visualizations, and engaging social media content.
             </p>
-            <a href="#portfolio" class="hero-button animate-on-scroll" style="animation-delay: 1s;">View My Edits</a>
+            <a href="#portfolio" class="hero-button animate-on-scroll" style="animation-delay: 1s;">View My Portfolio</a>
         </div>
     </section>
 
-    <section id="services" class="services">
+    <section id="services">
         <h2 class="section-title animate-on-scroll">My Creative Services</h2>
-        <div class="services-grid">
-            <div class="service-card animate-on-scroll" data-service="music" style="animation-delay: 0.2s">
-                <h3>Music Visualization</h3>
-                <p>Audio-reactive animations that bring your tracks to life</p>
+        <div class="grid-container">
+            <div class="card animate-on-scroll" data-service="music" style="animation-delay: 0.2s">
+                <h3><i class="fas fa-headphones-alt"></i> Music Visualization</h3>
+                <p>Bringing your audio to life with captivating visual effects that synchronize perfectly with every beat and rhythm.</p>
             </div>
 
-            <div class="service-card animate-on-scroll" data-service="motion" style="animation-delay: 0.4s">
-                <h3>Motion Graphics</h3>
-                <p>Cinematic titles and dynamic branding elements</p>
+            <div class="card animate-on-scroll" data-service="motion" style="animation-delay: 0.4s">
+                <h3><i class="fas fa-film"></i> Motion Graphics</h3>
+                <p>Creating dynamic title sequences, engaging animated logos, and compelling explainer videos that leave a lasting impression.</p>
             </div>
 
-            <div class="service-card animate-on-scroll" data-service="social" style="animation-delay: 0.6s">
-                <h3>Social Media Edits</h3>
-                <p>Trending edits optimized for maximum engagement</p>
+            <div class="card animate-on-scroll" data-service="social" style="animation-delay: 0.6s">
+                <h3><i class="fas fa-share-alt"></i> Social Media Edits</h3>
+                <p>Producing viral-ready video content tailored for platforms like Instagram and TikTok, optimized for maximum reach and engagement.</p>
             </div>
 
-            <div class="service-card animate-on-scroll" data-service="reels" style="animation-delay: 0.8s">
-                <h3>Video Reels</h3>
-                <p>High-energy content designed to go viral</p>
+            <div class="card animate-on-scroll" data-service="reels" style="animation-delay: 0.8s">
+                <h3><i class="fas fa-video"></i> Video Reels</h3>
+                <p>Crafting high-impact video reels for brand promotion, events, or personal highlights, designed to grab attention instantly.</p>
             </div>
         </div>
     </section>
 
-    <section id="tools" class="services"> <h2 class="section-title animate-on-scroll">My Toolkit</h2>
-        <div class="services-grid"> <div class="service-card animate-on-scroll" style="animation-delay: 0.2s">
+    <section id="tools"> 
+        <h2 class="section-title animate-on-scroll">My Toolkit</h2>
+        <div class="grid-container"> 
+            <div class="card animate-on-scroll" style="animation-delay: 0.2s">
                 <h3><i class="fas fa-laptop-code"></i> Adobe After Effects</h3>
-                <p>Mastery in advanced motion graphics, visual effects, and compositing. (AE 2025 Ready)</p>
+                <p>My primary tool for advanced motion graphics, complex visual effects, and seamless video compositing, enabling limitless creativity.</p>
             </div>
-            </div>
+        </div>
     </section>
 
     <section class="video-showcase" id="portfolio">
-        <div class="moving-gradient-overlay"></div> <h2 class="section-title animate-on-scroll">My Work</h2>
+        <h2 class="section-title animate-on-scroll">My Featured Work</h2>
         
         <div class="video-sections">
-            <h3 class="category-heading animate-on-scroll" style="animation-delay: 0.2s;">9:16 Edits</h3>
+            <h3 class="category-heading animate-on-scroll" style="animation-delay: 0.2s;">9:16 Vertical Edits</h3>
             <div class="video-grid vertical-videos">
                 
                 <div class="video-card animate-on-scroll" style="animation-delay: 0.4s">
@@ -676,7 +624,7 @@
                 </div>
             </div>
 
-            <h3 class="category-heading animate-on-scroll" style="animation-delay: 1.0s;">16:9 Edits</h3>
+            <h3 class="category-heading animate-on-scroll" style="animation-delay: 1.0s;">16:9 Cinematic Edits</h3>
             <div class="video-grid">
                 
                 <div class="video-card animate-on-scroll" style="animation-delay: 1.2s">
@@ -719,10 +667,10 @@
     </section>
 
     <section id="contact">
-        <div class="moving-gradient-overlay"></div> <h2 class="section-title animate-on-scroll" style="animation-delay: 0.2s">Let's Create Together</h2>
+        <h2 class="section-title animate-on-scroll" style="animation-delay: 0.2s">Let's Connect & Collaborate</h2>
         <div class="contact-info">
             <p class="animate-on-scroll" style="animation-delay: 0.4s">
-                Have a project in mind or want to discuss potential collaboration? Feel free to reach out directly via email, phone, or social media.
+                I'm always excited to work on new and challenging projects. Whether you have a specific vision or need creative guidance, feel free to reach out.
             </p>
             <a href="mailto:abhiramkuttutp@gmail.com" class="animate-on-scroll" style="animation-delay: 0.6s">
                 <i class="fas fa-envelope"></i> abhiramkuttutp@gmail.com
@@ -730,7 +678,7 @@
             <a href="tel:+919562731821" class="animate-on-scroll" style="animation-delay: 0.8s">
                 <i class="fas fa-phone"></i> +91 9562731821
             </a>
-            <p class="animate-on-scroll" style="margin-top: 1.5rem; margin-bottom: 0.5rem; animation-delay: 1s;">Follow Me</p>
+            <p class="animate-on-scroll" style="margin-top: 2rem; margin-bottom: 0.8rem; animation-delay: 1s;">Connect with Me</p>
             <div class="contact-social-links animate-on-scroll" style="animation-delay: 1.2s;">
                 <a href="https://instagram.com/abh1shyk" target="_blank" aria-label="Instagram">
                     <i class="fab fa-instagram social-icon"></i>
@@ -755,11 +703,11 @@
         }
 
         // Set RGB CSS variables dynamically based on hex codes in :root
-        document.documentElement.style.setProperty('--light-cream-rgb', hexToRgb('#eae0d5'));
-        document.documentElement.style.setProperty('--muted-gold-rgb', hexToRgb('#c6ac8f'));
-        document.documentElement.style.setProperty('--dark-blue-grey-rgb', hexToRgb('#22333b'));
-        document.documentElement.style.setProperty('--darkest-grey-rgb', hexToRgb('#0a0908'));
-        document.documentElement.style.setProperty('--earthy-brown-rgb', hexToRgb('#5e503f')); /* Ensure this is set */
+        document.documentElement.style.setProperty('--text-dark-rgb', hexToRgb('#333333'));
+        document.documentElement.style.setProperty('--accent-green-rgb', hexToRgb('#6A994E'));
+        document.documentElement.style.setProperty('--accent-peach-rgb', hexToRgb('#D4A59A'));
+        document.documentElement.style.setProperty('--bg-light-rgb', hexToRgb('#F8F8F8'));
+        document.documentElement.style.setProperty('--bg-medium-light-rgb', hexToRgb('#EFEFEF'));
 
 
         // Scroll progress bar
@@ -770,7 +718,7 @@
         });
 
         // 3D card tilt effect for service cards
-        document.querySelectorAll('.service-card').forEach(card => {
+        document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const x = e.clientX - card.getBoundingClientRect().left;
                 const y = e.clientY - card.getBoundingClientRect().top;
@@ -778,14 +726,14 @@
                 const centerX = card.offsetWidth / 2;
                 const centerY = card.offsetHeight / 2;
                 
-                const rotateX = (y - centerY) / 15; /* Adjusted tilt sensitivity */
-                const rotateY = (centerX - x) / 15;
+                const rotateX = (y - centerY) / 25; /* Adjusted tilt sensitivity */
+                const rotateY = (centerX - x) / 25;
                 
-                card.style.transform = `translateY(-15px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                card.style.transform = `translateY(-10px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
             });
             
             card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(-15px) rotateX(0) rotateY(0)'; /* Maintain lift */
+                card.style.transform = 'translateY(-10px) rotateX(0) rotateY(0)'; /* Maintain lift */
             });
         });
 
