@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #0066ff;
-            --secondary: #ff3366;
-            --bg: #121212;
-            --text: #f8f9fa;
+            --primary: #0070ff; /* Slightly brighter primary */
+            --secondary: #ff4070; /* Slightly brighter secondary */
+            --bg: #181818; /* Slightly darker background */
+            --text: #e9ecef; /* Slightly lighter text for better contrast */
         }
 
         body {
@@ -19,6 +19,7 @@
             margin: 0;
             min-height: 100vh;
             overflow-x: hidden;
+            background-color: var(--bg); /* Apply background color to body */
         }
 
         /* Hero section with video background */
@@ -42,7 +43,7 @@
             height: 100%;
             object-fit: cover;
             z-index: -1;
-            filter: blur(8px) brightness(0.6);
+            filter: blur(8px) brightness(0.55); /* Slightly darker video */
         }
 
         .hero-content {
@@ -57,9 +58,9 @@
             margin-bottom: 1rem;
             line-height: 0.9;
             color: white;
-            text-shadow: 
-                0 0 15px rgba(255,255,255,0.5),
-                0 0 30px rgba(255,255,255,0.3);
+            text-shadow:
+                0 0 15px rgba(255,255,255,0.6), /* Slightly stronger white glow */
+                0 0 30px rgba(255,255,255,0.4);
             opacity: 0;
             transform: scale(0.9);
             animation: popIn 1s 0.3s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -72,6 +73,7 @@
             font-size: 1.1rem;
             transform: translateY(20px);
             animation: fadeInUp 1s 0.8s forwards;
+            color: var(--text); /* Ensure bio text uses the defined text color */
         }
 
         /* Scroll progress indicator */
@@ -103,8 +105,9 @@
             opacity: 0;
             transform: translateY(-20px);
             animation: fadeInDown 0.8s 0.5s forwards;
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.4); /* Slightly more opaque navbar background */
+            backdrop-filter: blur(12px); /* Slightly stronger blur */
+            border-bottom: 1px solid rgba(255,255,255,0.05); /* Subtle bottom border */
         }
 
         .nav-links {
@@ -117,7 +120,7 @@
             text-decoration: none;
             font-weight: 500;
             position: relative;
-            opacity: 0.8;
+            opacity: 0.85; /* Slightly more visible initially */
             transition: opacity 0.3s;
         }
 
@@ -135,7 +138,7 @@
         .section-title {
             text-align: center;
             margin-bottom: 3rem;
-            font-size: 2rem;
+            font-size: 2.2rem; /* Slightly larger section title */
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.8s forwards;
@@ -143,21 +146,21 @@
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); /* Slightly wider min width */
+            gap: 2.5rem; /* Slightly larger gap */
             perspective: 1000px;
         }
 
         .service-card {
-            background: rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.06); /* Slightly more opaque card background */
             border-radius: 16px;
             padding: 2rem;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.12); /* Slightly more visible border */
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             transform-style: preserve-3d;
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px); /* Slightly stronger blur */
             opacity: 0;
             transform: translateY(30px);
         }
@@ -172,18 +175,18 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            opacity: 0.8;
+            font-size: 0.95rem; /* Slightly larger label */
+            opacity: 0.9; /* Slightly more visible label */
         }
 
         .skill-bar {
-            height: 6px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 3px;
+            height: 7px; /* Slightly thicker bar */
+            background: rgba(255,255,255,0.15); /* Slightly more visible bar background */
+            border-radius: 4px; /* Slightly more rounded */
             overflow: hidden;
             transform-style: preserve-3d;
-            transform: rotateX(25deg);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transform: rotateX(20deg); /* Slightly less steep rotation */
+            box-shadow: 0 5px 12px rgba(0,0,0,0.25); /* Slightly stronger shadow */
         }
 
         .skill-progress {
@@ -192,7 +195,7 @@
             position: relative;
             transform-origin: left;
             transform: scaleX(0);
-            transition: transform 1.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transition: transform 1.3s cubic-bezier(0.165, 0.84, 0.44, 1); /* Slightly faster animation */
         }
 
         .skill-progress::after {
@@ -202,58 +205,77 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(90deg, 
-                          transparent, 
-                          rgba(255,255,255,0.3), 
-                          transparent);
-            animation: shine 2s infinite;
+            background: linear-gradient(90deg,
+                            transparent,
+                            rgba(255,255,255,0.35), /* Slightly stronger shine */
+                            transparent);
+            animation: shine 1.8s infinite; /* Slightly faster shine */
         }
 
         /* Service-specific bar levels */
-        .service-card[data-service="music"] .skill-progress {
-            width: 95%;
+        .service-card.music .skill-progress {
+            transform: scaleX(0.95); /* Ensure initial width is set correctly if JS hasn't run yet */
         }
-        .service-card[data-service="motion"] .skill-progress {
-            width: 90%;
+        .service-card.motion .skill-progress {
+            transform: scaleX(0.90);
         }
-        .service-card[data-service="social"] .skill-progress {
-            width: 85%;
+        .service-card.social .skill-progress {
+            transform: scaleX(0.85);
         }
-        .service-card[data-service="reels"] .skill-progress {
-            width: 88%;
+        .service-card.reels .skill-progress {
+            transform: scaleX(0.88);
         }
 
         /* Video Showcase */
         .video-showcase {
             padding: 8rem 10%;
-            background: rgba(0,0,0,0.3);
+            background-color: #000; /* Solid black background */
+            position: relative;
         }
-        
+
+        .video-showcase::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 10%, transparent 70%); /* Subtle white glow */
+            opacity: 0;
+            animation: glow 3s infinite alternate; /* Fade in and out animation */
+            z-index: -1;
+        }
+
+        @keyframes glow {
+            0% { opacity: 0.1; }
+            100% { opacity: 0.25; }
+        }
+
         .video-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Slightly wider min width */
             gap: 2rem;
             margin-top: 3rem;
         }
-        
+
         .video-card {
             border-radius: 12px;
             overflow: hidden;
             transform: translateY(20px);
             opacity: 0;
-            animation: fadeInUp 0.8s forwards;
         }
-        
+
         .video-container {
             position: relative;
             padding-top: 56.25%; /* 16:9 ratio */
             background: #000;
+            overflow: hidden; /* Ensure overlay stays within bounds */
         }
 
         .video-container.vertical {
             padding-top: 177.78%; /* 9:16 ratio */
         }
-        
+
         .video-container video {
             position: absolute;
             top: 0;
@@ -261,9 +283,9 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s;
+            transition: transform 0.4s ease-in-out; /* Slightly smoother transition */
         }
-        
+
         .video-overlay {
             position: absolute;
             top: 0;
@@ -274,30 +296,31 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.55); /* Slightly more opaque overlay */
             opacity: 1;
-            transition: opacity 0.3s;
+            transition: opacity 0.2s ease-in-out; /* Faster overlay transition */
         }
-        
+
         .video-overlay i {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 2.2rem; /* Slightly smaller icon */
+            margin-bottom: 0.8rem; /* Smaller margin */
             color: white;
         }
-        
+
         .video-overlay h3 {
             color: white;
-            font-size: 1.5rem;
+            font-size: 1.4rem; /* Slightly smaller heading */
             margin: 0;
+            font-weight: 500; /* Slightly lighter font weight */
         }
-        
+
         /* Hover effects */
         .video-card:hover .video-overlay {
             opacity: 0;
         }
-        
+
         .video-card:hover video {
-            transform: scale(1.05);
+            transform: scale(1.03); /* Slightly less zoom on hover */
         }
 
         /* Contact section with black background */
@@ -330,57 +353,56 @@
             color: white;
             text-decoration: none;
             font-size: 1.2rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transition: transform 0.3s;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.25); /* Slightly stronger shadow */
+            transition: transform 0.25s ease-in-out; /* Slightly faster transition */
             opacity: 0;
             transform: translateY(20px);
-            animation: fadeInUp 0.8s 1.2s forwards;
         }
 
         .social-link:nth-child(2) {
-            animation-delay: 1.4s;
+            animation-delay: 1.3s; /* Adjusted delay */
         }
 
         .social-link:hover {
-            transform: translateY(-5px) scale(1.1);
+            transform: translateY(-5px) scale(1.08); /* Slightly less scale on hover */
         }
 
         /* Floating shapes */
         .shape {
             position: fixed;
             border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.1;
+            filter: blur(70px); /* Slightly more blur */
+            opacity: 0.12; /* Slightly more visible */
             z-index: -1;
         }
 
         .shape-1 {
-            width: 300px;
-            height: 300px;
+            width: 320px; /* Slightly larger */
+            height: 320px;
             background: var(--primary);
-            top: 20%;
-            right: 10%;
+            top: 18%; /* Adjusted position */
+            right: 8%; /* Adjusted position */
             animation: float 8s ease-in-out infinite;
         }
 
         .shape-2 {
-            width: 200px;
-            height: 200px;
+            width: 220px; /* Slightly larger */
+            height: 220px;
             background: var(--secondary);
-            bottom: 20%;
-            left: 10%;
+            bottom: 18%; /* Adjusted position */
+            left: 8%; /* Adjusted position */
             animation: float 10s ease-in-out infinite reverse;
         }
 
         /* Animations */
         @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+            50% { transform: translateY(-15px); } /* Slightly less movement */
         }
 
         @keyframes popIn {
             0% { opacity: 0; transform: scale(0.9); }
-            80% { transform: scale(1.05); }
+            80% { transform: scale(1.03); }
             100% { opacity: 1; transform: scale(1); }
         }
 
@@ -401,17 +423,15 @@
 
         /* Scroll-triggered animations */
         .animate-on-scroll {
-            animation: fadeInUp 0.8s forwards;
+            animation-fill-mode: both; /* Ensures the animation state persists */
         }
     </style>
 </head>
 <body>
-    <!-- Scroll progress -->
     <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
     </div>
 
-    <!-- Social links -->
     <div class="social-links">
         <a href="https://instagram.com/abh1shyk" class="social-link">
             <i class="fab fa-instagram"></i>
@@ -421,11 +441,9 @@
         </a>
     </div>
 
-    <!-- Background elements -->
     <div class="shape shape-1"></div>
     <div class="shape shape-2"></div>
     
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-links">
             <a href="#services">Services</a>
@@ -433,7 +451,6 @@
         </div>
     </nav>
     
-    <!-- Hero content with video background -->
     <section class="hero">
         <video class="hero-video" autoplay muted loop playsinline>
             <source src="videos/background.mp4" type="video/mp4">
@@ -446,7 +463,6 @@
         </div>
     </section>
 
-    <!-- Services -->
     <section id="services" class="services">
         <h2 class="section-title animate-on-scroll">My Creative Services</h2>
         <div class="services-grid">
@@ -508,12 +524,10 @@
         </div>
     </section>
 
-    <!-- Video Showcase -->
     <section class="video-showcase">
         <h2 class="section-title animate-on-scroll">My Work</h2>
         
         <div class="video-grid">
-            <!-- Motion Graphics 1 (9:16) -->
             <div class="video-card animate-on-scroll" style="animation-delay: 0.2s">
                 <div class="video-container vertical">
                     <video muted loop playsinline>
@@ -526,7 +540,6 @@
                 </div>
             </div>
             
-            <!-- Motion Graphics 2 (9:16) -->
             <div class="video-card animate-on-scroll" style="animation-delay: 0.4s">
                 <div class="video-container vertical">
                     <video muted loop playsinline>
@@ -539,8 +552,6 @@
                 </div>
             </div>
             
-            <!-- Music Visualization Videos -->
-            <!-- arya.mp4 (16:9) -->
             <div class="video-card animate-on-scroll" style="animation-delay: 0.6s">
                 <div class="video-container">
                     <video muted loop playsinline>
@@ -553,7 +564,6 @@
                 </div>
             </div>
             
-            <!-- don.mp4 (4:3) -->
             <div class="video-card animate-on-scroll" style="animation-delay: 0.8s">
                 <div class="video-container" style="padding-top: 75%;">
                     <video muted loop playsinline>
@@ -566,7 +576,6 @@
                 </div>
             </div>
             
-            <!-- hiddid.mp4 (4:3) -->
             <div class="video-card animate-on-scroll" style="animation-delay: 1.0s">
                 <div class="video-container" style="padding-top: 75%;">
                     <video muted loop playsinline>
@@ -579,7 +588,6 @@
                 </div>
             </div>
             
-            <!-- timelss.mp4 (9:16) -->
             <div class="video-card animate-on-scroll" style="animation-delay: 1.2s">
                 <div class="video-container vertical">
                     <video muted loop playsinline>
@@ -594,7 +602,6 @@
         </div>
     </section>
 
-    <!-- Contact section with black background -->
     <section id="contact">
         <h2 class="section-title animate-on-scroll" style="animation-delay: 0.2s">Let's Create Together</h2>
         <p class="animate-on-scroll" style="max-width: 600px; margin: 0 auto 3rem; opacity: 0.8; animation-delay: 0.4s">
@@ -668,15 +675,18 @@
         const videoObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 const video = entry.target.querySelector('video');
-                if (entry.isIntersecting) {
-                    video.play();
-                } else {
-                    video.pause();
-                    video.currentTime = 0;
+                if (video) { // Check if video element exists
+                    if (entry.isIntersecting) {
+                        video.play();
+                    } else {
+                        video.pause();
+                        video.currentTime = 0;
+                    }
                 }
             });
         }, { threshold: 0.5 });
 
+        // Observe both video-card and hero for video playback
         document.querySelectorAll('.video-card, .hero').forEach(element => {
             videoObserver.observe(element);
         });
