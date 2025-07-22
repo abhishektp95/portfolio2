@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abh1shyk | Motion Designer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* New Theme: Deep Void & Neon */
+        :root {
+            --bg-dark: #1A1A1A; /* Very dark grey background */
+            --text-light: #F0F0F0; /* Light off-white text */
+            --accent-purple: #8A2BE2; /* Blue-violet for primary accents */
+            --accent-teal: #00FFFF; /* Aqua/Cyan for secondary accents and glow */
+            --card-bg: #282828; /* Slightly lighter dark for cards */
+            --border-subtle: rgba(240, 240, 240, 0.08); /* Subtle light border for elements */
+
+            /* RGB values for JS dynamic calculations (for rgba colors) */
+            --text-light-rgb: 240, 240, 240;
+            --accent-purple-rgb: 138, 43, 226;
+            --accent-teal-rgb: 0, 255, 255;
+            --card-bg-rgb: 40, 40, 40;
+            --bg-dark-rgb: 26, 26, 26;
+        }
+
+        body {
+            font-family: 'Inter', 'SF Pro Display', -apple-system, sans-serif;
+            color: var(--text-light);
+            margin: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-color: var(--bg-dark);
+            line-height: 1.7; /* Improved line height */
+        }
+
+        /* Hero section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 5%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(0.3) saturate(1.5); /* Darker, slightly more vibrant video */
+            transform: scale(1.05); /* Ensure full cover */
+        }
+
+        .hero-video::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(138, 43, 226, 0.3), rgba(0, 255, 255, 0.2)); /* Subtle purple-teal overlay */
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem; /* More space between elements */
+        }
+
+        .name {
+            font-size: clamp(3.5rem, 12vw, 7rem); /* Larger, more impactful name */
+            font-weight: 800; /* Bolder */
+            letter-spacing: -0.04em;
+            line-height: 1;
+            color: var(--text-light);
+            text-shadow:
+                0 0 25px rgba(var(--accent-purple-rgb),0.6),
+                0 0 50px rgba(var(--accent-teal-rgb),0.4); /* Dual color glow */
+            opacity: 0;
+            transform: scale(0.9);
+            animation: popIn 1s 0.3s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .bio {
+            max-width: 600px;
+            font-size: 1.2rem; /* Slightly larger bio */
+            color: rgba(var(--text-light-rgb), 0.85); /* Slightly muted text */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s 0.8s forwards;
+            margin-bottom: 2rem;
+        }
+
+        .hero-button {
+            display: inline-block;
+            padding: 1.2rem 3rem; /* Larger button */
+            background: linear-gradient(45deg, var(--accent-purple), var(--accent-teal)); /* Gradient button */
+            color: var(--bg-dark); /* Dark text on vibrant button */
+            text-decoration: none;
+            border-radius: 8px; /* Slightly less rounded */
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s 1s forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-button:hover {
+            transform: translateY(-8px) scale(1.03); /* More pronounced lift */
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6);
+            filter: brightness(1.1); /* Slight glow on hover */
+        }
+        .hero-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: skewX(-20deg);
+            transition: all 0.5s ease;
+        }
+
+        .hero-button:hover::before {
+            left: 100%;
+        }
+
+        /* Scroll progress bar */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px; /* Thicker bar */
+            background: transparent;
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-teal)); /* New gradient */
+            width: 0%;
+            transition: width 0.1s;
+        }
+
+        /* Navigation */
+        .navbar {
+            display: flex;
+            justify-content: flex-end; /* Align right */
+            padding: 1.5rem 5%;
+            position: fixed;
+            width: 90%;
+            z-index: 100;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeInDown 0.8s 0.5s forwards;
+            background: rgba(var(--bg-dark-rgb),0.7); /* Darker, slightly opaque background */
+            backdrop-filter: blur(20px); /* Stronger blur */
+            border-bottom: 1px solid var(--border-subtle); /* Subtle border */
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            border-radius: 0 0 10px 10px; /* Rounded bottom corners */
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 3rem; /* More space */
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+            opacity: 0.9;
+            transition: opacity 0.3s, color 0.3s, transform 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-teal); /* Underline from accent teal */
+            transition: width 0.3s ease-out;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+            color: var(--accent-teal);
+            transform: translateY(-3px); /* Subtle lift on hover */
+        }
+
+        /* General Section Styles */
+        section {
+            padding: 10rem 10%;
+            background: var(--bg-dark);
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem; /* More space below title */
+            font-size: clamp(2rem, 6vw, 3.5rem); /* Responsive sizing */
+            font-weight: 700;
+            color: var(--text-light);
+            text-shadow:
+                0 0 10px rgba(var(--accent-purple-rgb),0.5),
+                0 0 20px rgba(var(--accent-teal-rgb),0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards;
+        }
+
+        /* Grid for cards (Services/Toolkit) */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Larger min width */
+            gap: 3.5rem; /* Larger gap */
+            perspective: 1000px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px; /* Slightly less rounded */
+            padding: 3rem; /* More padding */
+            border: 1px solid var(--border-subtle);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+            opacity: 0;
+            transform: translateY(30px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3); /* Deeper shadow */
+        }
+        .card:hover {
+            transform: translateY(-20px) rotateX(0deg) rotateY(0deg) scale(1.03); /* More pronounced lift */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); /* Stronger shadow on hover */
+            border-color: rgba(var(--accent-purple-rgb), 0.5); /* Border glow on hover */
+        }
+        .card h3 {
+            color: var(--accent-purple); /* Accent purple for headings */
+            font-size: 1.8rem; /* Larger headings */
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .card h3 i {
+            color: var(--accent-teal); /* Teal icon */
+            font-size: 2.2rem;
+        }
+        .card p {
+            color: rgba(var(--text-light-rgb),0.8);
+            font-size: 1.05rem;
+        }
+
+        /* Video Showcase */
+        .video-showcase {
+            padding: 8rem 0; /* Reduced vertical padding */
+            background-color: var(--bg-dark);
+            position: relative;
+        }
+
+        .video-showcase::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, rgba(var(--accent-purple-rgb), 0.1) 10%, transparent 70%); /* Subtle purple glow */
+            opacity: 0;
+            animation: glow 3s infinite alternate;
+            z-index: -1;
+        }
+         
+        @keyframes glow {
+            0% { opacity: 0.1; }
+            100% { opacity: 0.25; }
+        }
+
+        .video-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 6rem; /* More space between sections */
+            margin-top: 4rem;
+        }
+
+        .category-heading {
+            text-align: left;
+            margin-bottom: 2rem;
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            font-weight: 600;
+            color: var(--text-light);
+            text-shadow:
+                0 0 15px rgba(var(--accent-teal-rgb),0.7),
+                0 0 30px rgba(var(--accent-teal-rgb),0.4);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards;
+            padding: 0 10%;
+            box-sizing: border-box;
+        }
+         @media (max-width: 768px) {
+            .category-heading {
+                text-align: center;
+                padding: 0 5%;
+            }
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Larger min width */
+            grid-auto-rows: minmax(auto, 350px); /* Taller auto rows */
+            gap: 3rem; /* Larger gap */
+            padding: 0 10%;
+        }
+
+        @media (min-width: 992px) {
+            .video-grid {
+                grid-template-columns: repeat(3, 1fr);
+                grid-auto-rows: minmax(auto, 320px);
+            }
+             /* Custom grid positioning for 9:16 section to make some videos taller */
+            .video-grid.vertical-videos .video-card:nth-child(1) { /* Motion Graphics 1.mp4 */
+                grid-column: 1 / span 1;
+                grid-row: 1 / span 2;
+            }
+            .video-grid.vertical-videos .video-card:nth-child(2) { /* timelss.mp4 */
+                grid-column: 2 / span 1;
+                grid-row: 1 / span 2;
+            }
+             .video-grid.vertical-videos .video-card:nth-child(3) { /* Motion Graphics.mp4 */
+                grid-column: 3 / span 1;
+                grid-row: 1 / span 2;
+            }
+        }
+
+
+        .video-card {
+            border-radius: 12px;
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.5); /* Deeper, wider shadow */
+            transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out, border-color 0.4s;
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+            border-color: rgba(var(--accent-teal-rgb), 0.5);
+        }
+
+        .video-container {
+            position: relative;
+            padding-top: 56.25%; /* 16:9 ratio */
+            background: #000;
+            overflow: hidden;
+        }
+
+        .video-container.vertical {
+            padding-top: 177.78%; /* 9:16 ratio */
+        }
+
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.005); 
+            transition: transform 0.4s ease-in-out;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(var(--bg-dark-rgb),0.8); /* Darker overlay */
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        .video-overlay i {
+            font-size: 3rem; /* Larger icon */
+            margin-bottom: 0.8rem;
+            color: var(--accent-purple); /* Purple icon */
+            text-shadow: 0 0 10px rgba(var(--accent-teal-rgb),0.7); /* Subtle glow */
+        }
+
+        .video-overlay h3 {
+            color: var(--text-light);
+            font-size: 1.6rem; /* Larger heading */
+            margin: 0;
+            font-weight: 600;
+        }
+
+        /* Hover effects */
+        .video-card:hover .video-overlay {
+            opacity: 0;
+        }
+
+        .video-card:hover video {
+            transform: scale(1.08); /* More zoom on hover */
+        }
+
+        /* Contact section */
+        #contact {
+            padding: 10rem 10%;
+            text-align: center;
+            background: var(--bg-dark);
+            position: relative;
+        }
+
+        .contact-info {
+            margin-top: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .contact-info p {
+            font-size: 1.15rem; /* Larger text */
+            line-height: 1.8;
+            max-width: 700px;
+            margin-bottom: 2rem;
+            color: rgba(var(--text-light-rgb),0.85);
+        }
+
+        .contact-info a {
+            color: var(--accent-purple); /* Accent purple for links */
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.3rem; /* Larger font size */
+            transition: color 0.3s ease-in-out;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem; /* More space between icon and text */
+        }
+
+        .contact-info a:hover {
+            color: var(--accent-teal); /* Teal on hover */
+            text-decoration: underline;
+        }
+
+        .contact-social-links {
+            display: flex;
+            gap: 2.5rem; /* More space */
+            margin-top: 2rem;
+        }
+
+        .contact-social-links .social-icon {
+            font-size: 2.5rem; /* Larger social icons */
+            color: var(--text-light);
+            transition: color 0.3s ease-in-out, transform 0.3s;
+        }
+
+        .contact-social-links .social-icon:hover {
+            color: var(--accent-teal);
+            transform: translateY(-5px) scale(1.1);
+        }
+
+        /* Social links (fixed) */
+        .social-links {
+            position: fixed;
+            bottom: 3rem; /* Slightly higher */
+            right: 3rem; /* Slightly further from edge */
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem; /* Slightly more space */
+            z-index: 100;
+        }
+
+        .social-link {
+            width: 60px; /* Larger */
+            height: 60px; /* Larger */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, var(--accent-purple), var(--accent-teal)); /* New gradient */
+            color: var(--bg-dark); /* Dark icon on bright button */
+            text-decoration: none;
+            font-size: 1.6rem; /* Larger icon */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .social-link:nth-child(1) { animation: fadeInUp 0.8s 1.0s forwards; }
+        .social-link:nth-child(2) { animation: fadeInUp 0.8s 1.2s forwards; }
+
+
+        .social-link:hover {
+            transform: translateY(-10px) scale(1.1);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            filter: brightness(1.1);
+        }
+
+        /* Floating shapes (simplified for new theme) */
+        .shape {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px); /* More blur */
+            opacity: 0.1; /* Subtler */
+            z-index: -1;
+        }
+
+        .shape-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--accent-purple);
+            top: 15%;
+            right: 15%;
+            animation: float 10s ease-in-out infinite;
+        }
+
+        .shape-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--accent-teal);
+            bottom: 15%;
+            left: 15%;
+            animation: float 12s ease-in-out infinite reverse;
+        }
+
+        /* Moving White Gradient Overlay */
+        .moving-gradient-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(var(--text-light-rgb), 0.03) 0%, transparent 70%); /* Very subtle light gradient */
+            background-size: 300% 300%;
+            background-position: 50% 50%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.7;
+            animation: moveSubtleGradient 60s linear infinite alternate;
+        }
+
+        @keyframes moveSubtleGradient {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(8deg); } /* More movement */
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            80% { transform: scale(1.04); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); } /* More pronounced initial movement */
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); } /* More pronounced initial movement */
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scroll-triggered animations */
+        .animate-on-scroll {
+            animation-fill-mode: both;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="social-links">
+        <a href="https://instagram.com/abh1shyk" class="social-link" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://wa.me/9562731821" class="social-link" aria-label="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    
+    <nav class="navbar">
+        <div class="nav-links">
+            <a href="#services">Services</a>
+            <a href="#tools">Toolkit</a>
+            <a href="#portfolio">Work</a>
+            <a href="#contact">Connect</a>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="videos/background.mp4" type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <h1 class="name">Abh1shyk</h1>
+            <p class="bio">
+                21 y/o motion designer specializing in captivating music visualization, dynamic motion graphics, and viral social media content.
+            </p>
+            <a href="#portfolio" class="hero-button animate-on-scroll" style="animation-delay: 1s;">Explore My Creations</a>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <h2 class="section-title animate-on-scroll">My Creative Services</h2>
+        <div class="grid-container">
+            <div class="card animate-on-scroll" data-service="music" style="animation-delay: 0.2s">
+                <h3><i class="fas fa-headphones-alt"></i> Music Visualization</h3>
+                <p>Audio-reactive animations that dynamically bring your music to visual life, creating an immersive experience for listeners.</p>
+            </div>
+
+            <div class="card animate-on-scroll" data-service="motion" style="animation-delay: 0.4s">
+                <h3><i class="fas fa-film"></i> Motion Graphics</h3>
+                <p>Crafting compelling cinematic titles, engaging brand animations, and captivating explainer videos to tell your story effectively.</p>
+            </div>
+
+            <div class="card animate-on-scroll" data-service="social" style="animation-delay: 0.6s">
+                <h3><i class="fas fa-share-alt"></i> Social Media Edits</h3>
+                <p>Producing trending and shareable video edits optimized for various social platforms, ensuring maximum reach and engagement.</p>
+            </div>
+
+            <div class="card animate-on-scroll" data-service="reels" style="animation-delay: 0.8s">
+                <h3><i class="fas fa-video"></i> Dynamic Video Reels</h3>
+                <p>Developing high-energy, visually striking video reels designed to capture attention and go viral across all digital channels.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="tools" class="services"> 
+        <h2 class="section-title animate-on-scroll">My Toolkit</h2>
+        <div class="grid-container"> 
+            <div class="card animate-on-scroll" style="animation-delay: 0.2s">
+                <h3><i class="fas fa-laptop-code"></i> Adobe After Effects</h3>
+                <p>Mastery in advanced motion graphics, visual effects, and compositing to bring any creative vision to reality. (AE 2025 Ready)</p>
+            </div>
+            </div>
+    </section>
+
+    <section class="video-showcase" id="portfolio">
+        <div class="moving-gradient-overlay"></div>
+        <h2 class="section-title animate-on-scroll">My Featured Work</h2>
+        
+        <div class="video-sections">
+            <h3 class="category-heading animate-on-scroll" style="animation-delay: 0.2s;">9:16 Vertical Edits</h3>
+            <div class="video-grid vertical-videos">
+                
+                <div class="video-card animate-on-scroll" style="animation-delay: 0.4s">
+                    <div class="video-container vertical">
+                        <video muted loop playsinline>
+                            <source src="videos/Motion Graphics 1.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-overlay">
+                            <i class="fas fa-podcast"></i>
+                            <h3>Podcast Reel</h3>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="video-card animate-on-scroll" style="animation-delay: 0.6s">
+                    <div class="video-container vertical">
+                        <video muted loop playsinline>
+                            <source src="videos/Motion Graphics.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-overlay">
+                            <i class="fas fa-podcast"></i>
+                            <h3>Podcast Reel</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-card animate-on-scroll" style="animation-delay: 0.8s">
+                    <div class="video-container vertical">
+                        <video muted loop playsinline>
+                            <source src="videos/timelss.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-overlay">
+                            <i class="fas fa-camera"></i>
+                            <h3>Modeling Edit</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="category-heading animate-on-scroll" style="animation-delay: 1.0s;">16:9 Cinematic Edits</h3>
+            <div class="video-grid">
+                
+                <div class="video-card animate-on-scroll" style="animation-delay: 1.2s">
+                    <div class="video-container">
+                        <video muted loop playsinline>
+                            <source src="videos/don.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-overlay">
+                            <i class="fas fa-camera"></i>
+                            <h3>Modeling Edit</h3>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="video-card animate-on-scroll" style="animation-delay: 1.4s">
+                    <div class="video-container">
+                        <video muted loop playsinline>
+                            <source src="videos/hiddid.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-overlay">
+                            <i class="fas fa-camera"></i>
+                            <h3>Modeling Edit</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-card animate-on-scroll" style="animation-delay: 1.6s">
+                    <div class="video-container">
+                        <video muted loop playsinline>
+                            <source src="videos/arya.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-overlay">
+                            <i class="fas fa-camera"></i>
+                            <h3>Modeling Edit</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="moving-gradient-overlay"></div>
+        <h2 class="section-title animate-on-scroll" style="animation-delay: 0.2s">Let's Connect & Create</h2>
+        <div class="contact-info">
+            <p class="animate-on-scroll" style="animation-delay: 0.4s">
+                Ready to transform your ideas into stunning motion visuals? Whether you have a specific project in mind or just want to explore possibilities, I'm here to help. Reach out directly or connect with me on social media!
+            </p>
+            <a href="mailto:abhiramkuttutp@gmail.com" class="animate-on-scroll" style="animation-delay: 0.6s">
+                <i class="fas fa-envelope"></i> abhiramkuttutp@gmail.com
+            </a>
+            <a href="tel:+919562731821" class="animate-on-scroll" style="animation-delay: 0.8s">
+                <i class="fas fa-phone"></i> +91 9562731821
+            </a>
+            <p class="animate-on-scroll" style="margin-top: 2rem; margin-bottom: 0.8rem; animation-delay: 1s;">Find Me Online</p>
+            <div class="contact-social-links animate-on-scroll" style="animation-delay: 1.2s;">
+                <a href="https://instagram.com/abh1shyk" target="_blank" aria-label="Instagram">
+                    <i class="fab fa-instagram social-icon"></i>
+                </a>
+                <a href="https://wa.me/9562731821" target="_blank" aria-label="WhatsApp">
+                    <i class="fab fa-whatsapp social-icon"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // JavaScript for dynamic effects and interactions
+
+        // Helper to convert hex to RGB for dynamic CSS (like rgba in JS)
+        function hexToRgb(hex) {
+            const bigint = parseInt(hex.slice(1), 16);
+            const r = (bigint >> 16) & 255;
+            const g = (bigint >> 8) & 255;
+            const b = bigint & 255;
+            return `${r}, ${g}, ${b}`;
+        }
+
+        // Set RGB CSS variables dynamically based on hex codes in :root
+        document.documentElement.style.setProperty('--text-light-rgb', hexToRgb('#F0F0F0'));
+        document.documentElement.style.setProperty('--accent-purple-rgb', hexToRgb('#8A2BE2'));
+        document.documentElement.style.setProperty('--accent-teal-rgb', hexToRgb('#00FFFF'));
+        document.documentElement.style.setProperty('--card-bg-rgb', hexToRgb('#282828'));
+        document.documentElement.style.setProperty('--bg-dark-rgb', hexToRgb('#1A1A1A'));
+
+
+        // Scroll progress bar
+        window.addEventListener('scroll', () => {
+            const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollProgress = (window.scrollY / scrollTotal) * 100;
+            document.getElementById('progressBar').style.width = scrollProgress + '%';
+        });
+
+        // 3D card tilt effect for service cards
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const x = e.clientX - card.getBoundingClientRect().left;
+                const y = e.clientY - card.getBoundingClientRect().top;
+                
+                const centerX = card.offsetWidth / 2;
+                const centerY = card.offsetHeight / 2;
+                
+                const rotateX = (y - centerY) / 20; /* Adjusted tilt sensitivity */
+                const rotateY = (centerX - x) / 20;
+                
+                card.style.transform = `translateY(-20px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(-20px) rotateX(0) rotateY(0)'; /* Maintain lift */
+            });
+        });
+
+        // Scroll-triggered animations for elements with .animate-on-scroll
+        const animateElements = document.querySelectorAll('.animate-on-scroll');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const delay = element.style.animationDelay || '0s';
+                    element.style.animation = `fadeInUp 0.8s ${delay} forwards`;
+                    observer.unobserve(element); // Stop observing once animated
+                }
+            });
+        }, { threshold: 0.1 }); /* Trigger when 10% of element is visible */
+
+        animateElements.forEach(element => {
+            observer.observe(element);
+        });
+
+        // Auto-play/pause videos when visible using Intersection Observer
+        const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const video = entry.target.querySelector('video');
+                if (video) {
+                    if (entry.isIntersecting) {
+                        video.play();
+                    } else {
+                        video.pause();
+                        video.currentTime = 0; /* Reset video on pause */
+                    }
+                }
+            });
+        }, { threshold: 0.6 }); /* Play when 60% of video is visible */
+
+        // Observe all video cards and the hero section for video playback
+        document.querySelectorAll('.video-card, .hero').forEach(element => {
+            videoObserver.observe(element);
+        });
+
+        // Smooth scroll for internal anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                document.querySelector(targetId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
