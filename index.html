@@ -28,7 +28,13 @@
             color: var(--current-text);
             margin: 0;
             min-height: 100vh;
+            overflow-x: hidden;
             transition: background 0.5s, color 0.5s;
+        }
+
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
         }
 
         /* Scroll progress indicator */
@@ -61,6 +67,11 @@
             cursor: pointer;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
         }
 
         /* Navigation */
@@ -71,6 +82,9 @@
             position: fixed;
             width: 90%;
             z-index: 100;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeInDown 0.8s 0.5s forwards;
         }
 
         .nav-links {
@@ -91,7 +105,7 @@
             opacity: 1;
         }
 
-        /* Hero section - UPDATED NAME STYLE */
+        /* Hero section */
         .hero {
             height: 100vh;
             display: flex;
@@ -105,36 +119,41 @@
 
         .name {
             font-size: clamp(3rem, 10vw, 6rem);
-            font-weight: 700; /* Bolder */
+            font-weight: 700;
             letter-spacing: -0.03em;
             margin-bottom: 1rem;
             line-height: 0.9;
-            color: white !important; /* Forced white */
+            color: white !important;
             text-shadow: 
                 0 0 10px rgba(255,255,255,0.3),
                 0 0 20px rgba(255,255,255,0.2),
                 0 0 30px rgba(255,255,255,0.1);
-            position: relative;
-        }
-
-        /* Glow effect on dark mode */
-        [data-theme="dark"] .name {
-            text-shadow: 
-                0 0 15px rgba(255,255,255,0.5),
-                0 0 30px rgba(255,255,255,0.3),
-                0 0 45px rgba(255,255,255,0.1);
+            opacity: 0;
+            transform: scale(0.9);
+            animation: popIn 1s 0.3s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .bio {
             max-width: 500px;
             line-height: 1.6;
-            opacity: 0.8;
+            opacity: 0;
             font-size: 1.1rem;
+            transform: translateY(20px);
+            animation: fadeInUp 1s 0.8s forwards;
         }
 
-        /* Rest of your existing CSS remains unchanged */
+        /* Services - Enhanced 3D cards with light */
         .services {
             padding: 10rem 10%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards;
         }
 
         .services-grid {
@@ -149,13 +168,46 @@
             border-radius: 16px;
             padding: 2rem;
             border: 1px solid rgba(255,255,255,0.1);
-            transition: transform 0.5s, box-shadow 0.5s;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             transform-style: preserve-3d;
             position: relative;
             overflow: hidden;
             backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(30px);
         }
 
+        /* Light effect on hover */
+        .service-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, 
+                      rgba(255,255,255,0.15) 0%, 
+                      transparent 70%);
+            transform: scale(0);
+            transition: transform 0.5s;
+            pointer-events: none;
+        }
+
+        .service-card:hover::after {
+            transform: scale(1);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        /* Social links */
         .social-links {
             position: fixed;
             bottom: 2rem;
@@ -166,12 +218,84 @@
             z-index: 100;
         }
 
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s 1.2s forwards;
+        }
+
+        .social-link:nth-child(2) {
+            animation-delay: 1.4s;
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px) scale(1.1);
+        }
+
+        /* Floating shapes */
         .shape {
             position: fixed;
             border-radius: 50%;
             filter: blur(60px);
             opacity: 0.1;
             z-index: -1;
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--primary);
+            top: 20%;
+            right: 10%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            background: var(--secondary);
+            bottom: 20%;
+            left: 10%;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            80% { transform: scale(1.05); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scroll-triggered animations */
+        .animate-on-scroll {
+            animation: fadeInUp 0.8s forwards;
         }
     </style>
 </head>
@@ -218,21 +342,21 @@
 
     <!-- Services -->
     <section id="services" class="services">
-        <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2rem;">My Creative Services</h2>
+        <h2 class="section-title animate-on-scroll">My Creative Services</h2>
         <div class="services-grid">
-            <div class="service-card">
+            <div class="service-card animate-on-scroll" style="animation-delay: 0.2s">
                 <h3>Music Visualization</h3>
                 <p>Audio-reactive animations that bring your tracks to life</p>
             </div>
-            <div class="service-card">
+            <div class="service-card animate-on-scroll" style="animation-delay: 0.4s">
                 <h3>Motion Graphics</h3>
                 <p>Cinematic titles and dynamic branding elements</p>
             </div>
-            <div class="service-card">
+            <div class="service-card animate-on-scroll" style="animation-delay: 0.6s">
                 <h3>Social Media Edits</h3>
                 <p>Trending edits optimized for maximum engagement</p>
             </div>
-            <div class="service-card">
+            <div class="service-card animate-on-scroll" style="animation-delay: 0.8s">
                 <h3>Video Reels</h3>
                 <p>High-energy content designed to go viral</p>
             </div>
@@ -241,8 +365,8 @@
 
     <!-- Contact section -->
     <section id="contact" style="padding: 10rem 10%; text-align: center;">
-        <h2 style="font-size: 2rem; margin-bottom: 2rem;">Let's Create Together</h2>
-        <p style="max-width: 600px; margin: 0 auto 3rem; opacity: 0.8;">
+        <h2 class="section-title animate-on-scroll" style="animation-delay: 0.2s">Let's Create Together</h2>
+        <p class="animate-on-scroll" style="max-width: 600px; margin: 0 auto 3rem; opacity: 0.8; animation-delay: 0.4s">
             Ready to elevate your content with stunning motion design?
         </p>
     </section>
@@ -264,7 +388,7 @@
             document.getElementById('progressBar').style.width = scrollProgress + '%';
         });
 
-        // 3D card tilt effect
+        // 3D card tilt effect with light
         document.querySelectorAll('.service-card').forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const x = e.clientX - card.getBoundingClientRect().left;
@@ -277,12 +401,51 @@
                 const rotateY = (centerX - x) / 20;
                 
                 card.style.transform = `translateY(-10px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                
+                // Update light position
+                const light = card.querySelector('.card-light') || document.createElement('div');
+                light.className = 'card-light';
+                light.style.left = `${x}px`;
+                light.style.top = `${y}px`;
+                if (!card.querySelector('.card-light')) {
+                    card.appendChild(light);
+                }
             });
             
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'translateY(-10px) rotateX(0) rotateY(0)';
+                const light = card.querySelector('.card-light');
+                if (light) light.remove();
+            });
+        });
+
+        // Scroll-triggered animations
+        const animateElements = document.querySelectorAll('.animate-on-scroll');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const delay = element.style.animationDelay || '0s';
+                    element.style.animation = `fadeInUp 0.8s ${delay} forwards`;
+                    observer.unobserve(element);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        animateElements.forEach(element => {
+            observer.observe(element);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
             });
         });
     </script>
-</body>
+</head>
 </html>
