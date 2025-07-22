@@ -1,104 +1,70 @@
-/* Apple-like Typography */
+/* Gradient Background */
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  color: #1d1d1f;
-  background: #f5f5f7;
-  margin: 0;
-  line-height: 1.6;
-}
-
-/* Glass Navbar */
-.navbar {
-  position: fixed;
-  width: 100%;
-  padding: 20px 5%;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  z-index: 100;
-  display: flex;
-  justify-content: space-between;
-}
-
-.logo {
-  font-weight: 600;
-  font-size: 1.5rem;
-}
-
-/* Hero Section (Fullscreen) */
-.hero {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 0 10%;
-}
-
-.hero-title {
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  font-weight: 700;
-  margin: 0;
-}
-
-.hero-subtitle {
-  font-size: 1.2rem;
-  opacity: 0.8;
-  margin-bottom: 40px;
-}
-
-.scroll-hint {
-  animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-  40% { transform: translateY(-20px); }
-  60% { transform: translateY(-10px); }
-}
-
-/* Services Grid */
-.service-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  padding: 0 10%;
-}
-
-.service-card {
-  background: white;
-  border-radius: 18px;
-  padding: 30px;
-  text-align: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.service-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-
-.service-card i {
-  font-size: 2.5rem;
-  margin-bottom: 15px;
-  color: #0066cc; /* Apple blue */
-}
-
-/* Contact Buttons */
-.contact-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 25px;
-  background: #1d1d1f;
   color: white;
-  border-radius: 30px;
-  text-decoration: none;
-  transition: background 0.3s;
+  margin: 0;
+  background: linear-gradient(135deg, #0066cc 0%, #cc0033 100%);
+  min-height: 100vh;
 }
 
+/* Glitch Effect (For ABH1SHYK Title) */
+.glitch {
+  position: relative;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 700;
+  text-align: center;
+}
+.glitch::before, .glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+}
+.glitch::before {
+  color: #0ff;
+  animation: glitch-effect 3s infinite;
+}
+.glitch::after {
+  color: #f0f;
+  animation: glitch-effect 2s infinite reverse;
+}
+
+@keyframes glitch-effect {
+  0% { clip-path: inset(0 0 95% 0); }
+  25% { clip-path: inset(0 95% 0 0); }
+  50% { clip-path: inset(95% 0 0 0); }
+  75% { clip-path: inset(0 0 0 95%); }
+  100% { clip-path: inset(0 0 0 0); }
+}
+
+/* Services List (Centered, Tight Spacing) */
+.service-list {
+  text-align: center;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  margin: 40px 0;
+}
+.service-list p {
+  margin: 10px 0;
+  font-weight: 500;
+}
+
+/* Navbar (Glass Effect) */
+.navbar {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+/* Contact Buttons (Neon Hover) */
+.contact-btn {
+  background: transparent;
+  border: 2px solid white;
+}
 .contact-btn:hover {
-  background: #0066cc;
+  background: white;
+  color: #0066cc;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
 }
