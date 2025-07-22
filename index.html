@@ -128,7 +128,7 @@
             opacity: 1;
         }
 
-        /* Services - 3D cards with bars */
+        /* Services - 3D cards */
         .services {
             padding: 10rem 10%;
             background: var(--bg);
@@ -165,67 +165,6 @@
             transform: translateY(30px);
         }
 
-        /* 3D Skill Bars */
-        .skill-bar-container {
-            margin-top: 1.5rem;
-            perspective: 500px;
-        }
-
-        .skill-bar-label {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem; /* Slightly larger label */
-            opacity: 0.9; /* Slightly more visible label */
-        }
-
-        .skill-bar {
-            height: 7px; /* Slightly thicker bar */
-            background: rgba(255,255,255,0.15); /* Slightly more visible bar background */
-            border-radius: 4px; /* Slightly more rounded */
-            overflow: hidden;
-            transform-style: preserve-3d;
-            transform: rotateX(20deg); /* Slightly less steep rotation */
-            box-shadow: 0 5px 12px rgba(0,0,0,0.25); /* Slightly stronger shadow */
-        }
-
-        .skill-progress {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            position: relative;
-            transform-origin: left;
-            transform: scaleX(0);
-            transition: transform 1.3s cubic-bezier(0.165, 0.84, 0.44, 1); /* Slightly faster animation */
-        }
-
-        .skill-progress::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg,
-                            transparent,
-                            rgba(255,255,255,0.35), /* Slightly stronger shine */
-                            transparent);
-            animation: shine 1.8s infinite; /* Slightly faster shine */
-        }
-
-        /* Service-specific bar levels */
-        .service-card.music .skill-progress {
-            transform: scaleX(0.95); /* Ensure initial width is set correctly if JS hasn't run yet */
-        }
-        .service-card.motion .skill-progress {
-            transform: scaleX(0.90);
-        }
-        .service-card.social .skill-progress {
-            transform: scaleX(0.85);
-        }
-        .service-card.reels .skill-progress {
-            transform: scaleX(0.88);
-        }
-
         /* Video Showcase */
         .video-showcase {
             padding: 8rem 10%;
@@ -253,16 +192,67 @@
 
         .video-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Slightly wider min width */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjusted for more flexibility */
+            grid-auto-rows: minmax(auto, 300px); /* Ensures rows have a base height */
             gap: 2rem;
             margin-top: 3rem;
         }
+
+        /* Unique video positions */
+        .video-card:nth-child(1) { /* Main Motion Graphics video */
+            grid-column: span 2; /* Span two columns */
+            grid-row: span 2; /* Span two rows for a larger presence */
+            /* On smaller screens, allow it to behave like a regular card */
+            grid-column: auto;
+            grid-row: auto;
+        }
+
+        /* Media query for larger screens to apply specific grid layout */
+        @media (min-width: 992px) {
+            .video-grid {
+                grid-template-columns: repeat(3, 1fr); /* Example: 3 columns on large screens */
+                grid-auto-rows: minmax(auto, 280px); /* Adjust row height for larger screens */
+            }
+
+            .video-card:nth-child(1) { /* Main Motion Graphics video */
+                grid-column: 1 / span 2; /* Start at column 1, span 2 columns */
+                grid-row: 1 / span 2; /* Start at row 1, span 2 rows */
+            }
+            .video-card:nth-child(2) { /* Second Motion Graphics video */
+                grid-column: 3;
+                grid-row: 1;
+            }
+            .video-card:nth-child(3) { /* arya.mp4 */
+                grid-column: 3;
+                grid-row: 2;
+            }
+            .video-card:nth-child(4) { /* don.mp4 */
+                grid-column: 1;
+                grid-row: 3;
+            }
+            .video-card:nth-child(5) { /* hiddid.mp4 */
+                grid-column: 2;
+                grid-row: 3;
+            }
+            .video-card:nth-child(6) { /* timelss.mp4 */
+                grid-column: 3;
+                grid-row: 3;
+            }
+        }
+
 
         .video-card {
             border-radius: 12px;
             overflow: hidden;
             transform: translateY(20px);
             opacity: 0;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3); /* Stronger shadow */
+            transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
         }
 
         .video-container {
@@ -331,7 +321,57 @@
             position: relative;
         }
 
-        /* Social links */
+        /* New Contact Info Styles */
+        .contact-info {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem; /* Space between contact items */
+        }
+
+        .contact-info p {
+            font-size: 1rem;
+            line-height: 1.5;
+            max-width: 600px;
+            margin-bottom: 1rem; /* Space below the new introductory text */
+            opacity: 0.8;
+        }
+
+        .contact-info a {
+            color: var(--primary); /* Use primary color for links */
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s ease-in-out;
+            display: flex; /* For icons */
+            align-items: center; /* For icons */
+            gap: 0.5rem; /* Space between icon and text */
+        }
+
+        .contact-info a:hover {
+            color: var(--secondary); /* Change color on hover */
+            text-decoration: underline;
+        }
+
+        .contact-social-links {
+            display: flex;
+            gap: 1.5rem; /* Space between social icons */
+            margin-top: 1rem;
+        }
+
+        .contact-social-links .social-icon {
+            font-size: 1.8rem; /* Larger social icons */
+            color: var(--text); /* Default icon color */
+            transition: color 0.3s ease-in-out;
+        }
+
+        .contact-social-links .social-icon:hover {
+            color: var(--primary); /* Hover color */
+        }
+
+
+        /* Social links (fixed) */
         .social-links {
             position: fixed;
             bottom: 2rem;
@@ -433,10 +473,10 @@
     </div>
 
     <div class="social-links">
-        <a href="https://instagram.com/abh1shyk" class="social-link">
+        <a href="https://instagram.com/abh1shyk" class="social-link" aria-label="Instagram">
             <i class="fab fa-instagram"></i>
         </a>
-        <a href="https://wa.me/9562731821" class="social-link">
+        <a href="https://wa.me/9562731821" class="social-link" aria-label="WhatsApp">
             <i class="fab fa-whatsapp"></i>
         </a>
     </div>
@@ -469,57 +509,21 @@
             <div class="service-card animate-on-scroll" data-service="music" style="animation-delay: 0.2s">
                 <h3>Music Visualization</h3>
                 <p>Audio-reactive animations that bring your tracks to life</p>
-                <div class="skill-bar-container">
-                    <div class="skill-bar-label">
-                        <span>Expertise</span>
-                        <span>95%</span>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-progress"></div>
-                    </div>
-                </div>
             </div>
 
             <div class="service-card animate-on-scroll" data-service="motion" style="animation-delay: 0.4s">
                 <h3>Motion Graphics</h3>
                 <p>Cinematic titles and dynamic branding elements</p>
-                <div class="skill-bar-container">
-                    <div class="skill-bar-label">
-                        <span>Expertise</span>
-                        <span>90%</span>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-progress"></div>
-                    </div>
-                </div>
             </div>
 
             <div class="service-card animate-on-scroll" data-service="social" style="animation-delay: 0.6s">
                 <h3>Social Media Edits</h3>
                 <p>Trending edits optimized for maximum engagement</p>
-                <div class="skill-bar-container">
-                    <div class="skill-bar-label">
-                        <span>Expertise</span>
-                        <span>85%</span>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-progress"></div>
-                    </div>
-                </div>
             </div>
 
             <div class="service-card animate-on-scroll" data-service="reels" style="animation-delay: 0.8s">
                 <h3>Video Reels</h3>
                 <p>High-energy content designed to go viral</p>
-                <div class="skill-bar-container">
-                    <div class="skill-bar-label">
-                        <span>Expertise</span>
-                        <span>88%</span>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-progress"></div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -604,9 +608,26 @@
 
     <section id="contact">
         <h2 class="section-title animate-on-scroll" style="animation-delay: 0.2s">Let's Create Together</h2>
-        <p class="animate-on-scroll" style="max-width: 600px; margin: 0 auto 3rem; opacity: 0.8; animation-delay: 0.4s">
-            Ready to elevate your content with stunning motion design?
-        </p>
+        <div class="contact-info">
+            <p class="animate-on-scroll" style="animation-delay: 0.4s">
+                Have a project in mind or want to discuss potential collaboration? Feel free to reach out directly via email, phone, or social media.
+            </p>
+            <a href="mailto:abhiramkuttutp@gmail.com" class="animate-on-scroll" style="animation-delay: 0.6s">
+                <i class="fas fa-envelope"></i> abhiramkuttutp@gmail.com
+            </a>
+            <a href="tel:+919562731821" class="animate-on-scroll" style="animation-delay: 0.8s">
+                <i class="fas fa-phone"></i> +91 9562731821
+            </a>
+            <p class="animate-on-scroll" style="margin-top: 1.5rem; margin-bottom: 0.5rem; animation-delay: 1s;">Follow Me</p>
+            <div class="contact-social-links animate-on-scroll" style="animation-delay: 1.2s;">
+                <a href="https://instagram.com/abh1shyk" target="_blank" aria-label="Instagram">
+                    <i class="fab fa-instagram social-icon"></i>
+                </a>
+                <a href="https://wa.me/9562731821" target="_blank" aria-label="WhatsApp">
+                    <i class="fab fa-whatsapp social-icon"></i>
+                </a>
+            </div>
+        </div>
     </section>
 
     <script>
@@ -653,22 +674,6 @@
 
         animateElements.forEach(element => {
             observer.observe(element);
-        });
-
-        // Animate skill bars when visible
-        const skillBars = document.querySelectorAll('.skill-progress');
-        
-        const barObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.transform = 'scaleX(1)';
-                    barObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
-
-        skillBars.forEach(bar => {
-            barObserver.observe(bar);
         });
 
         // Auto-play videos when visible
