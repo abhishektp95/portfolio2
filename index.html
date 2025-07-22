@@ -33,10 +33,12 @@
             --light-cream-rgb: 234, 224, 213; /* For text-shadow rgba() */
             --dark-blue-grey-rgb: 34, 51, 59;
             --muted-gold-rgb: 198, 172, 143;
+            --earthy-brown-rgb: 94, 80, 63; /* Added for the button hover */
             --darkest-grey-rgb: 10, 9, 8;
             /* New RGBs for dynamic use */
             --light-mint-green-rgb: 207, 255, 226;
             --medium-sea-green-rgb: 162, 213, 198;
+            --white-rgb: 255, 255, 255;
         }
 
         body {
@@ -76,6 +78,9 @@
         .hero-content {
             position: relative;
             z-index: 1;
+            display: flex; /* Added for vertical alignment of button */
+            flex-direction: column; /* Added for vertical alignment of button */
+            align-items: center; /* Added for horizontal alignment of button */
         }
 
         .name {
@@ -101,6 +106,31 @@
             transform: translateY(20px);
             animation: fadeInUp 1s 0.8s forwards;
             color: var(--text);
+            margin-bottom: 2.5rem; /* Added space between bio and button */
+        }
+
+        /* New button style */
+        .hero-button {
+            display: inline-block;
+            padding: 1rem 2.5rem; /* Adjusted padding */
+            background-color: white; /* White background as requested */
+            color: var(--darkest-grey); /* Dark text for contrast */
+            text-decoration: none;
+            border-radius: 50px; /* Fully rounded button */
+            font-weight: 600;
+            font-size: 1.1rem; /* Slightly larger font */
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Soft shadow */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s 1s forwards; /* Animated to appear after bio */
+        }
+
+        .hero-button:hover {
+            background-color: var(--primary); /* Muted gold on hover */
+            color: var(--text); /* Light text on hover */
+            transform: translateY(-5px) scale(1.05); /* Lift and slight scale */
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
         }
 
         /* Scroll progress bar */
@@ -283,8 +313,12 @@
                 grid-column: 1 / span 1;
                 grid-row: 1 / span 2;
             }
-            .video-grid.vertical-videos .video-card:nth-child(2) { /* Motion Graphics.mp4 */
+            .video-grid.vertical-videos .video-card:nth-child(2) { /* timelss.mp4 */
                 grid-column: 2 / span 1;
+                grid-row: 1 / span 2;
+            }
+             .video-grid.vertical-videos .video-card:nth-child(3) { /* Motion Graphics.mp4 */
+                grid-column: 3 / span 1;
                 grid-row: 1 / span 2;
             }
         }
@@ -566,6 +600,7 @@
             <p class="bio">
                 21 y/o motion designer specializing in music visualization, dynamic motion graphics, and viral social media content.
             </p>
+            <a href="#portfolio" class="hero-button animate-on-scroll" style="animation-delay: 1s;">View My Edits</a>
         </div>
     </section>
 
@@ -614,7 +649,17 @@
                 </div>
                 
                 <div class="video-card animate-on-scroll" style="animation-delay: 0.6s">
-                    <div class="video-container vertical">
+                    <div class="video-container vertical"> <video muted loop playsinline>
+                            <source src="videos/timelss.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-overlay">
+                            <i class="fas fa-camera"></i>
+                            <h3>Modeling Edit</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-card animate-on-scroll" style="animation-delay: 0.8s"> <div class="video-container vertical">
                         <video muted loop playsinline>
                             <source src="videos/Motion Graphics.mp4" type="video/mp4">
                         </video>
@@ -626,23 +671,8 @@
                 </div>
             </div>
 
-            <h3 class="category-heading animate-on-scroll" style="animation-delay: 0.8s;">16:9 Edits</h3>
-            <div class="video-grid">
-                
-                <div class="video-card animate-on-scroll" style="animation-delay: 1.0s">
-                    <div class="video-container">
-                        <video muted loop playsinline>
-                            <source src="videos/timelss.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-overlay">
-                            <i class="fas fa-camera"></i>
-                            <h3>Modeling Edit</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="video-card animate-on-scroll" style="animation-delay: 1.2s">
-                    <div class="video-container">
+            <h3 class="category-heading animate-on-scroll" style="animation-delay: 1.0s;">16:9 Edits</h3> <div class="video-grid">
+                <div class="video-card animate-on-scroll" style="animation-delay: 1.2s"> <div class="video-container">
                         <video muted loop playsinline>
                             <source src="videos/don.mp4" type="video/mp4">
                         </video>
@@ -653,8 +683,7 @@
                     </div>
                 </div>
                 
-                <div class="video-card animate-on-scroll" style="animation-delay: 1.4s">
-                    <div class="video-container">
+                <div class="video-card animate-on-scroll" style="animation-delay: 1.4s"> <div class="video-container">
                         <video muted loop playsinline>
                             <source src="videos/hiddid.mp4" type="video/mp4">
                         </video>
@@ -665,8 +694,7 @@
                     </div>
                 </div>
 
-                <div class="video-card animate-on-scroll" style="animation-delay: 1.6s">
-                    <div class="video-container">
+                <div class="video-card animate-on-scroll" style="animation-delay: 1.6s"> <div class="video-container">
                         <video muted loop playsinline>
                             <source src="videos/arya.mp4" type="video/mp4">
                         </video>
@@ -721,9 +749,11 @@
         document.documentElement.style.setProperty('--muted-gold-rgb', hexToRgb('#c6ac8f'));
         document.documentElement.style.setProperty('--dark-blue-grey-rgb', hexToRgb('#22333b'));
         document.documentElement.style.setProperty('--darkest-grey-rgb', hexToRgb('#0a0908'));
+        document.documentElement.style.setProperty('--earthy-brown-rgb', hexToRgb('#5e503f')); /* Ensure this is set */
         // New RGB variables for the added colors
         document.documentElement.style.setProperty('--light-mint-green-rgb', hexToRgb('#CFFFE2'));
         document.documentElement.style.setProperty('--medium-sea-green-rgb', hexToRgb('#A2D5C6'));
+        document.documentElement.style.setProperty('--white-rgb', hexToRgb('#FFFFFF'));
 
 
         // Scroll progress bar
