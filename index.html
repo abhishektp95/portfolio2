@@ -36,13 +36,15 @@
             z-index: 100;
             display: flex;
             justify-content: space-between;
+            align-items: center;
         }
 
-        .logo {
-            color: var(--white);
-            font-weight: 700;
-            text-decoration: none;
-            font-size: 1.2rem;
+        .profile-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--white);
         }
 
         .nav-links {
@@ -55,10 +57,12 @@
             text-decoration: none;
             font-weight: 500;
             transition: transform 0.3s ease;
+            font-size: 1rem;
         }
 
         .nav-links a:hover {
             transform: translateY(-3px);
+            color: var(--gray-20);
         }
 
         /* Hero Section */
@@ -318,6 +322,7 @@
             
             .nav-links {
                 gap: 1rem;
+                font-size: 0.9rem;
             }
             
             .modal-content {
@@ -327,14 +332,34 @@
             .modal-video {
                 max-height: 60vh;
             }
+            
+            .profile-img {
+                width: 40px;
+                height: 40px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-links {
+                gap: 0.7rem;
+                font-size: 0.8rem;
+            }
+            
+            .profile-img {
+                width: 35px;
+                height: 35px;
+            }
         }
     </style>
 </head>
 <body>
     <nav class="navbar">
-        <a href="#" class="logo">ABH1SHYK</a>
+        <img src="profile.jpg" alt="Profile" class="profile-img">
         <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#about">About</a>
             <a href="#portfolio">Work</a>
+            <a href="#services">Services</a>
             <a href="#contact">Contact</a>
         </div>
     </nav>
@@ -345,6 +370,11 @@
             <p class="bio">21-year-old creative specializing in dynamic motion graphics and viral content that captivates audiences.</p>
             <a href="#portfolio" class="hero-button">View Portfolio</a>
         </div>
+    </section>
+
+    <section id="about">
+        <h2 class="section-heading">About Me</h2>
+        <!-- Add your about content here -->
     </section>
 
     <section id="portfolio">
@@ -441,6 +471,11 @@
                 </div>
             </div>
         </div>
+    </section>
+
+    <section id="services">
+        <h2 class="section-heading">Services</h2>
+        <!-- Add your services content here -->
     </section>
 
     <section id="contact" class="contact">
