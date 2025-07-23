@@ -19,15 +19,15 @@
             --secondary: var(--earthy-brown);
             --bg: var(--darkest-grey);
             --text: var(--light-cream);
-            --card-bg: var(--dark-blue-grey); /* New variable for card/navbar background */
+            --card-bg: var(--dark-blue-grey);
         }
 
         /* Helper for RGBA conversion in JS */
         :root {
-            --light-cream-rgb: 234, 224, 213; /* For text-shadow rgba() */
+            --light-cream-rgb: 234, 224, 213;
             --dark-blue-grey-rgb: 34, 51, 59;
             --muted-gold-rgb: 198, 172, 143;
-            --earthy-brown-rgb: 94, 80, 63; /* Added for the button hover */
+            --earthy-brown-rgb: 94, 80, 63;
             --darkest-grey-rgb: 10, 9, 8;
         }
 
@@ -58,7 +58,7 @@
             }
         }
 
-        /* Hero section with video background */
+        /* Hero section */
         .hero {
             height: 100vh;
             display: flex;
@@ -118,7 +118,6 @@
             width: 100%;
         }
 
-        /* New button style */
         .hero-button {
             display: inline-block;
             padding: 1rem 2.5rem;
@@ -229,7 +228,7 @@
             color: var(--primary);
         }
 
-        /* Services - 3D cards */
+        /* Services */
         .services {
             padding: 6rem 5%;
             background: var(--bg);
@@ -321,22 +320,22 @@
             font-size: 1rem;
         }
 
-        /* Video Showcase */
+        /* Video Showcase - Collage Layout */
         .video-showcase {
-            padding: 6rem 0;
+            padding: 6rem 5%;
             background-color: var(--darkest-grey);
             position: relative;
         }
 
         @media (min-width: 1200px) {
             .video-showcase {
-                padding: 8rem 0;
+                padding: 8rem 10%;
             }
         }
 
         @media (max-width: 768px) {
             .video-showcase {
-                padding: 4rem 0;
+                padding: 4rem 5%;
             }
         }
 
@@ -358,100 +357,32 @@
             100% { opacity: 0.18; }
         }
 
-        /* Container for categorized videos and their headings */
-        .video-sections {
-            display: flex;
-            flex-direction: column;
-            gap: 4rem;
-            margin-top: 3.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .video-sections {
-                gap: 3rem;
-                margin-top: 2.5rem;
-            }
-        }
-
-        .category-heading {
-            text-align: left;
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-            font-weight: 600;
-            color: var(--text);
-            text-shadow:
-                0 0 15px rgba(var(--light-cream-rgb),0.8),
-                0 0 30px rgba(var(--light-cream-rgb),0.5),
-                0 0 45px rgba(var(--light-cream-rgb),0.2);
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s forwards;
-            padding: 0 5%;
-            box-sizing: border-box;
-        }
-
-        @media (min-width: 1200px) {
-            .category-heading {
-                padding: 0 10%;
-                font-size: 2.2rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .category-heading {
-                font-size: 1.8rem;
-                text-align: center;
-                margin-bottom: 1rem;
-            }
-        }
-
-        .video-grid {
+        .video-collage {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            grid-auto-rows: minmax(auto, 300px);
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-auto-rows: minmax(200px, auto);
+            gap: 1rem;
             padding: 0 5%;
         }
 
         @media (min-width: 1200px) {
-            .video-grid {
+            .video-collage {
+                grid-template-columns: repeat(3, 1fr);
+                grid-auto-rows: minmax(250px, auto);
+                gap: 1.5rem;
                 padding: 0 10%;
-                gap: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .video-collage {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
         @media (max-width: 480px) {
-            .video-grid {
-                gap: 1rem;
-                padding: 0 3%;
-            }
-        }
-
-        /* Media query for larger screens to apply specific grid layout */
-        @media (min-width: 992px) {
-            .video-grid {
-                grid-template-columns: repeat(3, 1fr);
-                grid-auto-rows: minmax(auto, 280px);
-            }
-             /* Custom grid positioning for 9:16 section to make some videos taller */
-            .video-grid.vertical-videos .video-card:nth-child(1) { /* Motion Graphics 1.mp4 */
-                grid-column: 1 / span 1;
-                grid-row: 1 / span 2;
-            }
-            .video-grid.vertical-videos .video-card:nth-child(2) { /* timelss.mp4 */
-                grid-column: 2 / span 1;
-                grid-row: 1 / span 2;
-            }
-             .video-grid.vertical-videos .video-card:nth-child(3) { /* Motion Graphics.mp4 */
-                grid-column: 3 / span 1;
-                grid-row: 1 / span 2;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .video-grid.vertical-videos .video-card {
-                grid-row: auto !important;
-                grid-column: auto !important;
+            .video-collage {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -463,22 +394,40 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.4);
             transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
             background: var(--card-bg);
+            position: relative;
         }
 
-        .video-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        /* Video size classes */
+        .video-card.wide {
+            grid-column: span 2;
+        }
+
+        .video-card.tall {
+            grid-row: span 2;
+        }
+
+        .video-card.large {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        @media (max-width: 768px) {
+            .video-card.wide,
+            .video-card.large {
+                grid-column: span 1;
+            }
+            
+            .video-card.tall {
+                grid-row: span 1;
+            }
         }
 
         .video-container {
             position: relative;
-            padding-top: 56.25%; /* 16:9 ratio */
+            width: 100%;
+            height: 100%;
             background: #000;
             overflow: hidden;
-        }
-
-        .video-container.vertical {
-            padding-top: 177.78%; /* 9:16 ratio */
         }
 
         .video-container video {
@@ -543,7 +492,7 @@
             transform: scale(1.05);
         }
 
-        /* Contact section with black background */
+        /* Contact section */
         #contact {
             padding: 6rem 5%;
             text-align: center;
@@ -850,106 +799,108 @@
         </div>
     </section>
 
-    <section id="tools" class="services"> <h2 class="section-title animate-on-scroll">My Toolkit</h2>
-        <div class="services-grid"> <div class="service-card animate-on-scroll" style="animation-delay: 0.2s">
+    <section id="tools" class="services">
+        <h2 class="section-title animate-on-scroll">My Toolkit</h2>
+        <div class="services-grid">
+            <div class="service-card animate-on-scroll" style="animation-delay: 0.2s">
                 <h3><i class="fas fa-laptop-code"></i> Adobe After Effects</h3>
                 <p>Mastery in advanced motion graphics, visual effects, and compositing. (AE 2025 Ready)</p>
             </div>
-            </div>
+        </div>
     </section>
 
     <section class="video-showcase" id="portfolio">
-        <div class="moving-gradient-overlay"></div> <h2 class="section-title animate-on-scroll">My Work</h2>
+        <div class="moving-gradient-overlay"></div>
+        <h2 class="section-title animate-on-scroll">My Work</h2>
         
-        <div class="video-sections">
-            <h3 class="category-heading animate-on-scroll" style="animation-delay: 0.2s;">9:16 Edits</h3>
-            <div class="video-grid vertical-videos">
-                
-                <div class="video-card animate-on-scroll" style="animation-delay: 0.4s">
-                    <div class="video-container vertical">
-                        <video muted loop playsinline>
-                            <source src="videos/Motion Graphics 1.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-overlay">
-                            <i class="fas fa-podcast"></i>
-                            <h3>Podcast Reel</h3>
-                        </div>
+        <div class="video-collage">
+            <!-- Motion Graphics 1.mp4 - Tall video -->
+            <div class="video-card tall animate-on-scroll" style="animation-delay: 0.4s">
+                <div class="video-container">
+                    <video muted loop playsinline>
+                        <source src="videos/Motion Graphics 1.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-overlay">
+                        <i class="fas fa-podcast"></i>
+                        <h3>Podcast Reel</h3>
                     </div>
                 </div>
-                
-                <div class="video-card animate-on-scroll" style="animation-delay: 0.5s">
-                    <div class="video-container vertical">
-                        <video muted loop playsinline>
-                            <source src="videos/Elon.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-overlay">
-                            <i class="fas fa-user-astronaut"></i>
-                            <h3>Elon Edit</h3>
-                        </div>
+            </div>
+            
+            <!-- Elon.mp4 - Wide video -->
+            <div class="video-card wide animate-on-scroll" style="animation-delay: 0.5s">
+                <div class="video-container">
+                    <video muted loop playsinline>
+                        <source src="videos/Elon.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-overlay">
+                        <i class="fas fa-user-astronaut"></i>
+                        <h3>Elon Edit</h3>
                     </div>
                 </div>
-                
-                <div class="video-card animate-on-scroll" style="animation-delay: 0.6s">
-                    <div class="video-container vertical">
-                        <video muted loop playsinline>
-                            <source src="videos/Motion Graphics.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-overlay">
-                            <i class="fas fa-podcast"></i>
-                            <h3>Podcast Reel</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="video-card animate-on-scroll" style="animation-delay: 0.7s">
-                    <div class="video-container vertical">
-                        <video muted loop playsinline>
-                            <source src="videos/timelss.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-overlay">
-                            <i class="fas fa-camera"></i>
-                            <h3>Modeling Edit</h3>
-                        </div>
+            </div>
+            
+            <!-- Motion Graphics.mp4 - Regular video -->
+            <div class="video-card animate-on-scroll" style="animation-delay: 0.6s">
+                <div class="video-container">
+                    <video muted loop playsinline>
+                        <source src="videos/Motion Graphics.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-overlay">
+                        <i class="fas fa-podcast"></i>
+                        <h3>Podcast Reel</h3>
                     </div>
                 </div>
             </div>
 
-            <h3 class="category-heading animate-on-scroll" style="animation-delay: 1.0s;">16:9 Edits</h3>
-            <div class="video-grid">
-                
-                <div class="video-card animate-on-scroll" style="animation-delay: 1.2s">
-                    <div class="video-container">
-                        <video muted loop playsinline>
-                            <source src="videos/don.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-overlay">
-                            <i class="fas fa-camera"></i>
-                            <h3>Modeling Edit</h3>
-                        </div>
+            <!-- timelss.mp4 - Large video -->
+            <div class="video-card large animate-on-scroll" style="animation-delay: 0.7s">
+                <div class="video-container">
+                    <video muted loop playsinline>
+                        <source src="videos/timelss.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-overlay">
+                        <i class="fas fa-camera"></i>
+                        <h3>Modeling Edit</h3>
                     </div>
                 </div>
-                
-                <div class="video-card animate-on-scroll" style="animation-delay: 1.4s">
-                    <div class="video-container">
-                        <video muted loop playsinline>
-                            <source src="videos/hiddid.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-overlay">
-                            <i class="fas fa-camera"></i>
-                            <h3>Modeling Edit</h3>
-                        </div>
-                    </div>
-                </div>
+            </div>
 
-                <div class="video-card animate-on-scroll" style="animation-delay: 1.6s">
-                    <div class="video-container">
-                        <video muted loop playsinline>
-                            <source src="videos/arya.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-overlay">
-                            <i class="fas fa-camera"></i>
-                            <h3>Modeling Edit</h3>
-                        </div>
+            <!-- don.mp4 - Regular video -->
+            <div class="video-card animate-on-scroll" style="animation-delay: 1.0s">
+                <div class="video-container">
+                    <video muted loop playsinline>
+                        <source src="videos/don.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-overlay">
+                        <i class="fas fa-camera"></i>
+                        <h3>Modeling Edit</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- hiddid.mp4 - Tall video -->
+            <div class="video-card tall animate-on-scroll" style="animation-delay: 1.1s">
+                <div class="video-container">
+                    <video muted loop playsinline>
+                        <source src="videos/hiddid.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-overlay">
+                        <i class="fas fa-camera"></i>
+                        <h3>Modeling Edit</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- arya.mp4 - Wide video -->
+            <div class="video-card wide animate-on-scroll" style="animation-delay: 1.2s">
+                <div class="video-container">
+                    <video muted loop playsinline>
+                        <source src="videos/arya.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-overlay">
+                        <i class="fas fa-camera"></i>
+                        <h3>Modeling Edit</h3>
                     </div>
                 </div>
             </div>
@@ -957,7 +908,8 @@
     </section>
 
     <section id="contact">
-        <div class="moving-gradient-overlay"></div> <h2 class="section-title animate-on-scroll" style="animation-delay: 0.2s">Let's Create Together</h2>
+        <div class="moving-gradient-overlay"></div>
+        <h2 class="section-title animate-on-scroll" style="animation-delay: 0.2s">Let's Create Together</h2>
         <div class="contact-info">
             <p class="animate-on-scroll" style="animation-delay: 0.4s">
                 Have a project in mind or want to discuss potential collaboration? Feel free to reach out directly via email, phone, or social media.
@@ -997,8 +949,7 @@
         document.documentElement.style.setProperty('--muted-gold-rgb', hexToRgb('#c6ac8f'));
         document.documentElement.style.setProperty('--dark-blue-grey-rgb', hexToRgb('#22333b'));
         document.documentElement.style.setProperty('--darkest-grey-rgb', hexToRgb('#0a0908'));
-        document.documentElement.style.setProperty('--earthy-brown-rgb', hexToRgb('#5e503f')); /* Ensure this is set */
-
+        document.documentElement.style.setProperty('--earthy-brown-rgb', hexToRgb('#5e503f'));
 
         // Scroll progress bar
         window.addEventListener('scroll', () => {
@@ -1016,18 +967,18 @@
                 const centerX = card.offsetWidth / 2;
                 const centerY = card.offsetHeight / 2;
                 
-                const rotateX = (y - centerY) / 15; /* Adjusted tilt sensitivity */
+                const rotateX = (y - centerY) / 15;
                 const rotateY = (centerX - x) / 15;
                 
                 card.style.transform = `translateY(-15px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
             });
             
             card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(-15px) rotateX(0) rotateY(0)'; /* Maintain lift */
+                card.style.transform = 'translateY(-15px) rotateX(0) rotateY(0)';
             });
         });
 
-        // Scroll-triggered animations for elements with .animate-on-scroll
+        // Scroll-triggered animations
         const animateElements = document.querySelectorAll('.animate-on-scroll');
         
         const observer = new IntersectionObserver((entries) => {
@@ -1036,16 +987,16 @@
                     const element = entry.target;
                     const delay = element.style.animationDelay || '0s';
                     element.style.animation = `fadeInUp 0.8s ${delay} forwards`;
-                    observer.unobserve(element); // Stop observing once animated
+                    observer.unobserve(element);
                 }
             });
-        }, { threshold: 0.1 }); /* Trigger when 10% of element is visible */
+        }, { threshold: 0.1 });
 
         animateElements.forEach(element => {
             observer.observe(element);
         });
 
-        // Auto-play/pause videos when visible using Intersection Observer
+        // Auto-play/pause videos when visible
         const videoObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 const video = entry.target.querySelector('video');
@@ -1054,13 +1005,13 @@
                         video.play().catch(e => console.log("Autoplay prevented:", e));
                     } else {
                         video.pause();
-                        video.currentTime = 0; /* Reset video on pause */
+                        video.currentTime = 0;
                     }
                 }
             });
-        }, { threshold: 0.6 }); /* Play when 60% of video is visible */
+        }, { threshold: 0.6 });
 
-        // Observe all video cards and the hero section for video playback
+        // Observe all video cards and the hero section
         document.querySelectorAll('.video-card, .hero').forEach(element => {
             videoObserver.observe(element);
         });
@@ -1074,34 +1025,6 @@
                     behavior: 'smooth'
                 });
             });
-        });
-
-        // Handle mobile menu toggle (if you add a mobile menu later)
-        // This is a placeholder for future mobile menu functionality
-        function setupMobileMenu() {
-            const mobileMenuButton = document.createElement('button');
-            mobileMenuButton.className = 'mobile-menu-button';
-            mobileMenuButton.innerHTML = '<i class="fas fa-bars"></i>';
-            mobileMenuButton.setAttribute('aria-label', 'Toggle menu');
-            
-            const navbar = document.querySelector('.navbar');
-            navbar.prepend(mobileMenuButton);
-            
-            mobileMenuButton.addEventListener('click', () => {
-                document.querySelector('.nav-links').classList.toggle('active');
-            });
-        }
-
-        // Initialize mobile menu if screen is small
-        if (window.innerWidth <= 768) {
-            // setupMobileMenu(); // Uncomment if you add a mobile menu
-        }
-
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            if (window.innerWidth <= 768) {
-                // setupMobileMenu(); // Uncomment if you add a mobile menu
-            }
         });
     </script>
 </body>
