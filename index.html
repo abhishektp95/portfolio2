@@ -22,20 +22,44 @@
             min-height: 100vh;
             background-color: var(--white);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* Typography */
-        h1, h2, h3 {
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            margin: 0;
+        /* 3D Transform Styles */
+        .perspective {
+            perspective: 1000px;
         }
 
-        /* Layout */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        .transform-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            background-color: rgba(0,0,0,0.9);
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            transform: translateZ(50px);
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            transform: translateY(-3px);
         }
 
         /* Hero Section */
@@ -54,19 +78,15 @@
             position: relative;
             z-index: 2;
             padding: 0 5%;
+            transform: translateZ(30px);
         }
 
         .name {
             font-size: clamp(2.5rem, 10vw, 5rem);
             margin-bottom: 1.5rem;
             line-height: 0.9;
-        }
-
-        .bio {
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin-bottom: 2.5rem;
-            color: var(--gray-20);
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transform: translateZ(20px);
         }
 
         .hero-button {
@@ -79,95 +99,21 @@
             font-weight: 600;
             font-size: 1.1rem;
             transition: all 0.3s ease;
+            transform: translateZ(20px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
         .hero-button:hover {
-            background-color: var(--gray-10);
-            transform: translateY(-3px);
+            transform: translateY(-3px) translateZ(20px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
 
-        /* Navigation */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 1.5rem 5%;
-            background-color: rgba(0,0,0,0.9);
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .nav-links a {
-            color: var(--white);
-            text-decoration: none;
-            margin-left: 2rem;
-            font-weight: 500;
-            position: relative;
-        }
-
-        .nav-links a:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px;
-            left: 0;
-            background-color: var(--white);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover:after {
-            width: 100%;
-        }
-
-        /* Services */
-        .services {
-            padding: 8rem 0;
-            background-color: var(--white);
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .service-card {
-            border: 1px solid var(--gray-10);
-            padding: 2rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .service-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .service-card p {
-            color: var(--gray-80);
-        }
-
-        /* Portfolio */
-        .portfolio {
-            padding: 8rem 0;
-            background-color: var(--black);
-            color: var(--white);
-        }
-
+        /* Portfolio Grid */
         .video-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 1.5rem;
-            margin-top: 3rem;
+            padding: 2rem;
         }
 
         .video-card {
@@ -175,6 +121,14 @@
             overflow: hidden;
             border-radius: 8px;
             aspect-ratio: 16/9;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
         }
 
         .video-card video {
@@ -185,240 +139,209 @@
         }
 
         .video-card:hover video {
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
 
-        .video-overlay {
-            position: absolute;
+        /* Video Modal */
+        .modal {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background-color: rgba(0,0,0,0.9);
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
+            z-index: 1000;
             opacity: 0;
+            pointer-events: none;
             transition: opacity 0.3s ease;
         }
 
-        .video-card:hover .video-overlay {
+        .modal.active {
             opacity: 1;
+            pointer-events: all;
         }
 
-        /* Contact */
-        .contact {
-            padding: 8rem 0;
-            background-color: var(--white);
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            width: auto;
+            height: auto;
         }
 
-        .contact-info {
-            margin-top: 3rem;
+        .modal-video {
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
+            border-radius: 8px;
         }
 
-        .contact-info a {
-            display: block;
-            color: var(--black);
-            text-decoration: none;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-            transition: color 0.3s ease;
-        }
-
-        .contact-info a:hover {
-            color: var(--gray-80);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .social-links a {
-            color: var(--black);
-            font-size: 1.5rem;
-            transition: color 0.3s ease;
-        }
-
-        .social-links a:hover {
-            color: var(--gray-80);
-        }
-
-        /* Footer */
-        footer {
-            padding: 3rem 0;
-            background-color: var(--black);
-            color: var(--white);
-            text-align: center;
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
         }
 
         /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateZ(0); }
+            50% { transform: translateY(-20px) translateZ(10px); }
         }
 
-        .animate {
-            animation: fadeIn 1s ease forwards;
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .video-grid {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            
+            .modal-content {
+                max-width: 95%;
+            }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <a href="#" class="logo">ABH1SHYK</a>
-            <div class="nav-links">
-                <a href="#services">Services</a>
-                <a href="#portfolio">Work</a>
-                <a href="#contact">Contact</a>
-            </div>
+    <nav class="navbar perspective">
+        <a href="#" class="logo">ABH1SHYK</a>
+        <div class="nav-links">
+            <a href="#services" class="transform-3d">Services</a>
+            <a href="#portfolio" class="transform-3d">Work</a>
+            <a href="#contact" class="transform-3d">Contact</a>
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="hero-content container animate">
-            <h1 class="name">Motion Design <br>Crafted to Perfection</h1>
+    <section class="hero perspective">
+        <div class="hero-content transform-3d">
+            <h1 class="name floating">Motion Design <br>Crafted to Perfection</h1>
             <p class="bio">21-year-old creative specializing in dynamic motion graphics and viral content that captivates audiences.</p>
-            <a href="#portfolio" class="hero-button">View Portfolio</a>
+            <a href="#portfolio" class="hero-button transform-3d">View Portfolio</a>
         </div>
     </section>
 
-    <section id="services" class="services">
-        <div class="container">
-            <h2>Creative Services</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>Music Visualization</h3>
-                    <p>Transform audio into captivating visual experiences that enhance your music.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Motion Graphics</h3>
-                    <p>Cinematic animations and dynamic elements for brands and content creators.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Social Media Edits</h3>
-                    <p>Trend-driven content optimized for maximum engagement across platforms.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Video Reels</h3>
-                    <p>High-energy edits designed to stop scrolls and go viral.</p>
-                </div>
+    <section id="portfolio" class="perspective" style="padding: 5rem 0; background: var(--white);">
+        <h2 style="text-align: center; margin-bottom: 2rem; transform: translateZ(20px);">Selected Work</h2>
+        <div class="video-grid">
+            <!-- Video 1 -->
+            <div class="video-card transform-3d" onclick="openModal('videos/Motion Graphics 1.mp4')">
+                <video muted loop playsinline>
+                    <source src="videos/Motion Graphics 1.mp4" type="video/mp4">
+                </video>
+            </div>
+            
+            <!-- Video 2 -->
+            <div class="video-card transform-3d" onclick="openModal('videos/Elon.mp4')">
+                <video muted loop playsinline>
+                    <source src="videos/Elon.mp4" type="video/mp4">
+                </video>
+            </div>
+            
+            <!-- Video 3 -->
+            <div class="video-card transform-3d" onclick="openModal('videos/Motion Graphics.mp4')">
+                <video muted loop playsinline>
+                    <source src="videos/Motion Graphics.mp4" type="video/mp4">
+                </video>
+            </div>
+            
+            <!-- Video 4 -->
+            <div class="video-card transform-3d" onclick="openModal('videos/timelss.mp4')">
+                <video muted loop playsinline>
+                    <source src="videos/timelss.mp4" type="video/mp4">
+                </video>
+            </div>
+            
+            <!-- Video 5 -->
+            <div class="video-card transform-3d" onclick="openModal('videos/don.mp4')">
+                <video muted loop playsinline>
+                    <source src="videos/don.mp4" type="video/mp4">
+                </video>
+            </div>
+            
+            <!-- Video 6 -->
+            <div class="video-card transform-3d" onclick="openModal('videos/hiddid.mp4')">
+                <video muted loop playsinline>
+                    <source src="videos/hiddid.mp4" type="video/mp4">
+                </video>
             </div>
         </div>
     </section>
 
-    <section id="portfolio" class="portfolio">
-        <div class="container">
-            <h2>Selected Work</h2>
-            <div class="video-grid">
-                <div class="video-card">
-                    <video muted loop playsinline>
-                        <source src="videos/Motion Graphics 1.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-overlay">
-                        <h3>Podcast Reel</h3>
-                    </div>
-                </div>
-                <div class="video-card">
-                    <video muted loop playsinline>
-                        <source src="videos/Elon.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-overlay">
-                        <h3>Elon Edit</h3>
-                    </div>
-                </div>
-                <div class="video-card">
-                    <video muted loop playsinline>
-                        <source src="videos/Motion Graphics.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-overlay">
-                        <h3>Podcast Reel</h3>
-                    </div>
-                </div>
-                <div class="video-card">
-                    <video muted loop playsinline>
-                        <source src="videos/timelss.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-overlay">
-                        <h3>Modeling Edit</h3>
-                    </div>
-                </div>
-                <div class="video-card">
-                    <video muted loop playsinline>
-                        <source src="videos/don.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-overlay">
-                        <h3>Modeling Edit</h3>
-                    </div>
-                </div>
-                <div class="video-card">
-                    <video muted loop playsinline>
-                        <source src="videos/hiddid.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-overlay">
-                        <h3>Modeling Edit</h3>
-                    </div>
-                </div>
-            </div>
+    <!-- Video Modal -->
+    <div class="modal" id="videoModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <video class="modal-video" controls autoplay id="modalVideo">
+                Your browser does not support the video tag.
+            </video>
         </div>
-    </section>
-
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2>Get In Touch</h2>
-            <div class="contact-info">
-                <a href="mailto:abhiramkuttutp@gmail.com">
-                    <i class="fas fa-envelope"></i> abhiramkuttutp@gmail.com
-                </a>
-                <a href="tel:+919562731821">
-                    <i class="fas fa-phone"></i> +91 9562731821
-                </a>
-                <div class="social-links">
-                    <a href="https://instagram.com/abh1shyk" target="_blank">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="https://wa.me/9562731821" target="_blank">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <p>© 2023 Abh1shyk. All rights reserved.</p>
-        </div>
-    </footer>
+    </div>
 
     <script>
-        // Simple animation trigger
-        document.addEventListener('DOMContentLoaded', function() {
-            const animateElements = document.querySelectorAll('.animate');
+        // 3D hover effects
+        document.addEventListener('mousemove', function(e) {
+            const cards = document.querySelectorAll('.transform-3d');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const angleX = (y - centerY) / 20;
+                const angleY = (centerX - x) / 20;
+                
+                card.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg) translateZ(10px)`;
+            });
+        });
+
+        // Reset 3D transform when mouse leaves
+        document.querySelectorAll('.transform-3d').forEach(el => {
+            el.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateZ(0)';
+            });
+        });
+
+        // Video Modal functionality
+        function openModal(videoSrc) {
+            const modal = document.getElementById('videoModal');
+            const modalVideo = document.getElementById('modalVideo');
             
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = 1;
-                    }
-                });
-            }, { threshold: 0.1 });
+            modalVideo.src = videoSrc;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
 
-            animateElements.forEach(element => {
-                observer.observe(element);
-            });
+        function closeModal() {
+            const modal = document.getElementById('videoModal');
+            const modalVideo = document.getElementById('modalVideo');
+            
+            modalVideo.pause();
+            modalVideo.currentTime = 0;
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
 
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            });
+        // Close modal when clicking outside
+        document.getElementById('videoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal with ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
         });
     </script>
 </body>
