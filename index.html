@@ -71,10 +71,30 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            background-color: var(--black);
             color: var(--white);
             position: relative;
             overflow: hidden;
+        }
+
+        .hero-video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1;
         }
 
         .hero-content {
@@ -359,12 +379,17 @@
             <a href="#">Home</a>
             <a href="#about">About</a>
             <a href="#portfolio">Work</a>
-            <a href="#services">Services</a>
             <a href="#contact">Contact</a>
         </div>
     </nav>
 
     <section class="hero">
+        <!-- Background Video -->
+        <video class="hero-video-bg" autoplay muted loop playsinline>
+            <source src="videos/background.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        
         <div class="hero-content">
             <h1 class="name">Motion Design <br>Crafted to Perfection</h1>
             <p class="bio">21-year-old creative specializing in dynamic motion graphics and viral content that captivates audiences.</p>
@@ -471,11 +496,6 @@
                 </div>
             </div>
         </div>
-    </section>
-
-    <section id="services">
-        <h2 class="section-heading">Services</h2>
-        <!-- Add your services content here -->
     </section>
 
     <section id="contact" class="contact">
@@ -606,6 +626,16 @@
                 video.pause();
                 video.currentTime = 0;
             });
+        });
+
+        // Auto-play hero background video
+        document.addEventListener('DOMContentLoaded', function() {
+            const heroVideo = document.querySelector('.hero-video-bg');
+            if (heroVideo) {
+                heroVideo.play().catch(e => {
+                    console.log("Autoplay prevented, showing fallback:", e);
+                });
+            }
         });
     </script>
 </body>
