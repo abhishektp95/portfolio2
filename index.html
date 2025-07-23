@@ -25,16 +25,6 @@
             overflow-x: hidden;
         }
 
-        /* 3D Transform Styles */
-        .perspective {
-            perspective: 1000px;
-        }
-
-        .transform-3d {
-            transform-style: preserve-3d;
-            transition: transform 0.5s ease, box-shadow 0.5s ease;
-        }
-
         /* Navigation */
         .navbar {
             position: fixed;
@@ -46,7 +36,6 @@
             z-index: 100;
             display: flex;
             justify-content: space-between;
-            transform: translateZ(50px);
         }
 
         .logo {
@@ -65,8 +54,7 @@
             color: var(--white);
             text-decoration: none;
             font-weight: 500;
-            position: relative;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
         .nav-links a:hover {
@@ -89,7 +77,6 @@
             position: relative;
             z-index: 2;
             padding: 0 5%;
-            transform: translateZ(30px);
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -98,8 +85,6 @@
             font-size: clamp(2.5rem, 10vw, 5rem);
             margin-bottom: 1.5rem;
             line-height: 0.9;
-            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            transform: translateZ(20px);
         }
 
         .bio {
@@ -107,7 +92,6 @@
             max-width: 600px;
             margin-bottom: 2.5rem;
             color: var(--gray-20);
-            transform: translateZ(15px);
         }
 
         .hero-button {
@@ -120,12 +104,11 @@
             font-weight: 600;
             font-size: 1.1rem;
             transition: all 0.3s ease;
-            transform: translateZ(20px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
         .hero-button:hover {
-            transform: translateY(-3px) translateZ(20px);
+            transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
 
@@ -134,7 +117,6 @@
             text-align: center;
             font-size: 2.5rem;
             margin-bottom: 3rem;
-            transform: translateZ(20px);
         }
 
         /* Portfolio Grid */
@@ -151,8 +133,7 @@
             position: relative;
             overflow: hidden;
             border-radius: 8px;
-            transform-style: preserve-3d;
-            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             cursor: pointer;
         }
@@ -178,16 +159,16 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: transform 0.3s ease;
         }
 
         .video-card:hover {
-            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
         }
 
         .video-card:hover video {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
         /* Video Overlay */
@@ -314,16 +295,6 @@
             text-align: center;
         }
 
-        /* Animations */
-        @keyframes float {
-            0%, 100% { transform: translateY(0) translateZ(0); }
-            50% { transform: translateY(-20px) translateZ(10px); }
-        }
-
-        .floating {
-            animation: float 6s ease-in-out infinite;
-        }
-
         /* Responsive Adjustments */
         @media (max-width: 768px) {
             .video-grid {
@@ -346,27 +317,27 @@
     </style>
 </head>
 <body>
-    <nav class="navbar perspective">
+    <nav class="navbar">
         <a href="#" class="logo">ABH1SHYK</a>
         <div class="nav-links">
-            <a href="#portfolio" class="transform-3d">Work</a>
-            <a href="#contact" class="transform-3d">Contact</a>
+            <a href="#portfolio">Work</a>
+            <a href="#contact">Contact</a>
         </div>
     </nav>
 
-    <section class="hero perspective">
-        <div class="hero-content transform-3d">
-            <h1 class="name floating">Motion Design <br>Crafted to Perfection</h1>
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="name">Motion Design <br>Crafted to Perfection</h1>
             <p class="bio">21-year-old creative specializing in dynamic motion graphics and viral content that captivates audiences.</p>
-            <a href="#portfolio" class="hero-button transform-3d">View Portfolio</a>
+            <a href="#portfolio" class="hero-button">View Portfolio</a>
         </div>
     </section>
 
-    <section id="portfolio" class="perspective">
+    <section id="portfolio">
         <h2 class="section-heading">Selected Work</h2>
         <div class="video-grid">
             <!-- Motion Graphics 1.mp4 - 9:16 Vertical -->
-            <div class="video-card transform-3d ratio-9-16" onclick="openModal('videos/Motion Graphics 1.mp4')">
+            <div class="video-card ratio-9-16" onclick="openModal('videos/Motion Graphics 1.mp4')">
                 <video muted loop playsinline>
                     <source src="videos/Motion Graphics 1.mp4" type="video/mp4">
                 </video>
@@ -376,7 +347,7 @@
             </div>
             
             <!-- Elon.mp4 - 16:9 Horizontal -->
-            <div class="video-card transform-3d ratio-16-9" onclick="openModal('videos/Elon.mp4')">
+            <div class="video-card ratio-16-9" onclick="openModal('videos/Elon.mp4')">
                 <video muted loop playsinline>
                     <source src="videos/Elon.mp4" type="video/mp4">
                 </video>
@@ -386,7 +357,7 @@
             </div>
             
             <!-- Motion Graphics.mp4 - 9:16 Vertical -->
-            <div class="video-card transform-3d ratio-9-16" onclick="openModal('videos/Motion Graphics.mp4')">
+            <div class="video-card ratio-9-16" onclick="openModal('videos/Motion Graphics.mp4')">
                 <video muted loop playsinline>
                     <source src="videos/Motion Graphics.mp4" type="video/mp4">
                 </video>
@@ -396,7 +367,7 @@
             </div>
             
             <!-- timelss.mp4 - 1:1 Square -->
-            <div class="video-card transform-3d ratio-1-1" onclick="openModal('videos/timelss.mp4')">
+            <div class="video-card ratio-1-1" onclick="openModal('videos/timelss.mp4')">
                 <video muted loop playsinline>
                     <source src="videos/timelss.mp4" type="video/mp4">
                 </video>
@@ -406,7 +377,7 @@
             </div>
             
             <!-- don.mp4 - 4:5 Vertical -->
-            <div class="video-card transform-3d ratio-4-5" onclick="openModal('videos/don.mp4')">
+            <div class="video-card ratio-4-5" onclick="openModal('videos/don.mp4')">
                 <video muted loop playsinline>
                     <source src="videos/don.mp4" type="video/mp4">
                 </video>
@@ -416,7 +387,7 @@
             </div>
             
             <!-- hiddid.mp4 - 16:9 Horizontal -->
-            <div class="video-card transform-3d ratio-16-9" onclick="openModal('videos/hiddid.mp4')">
+            <div class="video-card ratio-16-9" onclick="openModal('videos/hiddid.mp4')">
                 <video muted loop playsinline>
                     <source src="videos/hiddid.mp4" type="video/mp4">
                 </video>
@@ -426,7 +397,7 @@
             </div>
             
             <!-- arya.mp4 - 9:16 Vertical -->
-            <div class="video-card transform-3d ratio-9-16" onclick="openModal('videos/arya.mp4')">
+            <div class="video-card ratio-9-16" onclick="openModal('videos/arya.mp4')">
                 <video muted loop playsinline>
                     <source src="videos/arya.mp4" type="video/mp4">
                 </video>
@@ -474,29 +445,6 @@
     </div>
 
     <script>
-        // 3D hover effects
-        document.addEventListener('mousemove', function(e) {
-            const cards = document.querySelectorAll('.transform-3d');
-            cards.forEach(card => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const angleX = (y - centerY) / 20;
-                const angleY = (centerX - x) / 20;
-                
-                card.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg) translateZ(10px)`;
-            });
-        });
-
-        // Reset 3D transform when mouse leaves
-        document.querySelectorAll('.transform-3d').forEach(el => {
-            el.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateZ(0)';
-            });
-        });
-
         // Video Modal functionality
         function openModal(videoSrc) {
             const modal = document.getElementById('videoModal');
