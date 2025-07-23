@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abh1shyk | Motion Designer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --black: #000000;
@@ -13,6 +14,8 @@
             --gray-80: #333333;
             --gray-20: #cccccc;
             --gray-10: #e6e6e6;
+            --primary: #ff4d4d;
+            --primary-light: #ff8080;
         }
 
         body {
@@ -37,12 +40,32 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transform: translateY(-100%);
+            opacity: 0;
+            animation: slideDown 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            animation-delay: 0.2s;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .profile-container {
             display: flex;
             align-items: center;
             gap: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-container:hover {
+            transform: scale(1.05);
         }
 
         .profile-img {
@@ -51,12 +74,34 @@
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid var(--white);
+            transition: all 0.3s ease;
+        }
+
+        .profile-img:hover {
+            transform: rotate(10deg);
+            border-color: var(--primary);
         }
 
         .profile-name {
             color: var(--white);
             font-weight: 600;
             font-size: 1.1rem;
+            position: relative;
+        }
+
+        .profile-name::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .profile-container:hover .profile-name::after {
+            width: 100%;
         }
 
         .nav-links {
@@ -68,13 +113,24 @@
             color: var(--white);
             text-decoration: none;
             font-weight: 500;
-            transition: transform 0.3s ease;
             font-size: 1rem;
+            position: relative;
+            padding: 0.5rem 0;
         }
 
-        .nav-links a:hover {
-            transform: translateY(-3px);
-            color: var(--gray-20);
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
         }
 
         /* Hero Section */
@@ -96,6 +152,14 @@
             height: 100%;
             object-fit: cover;
             z-index: 1;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-in forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
         }
 
         .hero::after {
@@ -115,12 +179,42 @@
             padding: 0 5%;
             max-width: 1200px;
             margin: 0 auto;
+            transform: translateY(30px);
+            opacity: 0;
+            animation: fadeUp 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes fadeUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .name {
             font-size: clamp(2.5rem, 10vw, 5rem);
             margin-bottom: 1.5rem;
             line-height: 0.9;
+            position: relative;
+            display: inline-block;
+        }
+
+        .name::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .hero:hover .name::after {
+            transform: scaleX(1);
         }
 
         .bio {
@@ -128,6 +222,10 @@
             max-width: 600px;
             margin-bottom: 2.5rem;
             color: var(--gray-20);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.8s ease forwards;
+            animation-delay: 0.8s;
         }
 
         .hero-button {
@@ -139,13 +237,34 @@
             border-radius: 50px;
             font-weight: 600;
             font-size: 1.1rem;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.8s ease forwards;
+            animation-delay: 1s;
+        }
+
+        .hero-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: all 0.6s ease;
         }
 
         .hero-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+
+        .hero-button:hover::before {
+            left: 100%;
         }
 
         /* About Section */
@@ -161,6 +280,14 @@
             margin: 0 auto;
             text-align: center;
             color: var(--gray-80);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .about.in-view .about-content {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Section Headings */
@@ -168,6 +295,28 @@
             text-align: center;
             font-size: 2.5rem;
             margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.5s ease;
+        }
+
+        .section-heading.in-view::after {
+            transform: scaleX(1);
+            transform-origin: left;
         }
 
         /* Portfolio Grid */
@@ -184,11 +333,34 @@
             position: relative;
             overflow: hidden;
             border-radius: 8px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             cursor: pointer;
+            opacity: 0;
+            transform: translateY(30px);
         }
 
+        .video-grid.in-view .video-card {
+            animation: cardAppear 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes cardAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Staggered animation for cards */
+        .video-card:nth-child(1) { animation-delay: 0.1s; }
+        .video-card:nth-child(2) { animation-delay: 0.2s; }
+        .video-card:nth-child(3) { animation-delay: 0.3s; }
+        .video-card:nth-child(4) { animation-delay: 0.4s; }
+        .video-card:nth-child(5) { animation-delay: 0.5s; }
+        .video-card:nth-child(6) { animation-delay: 0.6s; }
+        .video-card:nth-child(7) { animation-delay: 0.7s; }
+        .video-card:nth-child(8) { animation-delay: 0.8s; }
+        
         /* Aspect Ratio Classes */
         .ratio-16-9 {
             aspect-ratio: 16/9;
@@ -216,7 +388,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .video-player {
@@ -241,16 +413,21 @@
             justify-content: center;
             font-size: 1.2rem;
             opacity: 1;
-            transition: opacity 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .video-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
 
         .video-card:hover .video-thumbnail {
-            transform: scale(1.05);
+            transform: scale(1.1);
+        }
+
+        .video-card:hover .play-icon {
+            background-color: var(--primary);
+            transform: translate(-50%, -50%) scale(1.1);
         }
 
         /* Video Info */
@@ -263,17 +440,32 @@
             background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
             color: white;
             opacity: 1;
-            transition: opacity 0.3s ease;
+            transition: all 0.3s ease;
+            transform: translateY(20px);
+        }
+
+        .video-card:hover .video-info {
+            transform: translateY(0);
         }
 
         .video-title {
             font-weight: 600;
             margin-bottom: 0.3rem;
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover .video-title {
+            color: var(--primary);
         }
 
         .video-type {
             font-size: 0.9rem;
             opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover .video-type {
+            opacity: 1;
         }
 
         /* Contact Section */
@@ -281,6 +473,14 @@
             padding: 5rem 0;
             background-color: var(--white);
             text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .contact.in-view {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .contact-info {
@@ -295,11 +495,28 @@
             text-decoration: none;
             margin-bottom: 1.5rem;
             font-size: 1.2rem;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .contact-info a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
         }
 
         .contact-info a:hover {
-            color: var(--gray-80);
+            color: var(--primary);
+        }
+
+        .contact-info a:hover::before {
+            width: 100%;
         }
 
         .social-links {
@@ -312,11 +529,13 @@
         .social-links a {
             color: var(--black);
             font-size: 1.5rem;
-            transition: transform 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            display: inline-block;
         }
 
         .social-links a:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1.2);
+            color: var(--primary);
         }
 
         /* Footer */
@@ -325,6 +544,25 @@
             background-color: var(--black);
             color: var(--white);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.6s ease;
+        }
+
+        footer.in-view::before {
+            transform: scaleX(1);
         }
 
         /* Responsive Adjustments */
@@ -654,6 +892,47 @@
                     console.log("Autoplay prevented, showing fallback:", e);
                 });
             }
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe sections
+        document.querySelectorAll('.about, .video-grid, .contact, footer, .section-heading').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Animate section headings
+        document.querySelectorAll('.section-heading').forEach(heading => {
+            heading.addEventListener('mouseover', () => {
+                heading.classList.add('in-view');
+            });
+        });
+
+        // Add animation to footer on load
+        setTimeout(() => {
+            document.querySelector('footer').classList.add('in-view');
+        }, 1000);
+
+        // Add subtle animation to hero text on hover
+        const heroName = document.querySelector('.name');
+        heroName.addEventListener('mouseover', () => {
+            heroName.style.animation = 'textPulse 0.5s ease';
+            setTimeout(() => {
+                heroName.style.animation = '';
+            }, 500);
         });
     </script>
 </body>
