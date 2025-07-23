@@ -207,6 +207,13 @@
             transition: transform 0.3s ease;
         }
 
+        .video-player {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
         .play-icon {
             position: absolute;
             top: 50%;
@@ -221,7 +228,7 @@
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
-            opacity: 0;
+            opacity: 1;
             transition: opacity 0.3s ease;
         }
 
@@ -232,10 +239,6 @@
 
         .video-card:hover .video-thumbnail {
             transform: scale(1.05);
-        }
-
-        .video-card:hover .play-icon {
-            opacity: 1;
         }
 
         /* Video Info */
@@ -259,64 +262,6 @@
         .video-type {
             font-size: 0.9rem;
             opacity: 0.8;
-        }
-
-        /* Video Modal */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .modal.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .modal-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 90%;
-            width: auto;
-        }
-
-        .modal-video {
-            max-width: 100%;
-            max-height: 80vh;
-            border-radius: 8px;
-            display: block;
-        }
-
-        .modal-info {
-            position: absolute;
-            bottom: -50px;
-            left: 0;
-            color: white;
-            padding: 0.5rem 0;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: -50px;
-            right: 0;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .close-modal:hover {
-            transform: rotate(90deg);
         }
 
         /* Contact Section */
@@ -382,14 +327,6 @@
                 font-size: 0.9rem;
             }
             
-            .modal-content {
-                max-width: 95%;
-            }
-            
-            .modal-video {
-                max-height: 60vh;
-            }
-            
             .profile-img {
                 width: 40px;
                 height: 40px;
@@ -434,7 +371,7 @@
 
     <section class="hero">
         <!-- Background Video -->
-        <video class="hero-video-bg" autoplay muted loop playsinline>
+        <video class="hero-video-bg" autoplay muted loop playsinline controlsList="nodownload">
             <source src="videos/background.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
@@ -457,8 +394,12 @@
         <h2 class="section-heading">Selected Work</h2>
         <div class="video-grid">
             <!-- Motion Graphics 1.mp4 - 9:16 Vertical -->
-            <div class="video-card ratio-9-16" onclick="openModal('videos/Motion Graphics 1.mp4', 'Podcast Reel', '9:16 Edit')">
+            <div class="video-card ratio-9-16">
                 <div class="video-container">
+                    <video class="video-player" controls controlsList="nodownload">
+                        <source src="videos/Motion Graphics 1.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                     <img src="thumbnails/Motion Graphics 1.png" alt="Podcast Reel thumbnail" class="video-thumbnail">
                     <div class="play-icon">
                         <i class="fas fa-play"></i>
@@ -471,8 +412,12 @@
             </div>
             
             <!-- Elon.mp4 - 16:9 Horizontal -->
-            <div class="video-card ratio-9-16" onclick="openModal('videos/Elon.mp4', 'Elon Musk Edit', '16:9 Edit')">
+            <div class="video-card ratio-9-16">
                 <div class="video-container">
+                    <video class="video-player" controls controlsList="nodownload">
+                        <source src="videos/Elon.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                     <img src="thumbnails/Elon.png" alt="Elon Musk Edit thumbnail" class="video-thumbnail">
                     <div class="play-icon">
                         <i class="fas fa-play"></i>
@@ -485,8 +430,12 @@
             </div>
             
             <!-- Motion Graphics.mp4 - 9:16 Vertical -->
-            <div class="video-card ratio-9-16" onclick="openModal('videos/Motion Graphics.mp4', 'Podcast Highlights', '9:16 Edit')">
+            <div class="video-card ratio-9-16">
                 <div class="video-container">
+                    <video class="video-player" controls controlsList="nodownload">
+                        <source src="videos/Motion Graphics.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                     <img src="thumbnails/Motion Graphics.png" alt="Podcast Highlights thumbnail" class="video-thumbnail">
                     <div class="play-icon">
                         <i class="fas fa-play"></i>
@@ -499,8 +448,12 @@
             </div>
             
             <!-- timelss.mp4 - 1:1 Square -->
-            <div class="video-card ratio-9-16" onclick="openModal('videos/timelss.mp4', 'Timeless Fashion', '1:1 Square')">
+            <div class="video-card ratio-9-16">
                 <div class="video-container">
+                    <video class="video-player" controls controlsList="nodownload">
+                        <source src="videos/timelss.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                     <img src="thumbnails/timelss.png" alt="Timeless Fashion thumbnail" class="video-thumbnail">
                     <div class="play-icon">
                         <i class="fas fa-play"></i>
@@ -513,8 +466,12 @@
             </div>
             
             <!-- COMMNSENS.mp4 - 9:16 Vertical -->
-            <div class="video-card ratio-9-16" onclick="openModal('videos/COMMNSENS.mp4', 'Common Sense', '9:16 Edit')">
+            <div class="video-card ratio-9-16">
                 <div class="video-container">
+                    <video class="video-player" controls controlsList="nodownload">
+                        <source src="videos/COMMNSENS.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                     <img src="thumbnails/COMMNSENS.png" alt="Common Sense thumbnail" class="video-thumbnail">
                     <div class="play-icon">
                         <i class="fas fa-play"></i>
@@ -527,8 +484,12 @@
             </div>
             
             <!-- hiddid.mp4 - 16:9 Horizontal -->
-            <div class="video-card ratio-16-9" onclick="openModal('videos/hiddid.mp4', 'Hidden Identity', '16:9 Cinematic')">
+            <div class="video-card ratio-16-9">
                 <div class="video-container">
+                    <video class="video-player" controls controlsList="nodownload">
+                        <source src="videos/hiddid.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                     <img src="thumbnails/hiddid.png" alt="Hidden Identity thumbnail" class="video-thumbnail">
                     <div class="play-icon">
                         <i class="fas fa-play"></i>
@@ -541,8 +502,12 @@
             </div>
             
             <!-- arya.mp4 - 9:16 Vertical -->
-            <div class="video-card ratio-16-9" onclick="openModal('videos/arya.mp4', 'Arya Stark Tribute', '16-9 Vertical')">
+            <div class="video-card ratio-16-9">
                 <div class="video-container">
+                    <video class="video-player" controls controlsList="nodownload">
+                        <source src="videos/arya.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                     <img src="thumbnails/arya.png" alt="Arya Stark Tribute thumbnail" class="video-thumbnail">
                     <div class="play-icon">
                         <i class="fas fa-play"></i>
@@ -555,8 +520,12 @@
             </div>
             
             <!-- GoHeartbeat.mp4 - 16:9 Horizontal -->
-            <div class="video-card ratio-16-9" onclick="openModal('videos/GoHeartbeat.mp4', 'Heartbeat', '16:9 Edit')">
+            <div class="video-card ratio-16-9">
                 <div class="video-container">
+                    <video class="video-player" controls controlsList="nodownload">
+                        <source src="videos/GoHeartbeat.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                     <img src="thumbnails/GoHeartbeat.png" alt="Heartbeat thumbnail" class="video-thumbnail">
                     <div class="play-icon">
                         <i class="fas fa-play"></i>
@@ -596,84 +565,52 @@
         </div>
     </footer>
 
-    <!-- Video Modal -->
-    <div class="modal" id="videoModal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <video class="modal-video" controls id="modalVideo">
-                Your browser does not support the video tag.
-            </video>
-            <div class="modal-info" id="modalInfo"></div>
-        </div>
-    </div>
-
     <script>
-        // Video Modal functionality
-        function openModal(videoSrc, title, type) {
-            const modal = document.getElementById('videoModal');
-            const modalVideo = document.getElementById('modalVideo');
-            const modalInfo = document.getElementById('modalInfo');
-            
-            // Set video info
-            modalInfo.innerHTML = `
-                <div style="font-weight: 600; font-size: 1.2rem;">${title}</div>
-                <div style="font-size: 0.9rem; opacity: 0.8;">${type}</div>
-            `;
-            
-            // Create temporary video element to detect aspect ratio
-            const tempVideo = document.createElement('video');
-            tempVideo.src = videoSrc;
-            
-            tempVideo.onloadedmetadata = function() {
-                const videoWidth = tempVideo.videoWidth;
-                const videoHeight = tempVideo.videoHeight;
-                const aspectRatio = videoWidth / videoHeight;
-                const modalContent = document.querySelector('.modal-content');
+        // Video play functionality
+        document.querySelectorAll('.video-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const container = this.querySelector('.video-container');
+                const thumbnail = container.querySelector('.video-thumbnail');
+                const video = container.querySelector('.video-player');
+                const playIcon = container.querySelector('.play-icon');
                 
-                // Set modal dimensions based on aspect ratio
-                if (aspectRatio > 1) {
-                    // Landscape (wider than tall)
-                    modalContent.style.width = 'min(80vw, ' + (80 * aspectRatio) + 'vh)';
-                    modalContent.style.height = 'auto';
-                } else {
-                    // Portrait (taller than wide) or square
-                    modalContent.style.height = 'min(80vh, ' + (80 / aspectRatio) + 'vw)';
-                    modalContent.style.width = 'auto';
-                }
+                // Hide thumbnail and play icon
+                thumbnail.style.display = 'none';
+                playIcon.style.display = 'none';
                 
-                modalVideo.src = videoSrc;
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-                
-                // Play video when modal opens
-                modalVideo.onloadedmetadata = function() {
-                    modalVideo.play().catch(e => console.log("Autoplay prevented:", e));
-                };
-            };
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('videoModal');
-            const modalVideo = document.getElementById('modalVideo');
-            
-            modalVideo.pause();
-            modalVideo.currentTime = 0;
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Close modal when clicking outside
-        document.getElementById('videoModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
+                // Show and play video
+                video.style.display = 'block';
+                video.play().catch(e => console.log("Autoplay prevented:", e));
+            });
         });
 
-        // Close modal with ESC key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
+        // Pause all other videos when one is playing
+        document.querySelectorAll('.video-player').forEach(video => {
+            video.addEventListener('play', function() {
+                document.querySelectorAll('.video-player').forEach(otherVideo => {
+                    if (otherVideo !== video && !otherVideo.paused) {
+                        otherVideo.pause();
+                        // Show the thumbnail and play icon for other videos
+                        const container = otherVideo.closest('.video-container');
+                        if (container) {
+                            container.querySelector('.video-thumbnail').style.display = 'block';
+                            container.querySelector('.play-icon').style.display = 'flex';
+                        }
+                    }
+                });
+            });
+        });
+
+        // Show thumbnail again when video ends
+        document.querySelectorAll('.video-player').forEach(video => {
+            video.addEventListener('ended', function() {
+                const container = this.closest('.video-container');
+                if (container) {
+                    container.querySelector('.video-thumbnail').style.display = 'block';
+                    container.querySelector('.play-icon').style.display = 'flex';
+                    this.style.display = 'none';
+                }
+            });
         });
 
         // Smooth scrolling for navigation
