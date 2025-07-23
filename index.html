@@ -39,12 +39,24 @@
             align-items: center;
         }
 
+        .profile-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
         .profile-img {
             width: 50px;
             height: 50px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid var(--white);
+        }
+
+        .profile-name {
+            color: var(--white);
+            font-weight: 600;
+            font-size: 1.1rem;
         }
 
         .nav-links {
@@ -332,6 +344,10 @@
                 height: 40px;
             }
 
+            .profile-name {
+                font-size: 1rem;
+            }
+
             .play-icon {
                 width: 40px;
                 height: 40px;
@@ -350,6 +366,10 @@
                 height: 35px;
             }
 
+            .profile-name {
+                font-size: 0.9rem;
+            }
+
             .play-icon {
                 width: 30px;
                 height: 30px;
@@ -360,7 +380,10 @@
 </head>
 <body>
     <nav class="navbar">
-        <img src="profile.jpg" alt="Profile" class="profile-img">
+        <div class="profile-container">
+            <img src="profile.jpg" alt="Profile" class="profile-img">
+            <span class="profile-name">Abhishek TP</span>
+        </div>
         <div class="nav-links">
             <a href="#">Home</a>
             <a href="#about">About</a>
