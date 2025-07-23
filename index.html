@@ -136,6 +136,21 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
 
+        /* About Section */
+        .about {
+            padding: 5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-content {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            color: var(--gray-80);
+        }
+
         /* Section Headings */
         .section-heading {
             text-align: center;
@@ -426,14 +441,16 @@
         
         <div class="hero-content">
             <h1 class="name">Motion Design <br>Crafted to Perfection</h1>
-            <p class="bio">21-year-old creative specializing in dynamic motion graphics and viral content that captivates audiences.</p>
+            <p class="bio">Creating visually stunning motion graphics that tell compelling stories and engage audiences.</p>
             <a href="#portfolio" class="hero-button">View Portfolio</a>
         </div>
     </section>
 
-    <section id="about">
+    <section id="about" class="about">
         <h2 class="section-heading">About Me</h2>
-        <!-- Add your about content here -->
+        <div class="about-content">
+            <p>21-year-old creative specializing in dynamic motion graphics and viral content that captivates audiences.</p>
+        </div>
     </section>
 
     <section id="portfolio">
@@ -533,6 +550,34 @@
                     <div class="video-info">
                         <div class="video-title">Arya</div>
                         <div class="video-type">9:16 Vertical</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- COMMNSENS.mp4 - 9:16 Vertical -->
+            <div class="video-card ratio-9-16" onclick="openModal('videos/COMMNSENS.mp4', 'Common Sense', '9:16 Edit')">
+                <div class="video-container">
+                    <img src="thumbnails/COMMNSENS.png" alt="Common Sense thumbnail" class="video-thumbnail">
+                    <div class="play-icon">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="video-info">
+                        <div class="video-title">Common Sense</div>
+                        <div class="video-type">9:16 Vertical</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GoHeartbeat.mp4 - 16:9 Horizontal -->
+            <div class="video-card ratio-16-9" onclick="openModal('videos/GoHeartbeat.mp4', 'Heartbeat', '16:9 Edit')">
+                <div class="video-container">
+                    <img src="thumbnails/GoHeartbeat.png" alt="Heartbeat thumbnail" class="video-thumbnail">
+                    <div class="play-icon">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="video-info">
+                        <div class="video-title">Heartbeat</div>
+                        <div class="video-type">16:9 Horizontal</div>
                     </div>
                 </div>
             </div>
