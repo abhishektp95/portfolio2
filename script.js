@@ -26,3 +26,17 @@ gsap.from(".service-card", {
   stagger: 0.1,
   duration: 0.6,
 });
+// Remove this section from your JavaScript:
+// Auto-play videos on hover
+document.querySelectorAll('.video-container').forEach(container => {
+    const video = container.querySelector('video');
+    
+    container.addEventListener('mouseenter', () => {
+        video.play().catch(e => console.log("Autoplay prevented:", e));
+    });
+    
+    container.addEventListener('mouseleave', () => {
+        video.pause();
+        video.currentTime = 0;
+    });
+});
