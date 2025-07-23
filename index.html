@@ -155,7 +155,13 @@
             aspect-ratio: 4/5;
         }
 
-        .video-card video {
+        .video-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .video-container video {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -171,28 +177,27 @@
             transform: scale(1.05);
         }
 
-        /* Video Overlay */
-        .video-overlay {
+        /* Video Info */
+        .video-info {
             position: absolute;
-            top: 0;
+            bottom: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.3);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
+            padding: 1rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            opacity: 1;
             transition: opacity 0.3s ease;
         }
 
-        .video-overlay i {
-            color: var(--white);
-            font-size: 2.5rem;
+        .video-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
         }
 
-        .video-card:hover .video-overlay {
-            opacity: 1;
+        .video-type {
+            font-size: 0.9rem;
+            opacity: 0.8;
         }
 
         /* Video Modal */
@@ -221,6 +226,7 @@
             position: relative;
             max-width: 90%;
             max-height: 90%;
+            width: auto;
         }
 
         .modal-video {
@@ -228,6 +234,14 @@
             max-height: 80vh;
             border-radius: 8px;
             display: block;
+        }
+
+        .modal-info {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            color: white;
+            padding: 0.5rem 0;
         }
 
         .close-modal {
@@ -337,72 +351,93 @@
         <h2 class="section-heading">Selected Work</h2>
         <div class="video-grid">
             <!-- Motion Graphics 1.mp4 - 9:16 Vertical -->
-            <div class="video-card ratio-9-16" onclick="openModal('videos/Motion Graphics 1.mp4')">
-                <video muted loop playsinline>
-                    <source src="videos/Motion Graphics 1.mp4" type="video/mp4">
-                </video>
-                <div class="video-overlay">
-                    <i class="fas fa-expand"></i>
+            <div class="video-card ratio-9-16" onclick="openModal('videos/Motion Graphics 1.mp4', 'Podcast Reel', '9:16 Edit')">
+                <div class="video-container">
+                    <video muted loop playsinline>
+                        <source src="videos/Motion Graphics 1.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info">
+                        <div class="video-title">Podcast Reel</div>
+                        <div class="video-type">9:16 Vertical</div>
+                    </div>
                 </div>
             </div>
             
             <!-- Elon.mp4 - 16:9 Horizontal -->
-            <div class="video-card ratio-16-9" onclick="openModal('videos/Elon.mp4')">
-                <video muted loop playsinline>
-                    <source src="videos/Elon.mp4" type="video/mp4">
-                </video>
-                <div class="video-overlay">
-                    <i class="fas fa-expand"></i>
+            <div class="video-card ratio-16-9" onclick="openModal('videos/Elon.mp4', 'Elon Musk Edit', '16:9 Edit')">
+                <div class="video-container">
+                    <video muted loop playsinline>
+                        <source src="videos/Elon.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info">
+                        <div class="video-title">Elon Musk Edit</div>
+                        <div class="video-type">16:9 Horizontal</div>
+                    </div>
                 </div>
             </div>
             
             <!-- Motion Graphics.mp4 - 9:16 Vertical -->
-            <div class="video-card ratio-9-16" onclick="openModal('videos/Motion Graphics.mp4')">
-                <video muted loop playsinline>
-                    <source src="videos/Motion Graphics.mp4" type="video/mp4">
-                </video>
-                <div class="video-overlay">
-                    <i class="fas fa-expand"></i>
+            <div class="video-card ratio-9-16" onclick="openModal('videos/Motion Graphics.mp4', 'Podcast Highlights', '9:16 Edit')">
+                <div class="video-container">
+                    <video muted loop playsinline>
+                        <source src="videos/Motion Graphics.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info">
+                        <div class="video-title">Podcast Highlights</div>
+                        <div class="video-type">9:16 Vertical</div>
+                    </div>
                 </div>
             </div>
             
             <!-- timelss.mp4 - 1:1 Square -->
-            <div class="video-card ratio-1-1" onclick="openModal('videos/timelss.mp4')">
-                <video muted loop playsinline>
-                    <source src="videos/timelss.mp4" type="video/mp4">
-                </video>
-                <div class="video-overlay">
-                    <i class="fas fa-expand"></i>
+            <div class="video-card ratio-1-1" onclick="openModal('videos/timelss.mp4', 'Timeless Fashion', '1:1 Square')">
+                <div class="video-container">
+                    <video muted loop playsinline>
+                        <source src="videos/timelss.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info">
+                        <div class="video-title">Timeless Fashion</div>
+                        <div class="video-type">1:1 Square</div>
+                    </div>
                 </div>
             </div>
             
             <!-- don.mp4 - 4:5 Vertical -->
-            <div class="video-card ratio-4-5" onclick="openModal('videos/don.mp4')">
-                <video muted loop playsinline>
-                    <source src="videos/don.mp4" type="video/mp4">
-                </video>
-                <div class="video-overlay">
-                    <i class="fas fa-expand"></i>
+            <div class="video-card ratio-4-5" onclick="openModal('videos/don.mp4', 'Don Draper Style', '4:5 Vertical')">
+                <div class="video-container">
+                    <video muted loop playsinline>
+                        <source src="videos/don.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info">
+                        <div class="video-title">Don Draper Style</div>
+                        <div class="video-type">4:5 Vertical</div>
+                    </div>
                 </div>
             </div>
             
             <!-- hiddid.mp4 - 16:9 Horizontal -->
-            <div class="video-card ratio-16-9" onclick="openModal('videos/hiddid.mp4')">
-                <video muted loop playsinline>
-                    <source src="videos/hiddid.mp4" type="video/mp4">
-                </video>
-                <div class="video-overlay">
-                    <i class="fas fa-expand"></i>
+            <div class="video-card ratio-16-9" onclick="openModal('videos/hiddid.mp4', 'Hidden Identity', '16:9 Cinematic')">
+                <div class="video-container">
+                    <video muted loop playsinline>
+                        <source src="videos/hiddid.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info">
+                        <div class="video-title">Hidden Identity</div>
+                        <div class="video-type">16:9 Cinematic</div>
+                    </div>
                 </div>
             </div>
             
             <!-- arya.mp4 - 9:16 Vertical -->
-            <div class="video-card ratio-9-16" onclick="openModal('videos/arya.mp4')">
-                <video muted loop playsinline>
-                    <source src="videos/arya.mp4" type="video/mp4">
-                </video>
-                <div class="video-overlay">
-                    <i class="fas fa-expand"></i>
+            <div class="video-card ratio-9-16" onclick="openModal('videos/arya.mp4', 'Arya Stark Tribute', '9:16 Vertical')">
+                <div class="video-container">
+                    <video muted loop playsinline>
+                        <source src="videos/arya.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info">
+                        <div class="video-title">Arya Stark Tribute</div>
+                        <div class="video-type">9:16 Vertical</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -441,14 +476,22 @@
             <video class="modal-video" controls id="modalVideo">
                 Your browser does not support the video tag.
             </video>
+            <div class="modal-info" id="modalInfo"></div>
         </div>
     </div>
 
     <script>
         // Video Modal functionality
-        function openModal(videoSrc) {
+        function openModal(videoSrc, title, type) {
             const modal = document.getElementById('videoModal');
             const modalVideo = document.getElementById('modalVideo');
+            const modalInfo = document.getElementById('modalInfo');
+            
+            // Set video info
+            modalInfo.innerHTML = `
+                <div style="font-weight: 600; font-size: 1.2rem;">${title}</div>
+                <div style="font-size: 0.9rem; opacity: 0.8;">${type}</div>
+            `;
             
             // Create temporary video element to detect aspect ratio
             const tempVideo = document.createElement('video');
@@ -513,6 +556,20 @@
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
                     behavior: 'smooth'
                 });
+            });
+        });
+
+        // Auto-play videos on hover
+        document.querySelectorAll('.video-container').forEach(container => {
+            const video = container.querySelector('video');
+            
+            container.addEventListener('mouseenter', () => {
+                video.play().catch(e => console.log("Autoplay prevented:", e));
+            });
+            
+            container.addEventListener('mouseleave', () => {
+                video.pause();
+                video.currentTime = 0;
             });
         });
     </script>
