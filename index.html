@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abh1shyk | Motion Designer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --black: #000000;
@@ -14,8 +13,6 @@
             --gray-80: #333333;
             --gray-20: #cccccc;
             --gray-10: #e6e6e6;
-            --primary-blue: #007bff; /* A nice primary color for accents */
-            --dark-blue: #0056b3;
         }
 
         body {
@@ -28,22 +25,14 @@
             overflow-x: hidden;
         }
 
-        /* General Styling */
-        section {
-            padding: 5rem 5%;
-            position: relative;
-            z-index: 1;
+        /* 3D Transform Styles */
+        .perspective {
+            perspective: 1000px;
         }
 
-        h1, h2, h3, h4, h5, h6 {
-            color: var(--gray-90);
-            line-height: 1.2;
-            margin-top: 0;
-            margin-bottom: 1rem;
-        }
-
-        p {
-            margin-bottom: 1rem;
+        .transform-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
         }
 
         /* Navigation */
@@ -52,50 +41,36 @@
             top: 0;
             left: 0;
             width: 100%;
-            padding: 1rem 5%;
+            padding: 1.5rem 5%;
             background-color: rgba(0,0,0,0.9);
             z-index: 100;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transform: translateZ(50px);
         }
 
-        .navbar .logo {
+        .logo {
             color: var(--white);
-            text-decoration: none;
-            font-size: 1.8rem;
             font-weight: 700;
-            letter-spacing: 1px;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
         }
 
         .nav-links a {
             color: var(--white);
             text-decoration: none;
-            margin-left: 2rem;
             font-weight: 500;
             position: relative;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            background-color: var(--primary-blue);
-            bottom: -5px;
-            left: 0;
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
+            transition: all 0.3s ease;
         }
 
         .nav-links a:hover {
-            color: var(--primary-blue);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
         }
 
         /* Hero Section */
@@ -108,71 +83,66 @@
             color: var(--white);
             position: relative;
             overflow: hidden;
-            text-align: center;
         }
 
         .hero-content {
             position: relative;
             z-index: 2;
             padding: 0 5%;
-            max-width: 900px;
+            transform: translateZ(30px);
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        .hero .name {
-            font-size: clamp(2.8rem, 10vw, 5.5rem);
-            margin-bottom: 1rem;
-            line-height: 1;
-            text-shadow: 0 5px 15px rgba(0,0,0,0.4);
-            color: var(--white);
+        .name {
+            font-size: clamp(2.5rem, 10vw, 5rem);
+            margin-bottom: 1.5rem;
+            line-height: 0.9;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transform: translateZ(20px);
         }
 
-        .hero .bio {
-            font-size: clamp(1rem, 2.5vw, 1.3rem);
+        .bio {
+            font-size: 1.2rem;
+            max-width: 600px;
             margin-bottom: 2.5rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
             color: var(--gray-20);
+            transform: translateZ(15px);
         }
 
         .hero-button {
             display: inline-block;
-            padding: 1rem 3rem;
-            background-color: var(--primary-blue);
-            color: var(--white);
+            padding: 1rem 2.5rem;
+            background-color: var(--white);
+            color: var(--black);
             text-decoration: none;
             border-radius: 50px;
             font-weight: 600;
             font-size: 1.1rem;
             transition: all 0.3s ease;
+            transform: translateZ(20px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            border: none;
-            cursor: pointer;
         }
 
         .hero-button:hover {
-            background-color: var(--dark-blue);
-            transform: translateY(-3px);
+            transform: translateY(-3px) translateZ(20px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
 
-        /* Portfolio Grid */
-        #portfolio {
-            background: var(--gray-10);
-        }
-
-        #portfolio h2 {
+        /* Section Headings */
+        .section-heading {
             text-align: center;
+            font-size: 2.5rem;
             margin-bottom: 3rem;
-            font-size: clamp(2rem, 5vw, 3rem);
-            color: var(--gray-90);
+            transform: translateZ(20px);
         }
 
+        /* Portfolio Grid */
         .video-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Adjusted minmax for better sizing */
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -180,25 +150,68 @@
         .video-card {
             position: relative;
             overflow: hidden;
-            border-radius: 12px;
-            aspect-ratio: 16/9; /* Enforcing 16:9 ratio */
-            background-color: var(--gray-80); /* Placeholder background */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .video-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        /* Aspect Ratio Classes */
+        .ratio-16-9 {
+            aspect-ratio: 16/9;
+        }
+        
+        .ratio-9-16 {
+            aspect-ratio: 9/16;
+        }
+        
+        .ratio-1-1 {
+            aspect-ratio: 1/1;
+        }
+        
+        .ratio-4-5 {
+            aspect-ratio: 4/5;
         }
 
         .video-card video {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Ensures video covers the area, cropping if necessary */
-            display: block; /* Remove extra space below video */
-            transition: transform 0.3s ease;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .video-card:hover video {
+            transform: scale(1.1);
+        }
+
+        /* Video Overlay */
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-overlay i {
+            color: var(--white);
+            font-size: 2.5rem;
+        }
+
+        .video-card:hover .video-overlay {
+            opacity: 1;
         }
 
         /* Video Modal */
@@ -208,14 +221,14 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.95);
+            background-color: rgba(0,0,0,0.9);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.3s ease;
         }
 
         .modal.active {
@@ -227,384 +240,298 @@
             position: relative;
             max-width: 90%;
             max-height: 90%;
-            background: var(--black);
-            border-radius: 10px;
-            box-shadow: 0 0 50px rgba(0,0,0,0.7);
         }
 
         .modal-video {
-            width: 100%;
-            height: auto;
-            max-height: 85vh; /* Limit height to prevent overflow on smaller screens */
+            max-width: 100%;
+            max-height: 80vh;
             border-radius: 8px;
             display: block;
         }
 
         .close-modal {
             position: absolute;
-            top: 15px;
-            right: 20px;
+            top: -50px;
+            right: 0;
             color: white;
-            font-size: 2.5rem;
+            font-size: 2rem;
             cursor: pointer;
-            z-index: 1001;
-            transition: transform 0.2s ease;
+            transition: transform 0.3s ease;
         }
 
         .close-modal:hover {
             transform: rotate(90deg);
-            color: var(--primary-blue);
         }
 
-        /* About Section (New) */
-        #about {
+        /* Contact Section */
+        .contact {
+            padding: 5rem 0;
             background-color: var(--white);
             text-align: center;
-        }
-
-        #about h2 {
-            margin-bottom: 2rem;
-        }
-
-        #about p {
-            max-width: 800px;
-            margin: 0 auto 2rem auto;
-            font-size: 1.15rem;
-            color: var(--gray-80);
-        }
-
-        /* Services Section (New) */
-        #services {
-            background-color: var(--gray-90);
-            color: var(--white);
-            text-align: center;
-        }
-
-        #services h2 {
-            margin-bottom: 3rem;
-            color: var(--white);
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .service-card {
-            background-color: var(--gray-80);
-            padding: 2.5rem;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-        }
-
-        .service-card i {
-            font-size: 3rem;
-            color: var(--primary-blue);
-            margin-bottom: 1rem;
-        }
-
-        .service-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--white);
-        }
-
-        .service-card p {
-            color: var(--gray-20);
-            font-size: 1rem;
-        }
-
-
-        /* Contact Section (New) */
-        #contact {
-            background-color: var(--white);
-            text-align: center;
-        }
-
-        #contact h2 {
-            margin-bottom: 2rem;
         }
 
         .contact-info {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 3rem;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
         .contact-info a {
-            font-size: 1.2rem;
-            color: var(--primary-blue);
+            display: block;
+            color: var(--black);
             text-decoration: none;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
             transition: color 0.3s ease;
         }
 
         .contact-info a:hover {
-            color: var(--dark-blue);
-            text-decoration: underline;
+            color: var(--gray-80);
         }
 
         .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
             margin-top: 2rem;
         }
 
         .social-links a {
-            color: var(--gray-80);
-            font-size: 2rem;
-            margin: 0 1rem;
-            transition: color 0.3s ease, transform 0.3s ease;
+            color: var(--black);
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
         }
 
         .social-links a:hover {
-            color: var(--primary-blue);
-            transform: translateY(-3px);
+            transform: translateY(-5px);
         }
 
         /* Footer */
         footer {
-            background-color: var(--gray-90);
-            color: var(--gray-20);
+            padding: 2rem 0;
+            background-color: var(--black);
+            color: var(--white);
             text-align: center;
-            padding: 2rem 5%;
-            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateZ(0); }
+            50% { transform: translateY(-20px) translateZ(10px); }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
         }
 
         /* Responsive Adjustments */
         @media (max-width: 768px) {
-            .navbar {
-                padding: 1rem 3%;
-            }
-
-            .nav-links a {
-                margin-left: 1rem;
-                font-size: 0.9rem;
-            }
-
-            .hero-content {
-                padding: 0 3%;
-            }
-
-            .hero .name {
-                font-size: clamp(2.2rem, 12vw, 4.5rem);
-            }
-
-            .hero .bio {
-                font-size: 1rem;
-            }
-
-            .hero-button {
-                padding: 0.8rem 2rem;
-                font-size: 1rem;
-            }
-
             .video-grid {
                 grid-template-columns: 1fr;
-                padding: 0 3%;
+                padding: 1rem;
             }
-
-            section {
-                padding: 4rem 3%;
+            
+            .nav-links {
+                gap: 1rem;
             }
-
+            
             .modal-content {
                 max-width: 95%;
             }
-
-            .close-modal {
-                font-size: 2rem;
-                top: 10px;
-                right: 15px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .navbar .logo {
-                font-size: 1.5rem;
-            }
-
-            .nav-links {
-                display: none; /* Can implement a hamburger menu for mobile */
-            }
-
-            .hero .name {
-                margin-bottom: 1rem;
-            }
-
-            .hero .bio {
-                font-size: 0.9rem;
-                margin-bottom: 1.5rem;
-            }
-
-            .hero-button {
-                padding: 0.7rem 1.8rem;
-                font-size: 0.9rem;
-            }
-            .service-card {
-                padding: 1.5rem;
+            
+            .modal-video {
+                max-height: 60vh;
             }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
+    <nav class="navbar perspective">
         <a href="#" class="logo">ABH1SHYK</a>
         <div class="nav-links">
-            <a href="#about">About</a>
-            <a href="#services">Services</a>
-            <a href="#portfolio">Work</a>
-            <a href="#contact">Contact</a>
+            <a href="#portfolio" class="transform-3d">Work</a>
+            <a href="#contact" class="transform-3d">Contact</a>
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1 class="name">Motion Design <br>Crafted to Perfection</h1>
-            <p class="bio">As a 21-year-old creative, I specialize in crafting **dynamic motion graphics** and **viral content** that captivates audiences and drives engagement. Let's bring your vision to life.</p>
-            <a href="#portfolio" class="hero-button">View Portfolio</a>
+    <section class="hero perspective">
+        <div class="hero-content transform-3d">
+            <h1 class="name floating">Motion Design <br>Crafted to Perfection</h1>
+            <p class="bio">21-year-old creative specializing in dynamic motion graphics and viral content that captivates audiences.</p>
+            <a href="#portfolio" class="hero-button transform-3d">View Portfolio</a>
         </div>
     </section>
 
-    ---
-
-    <section id="about">
-        <h2>Who Am I?</h2>
-        <p>I'm Abhishyk, a passionate motion designer dedicated to transforming ideas into visually stunning and impactful animations. With a keen eye for detail and a commitment to storytelling, I help brands and individuals create memorable visual experiences that resonate with their audience. My work focuses on delivering high-quality, engaging content tailored to your specific needs, whether it's for social media, marketing campaigns, or brand identity.</p>
-    </section>
-
-    ---
-
-    <section id="services">
-        <h2>What I Offer</h2>
-        <div class="services-grid">
-            <div class="service-card">
-                <i class="fas fa-video"></i>
-                <h3>Motion Graphics</h3>
-                <p>Dynamic animations for intros, outros, explainers, and captivating visual stories.</p>
-            </div>
-            <div class="service-card">
-                <i class="fas fa-share-alt"></i>
-                <h3>Social Media Content</h3>
-                <p>Engaging video content optimized for platforms like Instagram, TikTok, and YouTube.</p>
-            </div>
-            <div class="service-card">
-                <i class="fas fa-hand-sparkles"></i>
-                <h3>Visual Effects (VFX)</h3>
-                <p>Enhancing footage with compelling visual effects to elevate your cinematic projects.</p>
-            </div>
-            <div class="service-card">
-                <i class="fas fa-lightbulb"></i>
-                <h3>Concept Development</h3>
-                <p>From initial idea to final animation, I help refine and bring your creative concepts to life.</p>
-            </div>
-        </div>
-    </section>
-
-    ---
-
-    <section id="portfolio">
-        <h2>Selected Work</h2>
+    <section id="portfolio" class="perspective">
+        <h2 class="section-heading">Selected Work</h2>
         <div class="video-grid">
-            <div class="video-card" onclick="openModal('videos/Motion Graphics 1.mp4')">
-                <video muted loop playsinline preload="metadata">
+            <!-- Motion Graphics 1.mp4 - 9:16 Vertical -->
+            <div class="video-card transform-3d ratio-9-16" onclick="openModal('videos/Motion Graphics 1.mp4')">
+                <video muted loop playsinline>
                     <source src="videos/Motion Graphics 1.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
                 </video>
+                <div class="video-overlay">
+                    <i class="fas fa-expand"></i>
+                </div>
             </div>
             
-            <div class="video-card" onclick="openModal('videos/Elon.mp4')">
-                <video muted loop playsinline preload="metadata">
+            <!-- Elon.mp4 - 16:9 Horizontal -->
+            <div class="video-card transform-3d ratio-16-9" onclick="openModal('videos/Elon.mp4')">
+                <video muted loop playsinline>
                     <source src="videos/Elon.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
                 </video>
+                <div class="video-overlay">
+                    <i class="fas fa-expand"></i>
+                </div>
             </div>
             
-            <div class="video-card" onclick="openModal('videos/Motion Graphics.mp4')">
-                <video muted loop playsinline preload="metadata">
+            <!-- Motion Graphics.mp4 - 9:16 Vertical -->
+            <div class="video-card transform-3d ratio-9-16" onclick="openModal('videos/Motion Graphics.mp4')">
+                <video muted loop playsinline>
                     <source src="videos/Motion Graphics.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
                 </video>
+                <div class="video-overlay">
+                    <i class="fas fa-expand"></i>
+                </div>
             </div>
             
-            <div class="video-card" onclick="openModal('videos/timelss.mp4')">
-                <video muted loop playsinline preload="metadata">
+            <!-- timelss.mp4 - 1:1 Square -->
+            <div class="video-card transform-3d ratio-1-1" onclick="openModal('videos/timelss.mp4')">
+                <video muted loop playsinline>
                     <source src="videos/timelss.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
                 </video>
+                <div class="video-overlay">
+                    <i class="fas fa-expand"></i>
+                </div>
             </div>
             
-            <div class="video-card" onclick="openModal('videos/don.mp4')">
-                <video muted loop playsinline preload="metadata">
+            <!-- don.mp4 - 4:5 Vertical -->
+            <div class="video-card transform-3d ratio-4-5" onclick="openModal('videos/don.mp4')">
+                <video muted loop playsinline>
                     <source src="videos/don.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
                 </video>
+                <div class="video-overlay">
+                    <i class="fas fa-expand"></i>
+                </div>
             </div>
             
-            <div class="video-card" onclick="openModal('videos/hiddid.mp4')">
-                <video muted loop playsinline preload="metadata">
+            <!-- hiddid.mp4 - 16:9 Horizontal -->
+            <div class="video-card transform-3d ratio-16-9" onclick="openModal('videos/hiddid.mp4')">
+                <video muted loop playsinline>
                     <source src="videos/hiddid.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
                 </video>
+                <div class="video-overlay">
+                    <i class="fas fa-expand"></i>
+                </div>
+            </div>
+            
+            <!-- arya.mp4 - 9:16 Vertical -->
+            <div class="video-card transform-3d ratio-9-16" onclick="openModal('videos/arya.mp4')">
+                <video muted loop playsinline>
+                    <source src="videos/arya.mp4" type="video/mp4">
+                </video>
+                <div class="video-overlay">
+                    <i class="fas fa-expand"></i>
+                </div>
             </div>
         </div>
     </section>
 
-    ---
-
-    <section id="contact">
-        <h2>Get in Touch</h2>
-        <p>Ready to collaborate on your next project? Feel free to reach out!</p>
+    <section id="contact" class="contact">
+        <h2 class="section-heading">Get In Touch</h2>
         <div class="contact-info">
-            <a href="mailto:your-email@example.com"><i class="fas fa-envelope"></i> your-email@example.com</a>
-            <a href="tel:+911234567890"><i class="fas fa-phone"></i> +91 12345 67890</a>
-        </div>
-        <div class="social-links">
-            <a href="#" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="mailto:abhiramkuttutp@gmail.com">
+                <i class="fas fa-envelope"></i> abhiramkuttutp@gmail.com
+            </a>
+            <a href="tel:+919562731821">
+                <i class="fas fa-phone"></i> +91 9562731821
+            </a>
+            <div class="social-links">
+                <a href="https://instagram.com/abh1shyk" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://wa.me/9562731821" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
             </div>
+        </div>
     </section>
-
-    ---
 
     <footer>
-        <p>&copy; 2025 Abh1shyk. All rights reserved.</p>
+        <div class="container">
+            <p>© 2023 Abh1shyk. All rights reserved.</p>
+        </div>
     </footer>
 
+    <!-- Video Modal -->
     <div class="modal" id="videoModal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">&times;</span>
-            <video class="modal-video" controls autoplay id="modalVideo" playsinline>
+            <video class="modal-video" controls id="modalVideo">
                 Your browser does not support the video tag.
             </video>
         </div>
     </div>
 
     <script>
-        // Removed excessive 3D transform for a cleaner look.
-        // The previous 3D transform on mousemove was applied to all .transform-3d elements,
-        // which included the navbar and hero elements. This can be distracting.
-        // I've kept a subtle hover effect on video cards in CSS.
+        // 3D hover effects
+        document.addEventListener('mousemove', function(e) {
+            const cards = document.querySelectorAll('.transform-3d');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const angleX = (y - centerY) / 20;
+                const angleY = (centerX - x) / 20;
+                
+                card.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg) translateZ(10px)`;
+            });
+        });
 
-        // Video Modal functionality (remains largely the same, added preload attribute)
+        // Reset 3D transform when mouse leaves
+        document.querySelectorAll('.transform-3d').forEach(el => {
+            el.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateZ(0)';
+            });
+        });
+
+        // Video Modal functionality
         function openModal(videoSrc) {
             const modal = document.getElementById('videoModal');
             const modalVideo = document.getElementById('modalVideo');
             
-            modalVideo.src = videoSrc;
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
-            modalVideo.play(); // Ensure video plays immediately
+            // Create temporary video element to detect aspect ratio
+            const tempVideo = document.createElement('video');
+            tempVideo.src = videoSrc;
+            
+            tempVideo.onloadedmetadata = function() {
+                const videoWidth = tempVideo.videoWidth;
+                const videoHeight = tempVideo.videoHeight;
+                const aspectRatio = videoWidth / videoHeight;
+                const modalContent = document.querySelector('.modal-content');
+                
+                // Set modal dimensions based on aspect ratio
+                if (aspectRatio > 1) {
+                    // Landscape (wider than tall)
+                    modalContent.style.width = 'min(80vw, ' + (80 * aspectRatio) + 'vh)';
+                    modalContent.style.height = 'auto';
+                } else {
+                    // Portrait (taller than wide) or square
+                    modalContent.style.height = 'min(80vh, ' + (80 / aspectRatio) + 'vw)';
+                    modalContent.style.width = 'auto';
+                }
+                
+                modalVideo.src = videoSrc;
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                // Play video when modal opens
+                modalVideo.onloadedmetadata = function() {
+                    modalVideo.play().catch(e => console.log("Autoplay prevented:", e));
+                };
+            };
         }
 
         function closeModal() {
@@ -612,9 +539,9 @@
             const modalVideo = document.getElementById('modalVideo');
             
             modalVideo.pause();
-            modalVideo.currentTime = 0; // Reset video to start
+            modalVideo.currentTime = 0;
             modal.classList.remove('active');
-            document.body.style.overflow = 'auto'; // Re-enable scrolling
+            document.body.style.overflow = 'auto';
         }
 
         // Close modal when clicking outside
@@ -631,14 +558,13 @@
             }
         });
 
-        // Autoplay and loop video previews on hover for portfolio cards
-        document.querySelectorAll('.video-card video').forEach(video => {
-            video.addEventListener('mouseenter', () => {
-                video.play();
-            });
-            video.addEventListener('mouseleave', () => {
-                video.pause();
-                video.currentTime = 0; // Reset video to beginning
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
             });
         });
     </script>
