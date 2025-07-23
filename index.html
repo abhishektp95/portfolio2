@@ -3,841 +3,294 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abh1shyk | Motion Designer</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Define your new color palette using CSS variables */
-        :root {
-            --darkest-grey: #0a0908;
-            --dark-blue-grey: #22333b;
-            --light-cream: #eae0d5;
-            --muted-gold: #c6ac8f;
-            --earthy-brown: #5e503f;
-
-            /* Mapped to existing variable names for consistency */
-            --primary: var(--muted-gold);
-            --secondary: var(--earthy-brown);
-            --bg: var(--darkest-grey);
-            --text: var(--light-cream);
-            --card-bg: var(--dark-blue-grey); /* New variable for card/navbar background */
-        }
-
-        /* Helper for RGBA conversion in JS */
-        :root {
-            --light-cream-rgb: 234, 224, 213; /* For text-shadow rgba() */
-            --dark-blue-grey-rgb: 34, 51, 59;
-            --muted-gold-rgb: 198, 172, 143;
-            --earthy-brown-rgb: 94, 80, 63; /* Added for the button hover */
-            --darkest-grey-rgb: 10, 9, 8;
-        }
-
-        body {
-            font-family: 'SF Pro Display', -apple-system, sans-serif;
-            color: var(--text);
-            margin: 0;
-            min-height: 100vh;
-            overflow-x: hidden;
-            background-color: var(--bg);
-            line-height: 1.6; /* Slightly improved line height for readability */
-        }
-
-        /* Hero section with video background */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 10%;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
-            filter: blur(8px) brightness(0.4); /* Slightly darker video for better contrast */
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            display: flex; /* Added for vertical alignment of button */
-            flex-direction: column; /* Added for vertical alignment of button */
-            align-items: center; /* Added for horizontal alignment of button */
-        }
-
-        .name {
-            font-size: clamp(3rem, 10vw, 6rem);
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            margin-bottom: 1rem;
-            line-height: 0.9;
-            color: var(--text); /* Use light cream for name */
-            text-shadow:
-                0 0 20px rgba(var(--light-cream-rgb),0.5), /* Glow from light cream */
-                0 0 40px rgba(var(--light-cream-rgb),0.3);
-            opacity: 0;
-            transform: scale(0.9);
-            animation: popIn 1s 0.3s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .bio {
-            max-width: 500px;
-            line-height: 1.6;
-            opacity: 0;
-            font-size: 1.1rem;
-            transform: translateY(20px);
-            animation: fadeInUp 1s 0.8s forwards;
-            color: var(--text);
-            margin-bottom: 2.5rem; /* Added space between bio and button */
-        }
-
-        /* New button style */
-        .hero-button {
-            display: inline-block;
-            padding: 1rem 2.5rem; /* Adjusted padding */
-            background-color: white; /* White background as requested */
-            color: var(--darkest-grey); /* Dark text for contrast */
-            text-decoration: none;
-            border-radius: 50px; /* Fully rounded button */
-            font-weight: 600;
-            font-size: 1.1rem; /* Slightly larger font */
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Soft shadow */
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 1s 1s forwards; /* Animated to appear after bio */
-        }
-
-        .hero-button:hover {
-            background-color: var(--primary); /* Muted gold on hover */
-            color: var(--text); /* Light text on hover */
-            transform: translateY(-5px) scale(1.05); /* Lift and slight scale */
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
-        }
-
-        /* Scroll progress bar */
-        .progress-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: transparent;
-            z-index: 1000;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            width: 0%;
-            transition: width 0.1s;
-        }
-
-        /* Navigation */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            padding: 2rem 5%;
-            position: fixed;
-            width: 90%;
-            z-index: 100;
-            opacity: 0;
-            transform: translateY(-20px);
-            animation: fadeInDown 0.8s 0.5s forwards;
-            background: rgba(var(--dark-blue-grey-rgb),0.7); /* Use dark-blue-grey with opacity */
-            backdrop-filter: blur(15px); /* Stronger blur */
-            border-bottom: 1px solid rgba(var(--light-cream-rgb),0.08); /* Subtle border with cream */
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* Soft shadow */
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 2.5rem; /* Slightly more space */
-        }
-
-        .nav-links a {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 500;
-            position: relative;
-            opacity: 0.9;
-            transition: opacity 0.3s, color 0.3s;
-        }
-
-        .nav-links a:hover {
-            opacity: 1;
-            color: var(--primary); /* Highlight on hover */
-        }
-
-        /* Services - 3D cards */
-        .services {
-            padding: 10rem 10%;
-            background: var(--bg);
-            position: relative;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 3.5rem; /* More space */
-            font-size: 2.5rem; /* Larger section title */
-            font-weight: 600;
-            color: var(--text);
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s forwards;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjusted min width */
-            gap: 3rem; /* Larger gap */
-            perspective: 1000px;
-        }
-
-        .service-card {
-            background: var(--card-bg); /* Use dark-blue-grey */
-            border-radius: 16px;
-            padding: 2.5rem; /* More padding */
-            border: 1px solid rgba(var(--light-cream-rgb),0.1); /* Subtle border with cream */
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform-style: preserve-3d;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(12px);
-            opacity: 0;
-            transform: translateY(30px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2); /* Deeper shadow */
-        }
-        .service-card:hover {
-            transform: translateY(-15px) rotateX(0deg) rotateY(0deg) scale(1.02); /* More pronounced lift */
-            box-shadow: 0 15px 40px rgba(0,0,0,0.35); /* Stronger shadow on hover */
-        }
-        .service-card h3 {
-            color: var(--primary); /* Muted gold for headings */
-            font-size: 1.6rem;
-            margin-bottom: 1rem;
-        }
-        .service-card p {
-            color: rgba(var(--light-cream-rgb),0.8); /* Slightly less opaque text */
-        }
-
-        /* Video Showcase */
-        .video-showcase {
-            padding: 8rem 0;
-            background-color: var(--darkest-grey); /* Pure black background */
-            position: relative;
-        }
-
-        .video-showcase::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle, rgba(var(--muted-gold-rgb), 0.1) 10%, transparent 70%); /* Subtle gold glow */
-            opacity: 0;
-            animation: glow 3s infinite alternate;
-            z-index: -1;
-        }
-         
-        @keyframes glow {
-            0% { opacity: 0.08; } /* Subtler glow */
-            100% { opacity: 0.18; }
-        }
-
-        /* Container for categorized videos and their headings */
-        .video-sections {
-            display: flex;
-            flex-direction: column;
-            gap: 5rem; /* More space between sections */
-            margin-top: 3.5rem;
-        }
-
-        .category-heading {
-            text-align: left;
-            margin-bottom: 1.5rem; /* Reduced margin, as grid padding handles spacing below */
-            font-size: 2.2rem; /* Consistent with section title */
-            font-weight: 600;
-            color: var(--text);
-            /* ENHANCED GLOW EFFECT */
-            text-shadow:
-                0 0 15px rgba(var(--light-cream-rgb),0.8), /* More intense, slightly wider */
-                0 0 30px rgba(var(--light-cream-rgb),0.5), /* More intense, wider */
-                0 0 45px rgba(var(--light-cream-rgb),0.2); /* New, subtle, even wider layer for a true glow */
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s forwards;
-            padding: 0 10%;
-            box-sizing: border-box;
-        }
-         @media (max-width: 768px) {
-            .category-heading {
-                text-align: center;
-                padding: 0 5%;
-            }
-        }
-
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjusted min width */
-            grid-auto-rows: minmax(auto, 300px);
-            gap: 2.5rem; /* More gap */
-            padding: 0 10%;
-        }
-
-        /* Media query for larger screens to apply specific grid layout */
-        @media (min-width: 992px) {
-            .video-grid {
-                grid-template-columns: repeat(3, 1fr);
-                grid-auto-rows: minmax(auto, 280px);
-            }
-             /* Custom grid positioning for 9:16 section to make some videos taller */
-            .video-grid.vertical-videos .video-card:nth-child(1) { /* Motion Graphics 1.mp4 */
-                grid-column: 1 / span 1;
-                grid-row: 1 / span 2;
-            }
-            .video-grid.vertical-videos .video-card:nth-child(2) { /* timelss.mp4 */
-                grid-column: 2 / span 1;
-                grid-row: 1 / span 2;
-            }
-             .video-grid.vertical-videos .video-card:nth-child(3) { /* Motion Graphics.mp4 */
-                grid-column: 3 / span 1;
-                grid-row: 1 / span 2;
-            }
-        }
-
-
-        .video-card {
-            border-radius: 12px;
-            overflow: hidden;
-            transform: translateY(20px);
-            opacity: 0;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4); /* Deeper shadow */
-            transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
-            background: var(--card-bg); /* Use dark blue-grey for video cards too */
-        }
-
-        .video-card:hover {
-            transform: translateY(-8px) scale(1.02); /* Slightly more lift and scale */
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-        }
-
-        .video-container {
-            position: relative;
-            padding-top: 56.25%; /* 16:9 ratio */
-            background: #000;
-            overflow: hidden;
-        }
-
-        .video-container.vertical {
-            padding-top: 177.78%; /* 9:16 ratio */
-        }
-
-        .video-container video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            /* Added transform to slightly scale video to cover any rendering gaps */
-            transform: scale(1.005); 
-            transition: transform 0.4s ease-in-out;
-        }
-
-        .video-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: rgba(var(--darkest-grey-rgb),0.7); /* Use darkest-grey for overlay */
-            opacity: 1;
-            transition: opacity 0.3s ease-in-out; /* Slightly slower overlay transition */
-        }
-        
-        .video-overlay i {
-            font-size: 2.5rem; /* Larger icon */
-            margin-bottom: 0.6rem;
-            color: var(--primary); /* Muted gold icon */
-        }
-
-        .video-overlay h3 {
-            color: var(--text); /* Cream text */
-            font-size: 1.5rem; /* Slightly larger heading */
-            margin: 0;
-            font-weight: 500;
-        }
-
-        /* Hover effects */
-        .video-card:hover .video-overlay {
-            opacity: 0;
-        }
-
-        .video-card:hover video {
-            transform: scale(1.05); /* More zoom on hover */
-        }
-
-        /* Contact section with black background */
-        #contact {
-            padding: 10rem 10%;
-            text-align: center;
-            background: var(--darkest-grey); /* Pure black background */
-            position: relative;
-        }
-
-        /* Contact Info Styles */
-        .contact-info {
-            margin-top: 2.5rem; /* More space */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.8rem; /* More space between contact items */
-        }
-
-        .contact-info p {
-            font-size: 1.1rem; /* Slightly larger text */
-            line-height: 1.7;
-            max-width: 650px;
-            margin-bottom: 1.5rem; /* More space below introductory text */
-            color: rgba(var(--light-cream-rgb),0.9); /* Slightly less opaque */
-        }
-
-        .contact-info a {
-            color: var(--primary); /* Use primary color for links */
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.2rem; /* Larger font size */
-            transition: color 0.3s ease-in-out;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem; /* More space between icon and text */
-        }
-
-        .contact-info a:hover {
-            color: var(--secondary); /* Change color to earthy brown on hover */
-            text-decoration: underline;
-        }
-
-        .contact-social-links {
-            display: flex;
-            gap: 2rem; /* More space between social icons */
-            margin-top: 1.5rem;
-        }
-
-        .contact-social-links .social-icon {
-            font-size: 2rem; /* Larger social icons */
-            color: var(--text); /* Default icon color */
-            transition: color 0.3s ease-in-out;
-        }
-
-        .contact-social-links .social-icon:hover {
-            color: var(--primary); /* Hover color to muted gold */
-        }
-
-
-        /* Social links (fixed) */
-        .social-links {
-            position: fixed;
-            bottom: 2.5rem; /* Slightly higher */
-            right: 2.5rem; /* Slightly further from edge */
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem; /* Slightly more space */
-            z-index: 100;
-        }
-
-        .social-link {
-            width: 55px; /* Slightly larger */
-            height: 55px; /* Slightly larger */
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(45deg, var(--primary), var(--secondary)); /* Muted gold to earthy brown */
-            color: white;
-            text-decoration: none;
-            font-size: 1.3rem; /* Larger icon */
-            box-shadow: 0 8px 20px rgba(0,0,0,0.35); /* Stronger shadow */
-            transition: transform 0.3s ease-in-out;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .social-link:nth-child(1) { animation: fadeInUp 0.8s 1.0s forwards; }
-        .social-link:nth-child(2) { animation: fadeInUp 0.8s 1.2s forwards; }
-
-
-        .social-link:hover {
-            transform: translateY(-8px) scale(1.1); /* More pronounced lift and scale */
-            box-shadow: 0 12px 25px rgba(0,0,0,0.45);
-        }
-
-        /* Floating shapes */
-        .shape {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(80px); /* More blur */
-            opacity: 0.15; /* More visible */
-            z-index: -1;
-        }
-
-        .shape-1 {
-            width: 350px; /* Larger */
-            height: 350px;
-            background: var(--primary); /* Muted gold */
-            top: 20%;
-            right: 10%;
-            animation: float 9s ease-in-out infinite; /* Slightly longer float */
-        }
-
-        .shape-2 {
-            width: 250px; /* Larger */
-            height: 250px;
-            background: var(--secondary); /* Earthy brown */
-            bottom: 20%;
-            left: 10%;
-            animation: float 11s ease-in-out infinite reverse; /* Slightly longer float */
-        }
-
-        /* Moving White Gradient Overlay */
-        .moving-gradient-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, rgba(var(--light-cream-rgb), 0.05) 0%, transparent 70%); /* Subtle cream gradient */
-            background-size: 300% 300%; /* Larger size for movement */
-            background-position: 50% 50%; /* Start at center */
-            pointer-events: none;
-            z-index: -1; /* Ensure it stays behind content */
-            opacity: 0.8; /* Overall transparency */
-            animation: moveSubtleGradient 60s linear infinite alternate; /* Very slow, linear, alternating movement */
-        }
-
-        @keyframes moveSubtleGradient {
-            0% { background-position: 0% 0%; }
-            100% { background-position: 100% 100%; }
-        }
-
-        /* Animations */
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); } /* More movement and slight rotation */
-        }
-
-        @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.9); }
-            80% { transform: scale(1.04); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(25px); } /* More pronounced initial movement */
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-25px); } /* More pronounced initial movement */
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Scroll-triggered animations */
-        .animate-on-scroll {
-            animation-fill-mode: both;
-        }
-    </style>
+    <title>Your Name - Video Editor & Content Creator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/images/favicon.png" type="image/png">
 </head>
 <body>
+
     <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
     </div>
 
-    <div class="social-links">
-        <a href="https://instagram.com/abh1shyk" class="social-link" aria-label="Instagram">
-            <i class="fab fa-instagram"></i>
-        </a>
-        <a href="https://wa.me/9562731821" class="social-link" aria-label="WhatsApp">
-            <i class="fab fa-whatsapp"></i>
-        </a>
-    </div>
-
     <div class="shape shape-1"></div>
     <div class="shape shape-2"></div>
-    
+
+    <div class="moving-gradient-overlay"></div>
+
     <nav class="navbar">
+        <div class="logo">
+            <a href="#hero">YourName.</a>
+        </div>
         <div class="nav-links">
             <a href="#services">Services</a>
-            <a href="#contact">Connect</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#contact">Contact</a>
         </div>
     </nav>
-    
-    <section class="hero">
-        <video class="hero-video" autoplay muted loop playsinline>
-            <source src="videos/background.mp4" type="video/mp4">
+
+    <section class="hero" id="hero">
+        <video autoplay muted loop playsinline class="hero-video" preload="auto">
+            <source src="assets/videos/hero-background.mp4" type="video/mp4">
+            Your browser does not support the video tag.
         </video>
         <div class="hero-content">
-            <h1 class="name">Abh1shyk</h1>
-            <p class="bio">
-                I'm a 21-year-old video editor from Kerala specializing in After Effects with a passion for creating visually stunning content.
-                With expertise in motion graphics and social media content, I help creators and brands tell their stories through engaging visuals.
+            <h1 class="name animate-on-scroll" data-animation="popIn">Your Name</h1>
+            <p class="bio animate-on-scroll" data-animation="fadeInUp">
+                A passionate video editor and content creator, transforming raw footage into captivating stories.
             </p>
-            <a href="#portfolio" class="hero-button animate-on-scroll" style="animation-delay: 1s;">View My Edits</a>
+            <a href="#portfolio" class="hero-button animate-on-scroll" data-animation="fadeInUp">View My Work</a>
         </div>
     </section>
 
-    <section id="services" class="services">
-        <h2 class="section-title animate-on-scroll">My Creative Services</h2>
+    <section class="services" id="services">
+        <div class="section-title animate-on-scroll" data-animation="fadeInUp">
+            <h2>What I Do</h2>
+        </div>
         <div class="services-grid">
-            <div class="service-card animate-on-scroll" data-service="music" style="animation-delay: 0.2s">
-                <h3>Music Visualization</h3>
-                <p>Audio-reactive animations that bring your tracks to life</p>
+            <div class="service-card animate-on-scroll" data-animation="fadeInUp" data-delay="0.2s">
+                <h3>Video Editing</h3>
+                <p>Crafting compelling narratives from your raw footage, ensuring a seamless and engaging viewing experience.</p>
             </div>
-
-            <div class="service-card animate-on-scroll" data-service="motion" style="animation-delay: 0.4s">
+            <div class="service-card animate-on-scroll" data-animation="fadeInUp" data-delay="0.4s">
+                <h3>Content Creation</h3>
+                <p>Developing unique concepts and producing high-quality video content tailored to your brand and audience.</p>
+            </div>
+            <div class="service-card animate-on-scroll" data-animation="fadeInUp" data-delay="0.6s">
                 <h3>Motion Graphics</h3>
-                <p>Cinematic titles and dynamic branding elements</p>
+                <p>Adding dynamic visual elements and animations to elevate your videos and capture attention.</p>
             </div>
-
-            <div class="service-card animate-on-scroll" data-service="social" style="animation-delay: 0.6s">
-                <h3>Social Media Edits</h3>
-                <p>Trending edits optimized for maximum engagement</p>
+            <div class="service-card animate-on-scroll" data-animation="fadeInUp" data-delay="0.8s">
+                <h3>Color Grading</h3>
+                <p>Enhancing the visual mood and consistency of your footage with professional color correction and grading.</p>
             </div>
-
-            <div class="service-card animate-on-scroll" data-service="reels" style="animation-delay: 0.8s">
-                <h3>Video Reels</h3>
-                <p>High-energy content designed to go viral</p>
+            <div class="service-card animate-on-scroll" data-animation="fadeInUp" data-delay="1.0s">
+                <h3>Sound Design</h3>
+                <p>Improving audio quality, adding sound effects, and mixing for a rich and immersive auditory experience.</p>
+            </div>
+            <div class="service-card animate-on-scroll" data-animation="fadeInUp" data-delay="1.2s">
+                <h3>Short-Form Video</h3>
+                <p>Specializing in engaging short-form content for platforms like TikTok, Reels, and YouTube Shorts.</p>
             </div>
         </div>
-    </section>
-
-    <section id="tools" class="services"> <h2 class="section-title animate-on-scroll">My Toolkit</h2>
-        <div class="services-grid"> <div class="service-card animate-on-scroll" style="animation-delay: 0.2s">
-                <h3><i class="fas fa-laptop-code"></i> Adobe After Effects</h3>
-                <p>Mastery in advanced motion graphics, visual effects, and compositing. (AE 2025 Ready)</p>
-            </div>
-            </div>
     </section>
 
     <section class="video-showcase" id="portfolio">
-        <div class="moving-gradient-overlay"></div> <h2 class="section-title animate-on-scroll">My Work</h2>
-        
-        <div class="video-sections">
-            <h3 class="category-heading animate-on-scroll" style="animation-delay: 0.2s;">9:16 Edits</h3>
-            <div class="video-grid vertical-videos">
-                
-                <div class="video-card animate-on-scroll" style="animation-delay: 0.4s">
-                    <div class="video-container vertical">
-                        <video muted loop playsinline>
-                            <source src="videos/Motion Graphics 1.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-overlay">
-                            <i class="fas fa-podcast"></i>
-                            <h3>Podcast Reel</h3>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="video-card animate-on-scroll" style="animation-delay: 0.6s">
-                    <div class="video-container vertical">
-                        <video muted loop playsinline>
-                            <source src="videos/Motion Graphics.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-overlay">
-                            <i class="fas fa-podcast"></i>
-                            <h3>Podcast Reel</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="video-card animate-on-scroll" style="animation-delay: 0.8s">
-                    <div class="video-container vertical">
-                        <video muted loop playsinline>
-                            <source src="videos/timelss.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-overlay">
-                            <i class="fas fa-camera"></i>
-                            <h3>Modeling Edit</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <h3 class="category-heading animate-on-scroll" style="animation-delay: 1.0s;">16:9 Edits</h3>
-            <div class="video-grid">
-                
-                <div class="video-card animate-on-scroll" style="animation-delay: 1.2s">
-                    <div class="video-container">
-                        <video muted loop playsinline>
-                            <source src="videos/don.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-overlay">
-                            <i class="fas fa-camera"></i>
-                            <h3>Modeling Edit</h3>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="video-card animate-on-scroll" style="animation-delay: 1.4s">
-                    <div class="video-container">
-                        <video muted loop playsinline>
-                            <source src="videos/hiddid.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-overlay">
-                            <i class="fas fa-camera"></i>
-                            <h3>Modeling Edit</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="video-card animate-on-scroll" style="animation-delay: 1.6s">
-                    <div class="video-container">
-                        <video muted loop playsinline>
-                            <source src="videos/arya.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-overlay">
-                            <i class="fas fa-camera"></i>
-                            <h3>Modeling Edit</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="section-title animate-on-scroll" data-animation="fadeInUp">
+            <h2>My Work</h2>
         </div>
+
+        <div class="video-sections">
+            <div class="category-heading animate-on-scroll" data-animation="fadeInUp">
+                <h3>Vertical Edits (9:16)</h3>
+            </div>
+            <div class="video-grid vertical-videos">
+                <div class="video-card animate-on-scroll" data-animation="fadeInUp" data-delay="0.2s">
+                    <div class="video-container vertical">
+                        <video loop muted preload="none" poster="assets/images/placeholder-vertical1.jpg">
+                            <source src="assets/videos/edit1.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-overlay">
+                            <i class="fas fa-play"></i>
+                            <h3>Product Showcase</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card animate-on-scroll" data-animation="fadeInUp" data-delay="0.4s">
+                    <div class="video-container vertical">
+                        <video loop muted preload="none" poster="assets/images/placeholder-vertical2.jpg">
+                            <source src="assets/videos/edit2.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-overlay">
+                            <i class="fas fa-play"></i>
+                            <h3>Travel Vlog</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card animate-on-scroll" data-animation="fadeInUp" data-delay="0.6s">
+                    <div class="video-container vertical">
+                        <video loop muted preload="none" poster="assets/images/placeholder-vertical3.jpg">
+                            <source src="assets/videos/edit3.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-overlay">
+                            <i class="fas fa-play"></i>
+                            <h3>Fashion Reel</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card animate-on-scroll" data-animation="fadeInUp" data-delay="0.8s">
+                    <div class="video-container vertical">
+                        <video loop muted preload="none" poster="assets/images/placeholder-vertical4.jpg">
+                            <source src="assets/videos/edit4.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-overlay">
+                            <i class="fas fa-play"></i>
+                            <h3>Workout Promo</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card animate-on-scroll" data-animation="fadeInUp" data-delay="1.0s">
+                    <div class="video-container vertical">
+                        <video loop muted preload="none" poster="assets/images/placeholder-vertical5.jpg">
+                            <source src="assets/videos/edit5.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-overlay">
+                            <i class="fas fa-play"></i>
+                            <h3>Behind the Scenes</h3>
+                        </div>
+                    </div>
+                </div>
+                 <div class="video-card animate-on-scroll" data-animation="fadeInUp" data-delay="1.2s">
+                    <div class="video-container vertical">
+                        <video loop muted preload="none" poster="assets/images/placeholder-vertical6.jpg">
+                            <source src="assets/videos/edit6.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-overlay">
+                            <i class="fas fa-play"></i>
+                            <h3>Quick Tip</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-heading animate-on-scroll" data-animation="fadeInUp">
+                <h3>Standard Edits (16:9)</h3>
+            </div>
+            <div class="video-grid">
+                <div class="video-card animate-on-scroll" data-animation="fadeInUp" data-delay="0.2s">
+                    <div class="video-container">
+                        <video loop muted preload="none" poster="assets/images/placeholder-standard1.jpg">
+                            <source src="assets/videos/standard-edit1.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-overlay">
+                            <i class="fas fa-play"></i>
+                            <h3>Corporate Explainer</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card animate-on-scroll" data-animation="fadeInUp" data-delay="0.4s">
+                    <div class="video-container">
+                        <video loop muted preload="none" poster="assets/images/placeholder-standard2.jpg">
+                            <source src="assets/videos/standard-edit2.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-overlay">
+                            <i class="fas fa-play"></i>
+                            <h3>Event Highlight</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card animate-on-scroll" data-animation="fadeInUp" data-delay="0.6s">
+                    <div class="video-container">
+                        <video loop muted preload="none" poster="assets/images/placeholder-standard3.jpg">
+                            <source src="assets/videos/standard-edit3.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-overlay">
+                            <i class="fas fa-play"></i>
+                            <h3>Real Estate Tour</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card animate-on-scroll" data-animation="fadeInUp" data-delay="0.8s">
+                    <div class="video-container">
+                        <video loop muted preload="none" poster="assets/images/placeholder-standard4.jpg">
+                            <source src="assets/videos/standard-edit4.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-overlay">
+                            <i class="fas fa-play"></i>
+                            <h3>Interview Snippet</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card animate-on-scroll" data-animation="fadeInUp" data-delay="1.0s">
+                    <div class="video-container">
+                        <video loop muted preload="none" poster="assets/images/placeholder-standard5.jpg">
+                            <source src="assets/videos/standard-edit5.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-overlay">
+                            <i class="fas fa-play"></i>
+                            <h3>Food Review</h3>
+                        </div>
+                    </div>
+                </div>
+                 <div class="video-card animate-on-scroll" data-animation="fadeInUp" data-delay="1.2s">
+                    <div class="video-container">
+                        <video loop muted preload="none" poster="assets/images/placeholder-standard6.jpg">
+                            <source src="assets/videos/standard-edit6.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-overlay">
+                            <i class="fas fa-play"></i>
+                            <h3>Short Documentary</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-heading animate-on-scroll" data-animation="fadeInUp">
+                <h3>Elon (9:16)</h3>
+            </div>
+            <div class="video-grid vertical-videos">
+                <div class="video-card animate-on-scroll" data-animation="fadeInUp" data-delay="0.2s">
+                    <div class="video-container vertical">
+                        <video loop muted preload="none" poster="assets/images/placeholder-elon.jpg">
+                            <source src="assets/videos/Elon.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-overlay">
+                            <i class="fas fa-play"></i>
+                            <h3>Elon Musk Edit</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
     </section>
 
     <section id="contact">
-        <div class="moving-gradient-overlay"></div> <h2 class="section-title animate-on-scroll" style="animation-delay: 0.2s">Let's Create Together</h2>
+        <div class="section-title animate-on-scroll" data-animation="fadeInUp">
+            <h2>Get In Touch</h2>
+        </div>
         <div class="contact-info">
-            <p class="animate-on-scroll" style="animation-delay: 0.4s">
-                Have a project in mind or want to discuss potential collaboration? Feel free to reach out directly via email, phone, or social media.
+            <p class="animate-on-scroll" data-animation="fadeInUp" data-delay="0.2s">
+                Ready to bring your vision to life? Let's create something amazing together.
+                Feel free to reach out for inquiries, collaborations, or just to say hello!
             </p>
-            <a href="mailto:abhiramkuttutp@gmail.com" class="animate-on-scroll" style="animation-delay: 0.6s">
-                <i class="fas fa-envelope"></i> abhiramkuttutp@gmail.com
+            <a href="mailto:your.email@example.com" class="animate-on-scroll" data-animation="fadeInUp" data-delay="0.4s">
+                <i class="fas fa-envelope"></i> your.email@example.com
             </a>
-            <a href="tel:+919562731821" class="animate-on-scroll" style="animation-delay: 0.8s">
-                <i class="fas fa-phone"></i> +91 9562731821
+            <a href="tel:+1234567890" class="animate-on-scroll" data-animation="fadeInUp" data-delay="0.6s">
+                <i class="fas fa-phone"></i> +1 (234) 567-890
             </a>
-            <p class="animate-on-scroll" style="margin-top: 1.5rem; margin-bottom: 0.5rem; animation-delay: 1s;">Follow Me</p>
-            <div class="contact-social-links animate-on-scroll" style="animation-delay: 1.2s;">
-                <a href="https://instagram.com/abh1shyk" target="_blank" aria-label="Instagram">
-                    <i class="fab fa-instagram social-icon"></i>
-                </a>
-                <a href="https://wa.me/9562731821" target="_blank" aria-label="WhatsApp">
-                    <i class="fab fa-whatsapp social-icon"></i>
-                </a>
+            <div class="contact-social-links animate-on-scroll" data-animation="fadeInUp" data-delay="0.8s">
+                <a href="https://www.instagram.com/yourprofile" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/yourchannel" target="_blank" class="social-icon"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.linkedin.com/in/yourprofile" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
             </div>
         </div>
     </section>
 
-    <script>
-        // JavaScript for dynamic effects and interactions
+    <div class="social-links">
+        <a href="https://www.instagram.com/yourprofile" target="_blank" class="social-link animate-on-scroll" data-animation="fadeInUp" data-delay="1.0s">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/yourprofile" target="_blank" class="social-link animate-on-scroll" data-animation="fadeInUp" data-delay="1.2s">
+            <i class="fab fa-linkedin-in"></i>
+        </a>
+    </div>
 
-        // Helper to convert hex to RGB for dynamic CSS (like rgba in JS)
-        function hexToRgb(hex) {
-            const bigint = parseInt(hex.slice(1), 16);
-            const r = (bigint >> 16) & 255;
-            const g = (bigint >> 8) & 255;
-            const b = bigint & 255;
-            return `${r}, ${g}, ${b}`;
-        }
-
-        // Set RGB CSS variables dynamically based on hex codes in :root
-        document.documentElement.style.setProperty('--light-cream-rgb', hexToRgb('#eae0d5'));
-        document.documentElement.style.setProperty('--muted-gold-rgb', hexToRgb('#c6ac8f'));
-        document.documentElement.style.setProperty('--dark-blue-grey-rgb', hexToRgb('#22333b'));
-        document.documentElement.style.setProperty('--darkest-grey-rgb', hexToRgb('#0a0908'));
-        document.documentElement.style.setProperty('--earthy-brown-rgb', hexToRgb('#5e503f')); /* Ensure this is set */
-
-
-        // Scroll progress bar
-        window.addEventListener('scroll', () => {
-            const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollProgress = (window.scrollY / scrollTotal) * 100;
-            document.getElementById('progressBar').style.width = scrollProgress + '%';
-        });
-
-        // 3D card tilt effect for service cards
-        document.querySelectorAll('.service-card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const x = e.clientX - card.getBoundingClientRect().left;
-                const y = e.clientY - card.getBoundingClientRect().top;
-                
-                const centerX = card.offsetWidth / 2;
-                const centerY = card.offsetHeight / 2;
-                
-                const rotateX = (y - centerY) / 15; /* Adjusted tilt sensitivity */
-                const rotateY = (centerX - x) / 15;
-                
-                card.style.transform = `translateY(-15px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(-15px) rotateX(0) rotateY(0)'; /* Maintain lift */
-            });
-        });
-
-        // Scroll-triggered animations for elements with .animate-on-scroll
-        const animateElements = document.querySelectorAll('.animate-on-scroll');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const element = entry.target;
-                    const delay = element.style.animationDelay || '0s';
-                    element.style.animation = `fadeInUp 0.8s ${delay} forwards`;
-                    observer.unobserve(element); // Stop observing once animated
-                }
-            });
-        }, { threshold: 0.1 }); /* Trigger when 10% of element is visible */
-
-        animateElements.forEach(element => {
-            observer.observe(element);
-        });
-
-        // Auto-play/pause videos when visible using Intersection Observer
-        const videoObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const video = entry.target.querySelector('video');
-                if (video) {
-                    if (entry.isIntersecting) {
-                        video.play();
-                    } else {
-                        video.pause();
-                        video.currentTime = 0; /* Reset video on pause */
-                    }
-                }
-            });
-        }, { threshold: 0.6 }); /* Play when 60% of video is visible */
-
-        // Observe all video cards and the hero section for video playback
-        document.querySelectorAll('.video-card, .hero').forEach(element => {
-            videoObserver.observe(element);
-        });
-
-        // Smooth scroll for internal anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                document.querySelector(targetId).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
