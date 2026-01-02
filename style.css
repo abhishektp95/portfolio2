@@ -6,7 +6,7 @@
     --surface: #111111;
     --text-main: #ffffff;
     --text-muted: #888888;
-    --accent: #ffffff; /* White is the accent */
+    --accent: #ffffff;
     --border: #222222;
     
     --font-main: 'Inter', sans-serif;
@@ -31,10 +31,9 @@ body {
     font-family: var(--font-main);
     line-height: 1.5;
     overflow-x: hidden;
-    cursor: default; /* Optional: Custom cursor implementation logic needed for 'none' */
 }
 
-/* NOISE OVERLAY FOR TEXTURE */
+/* NOISE OVERLAY */
 .noise-overlay {
     position: fixed;
     top: 0;
@@ -136,7 +135,6 @@ nav {
 
 .hero-title span {
     display: block;
-    /* Outline text effect */
     -webkit-text-stroke: 0px;
     color: var(--text-main);
 }
@@ -148,7 +146,7 @@ nav {
 }
 
 .hero:hover span.outline {
-    color: var(--text-main); /* Fill on hover */
+    color: var(--text-main);
     -webkit-text-stroke: 0;
 }
 
@@ -196,10 +194,6 @@ nav {
     padding-bottom: 2rem;
 }
 
-.section-title {
-    font-size: 4rem;
-}
-
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
@@ -210,37 +204,52 @@ nav {
     position: relative;
     background: var(--surface);
     overflow: hidden;
-    /* Sharp corners */
     border-radius: 0; 
     transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
+/* FIX: Relative Container + Absolute Children 
+   This ensures video and image overlap perfectly
+*/
 .card-media {
     position: relative;
     width: 100%;
-    /* Default aspect ratio logic handled in HTML/JS or padding hack */
     background: #000;
+    overflow: hidden;
 }
 
 .card-media video, 
 .card-media img {
+    position: absolute; /* FIX: Added this */
+    top: 0;             /* FIX: Added this */
+    left: 0;            /* FIX: Added this */
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
     opacity: 0.7;
-    filter: grayscale(100%); /* Force B&W */
+    filter: grayscale(100%);
     transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-/* Hover Effect: Full Color (or brighter B&W) + Zoom */
+/* Ensure image sits on top of video initially */
+.card-media img {
+    z-index: 2;
+}
+
+.card-media video {
+    z-index: 1;
+}
+
+/* Hover Effect */
 .card:hover .card-media video, 
 .card:hover .card-media img {
     opacity: 1;
-    filter: grayscale(0%); /* Remove grayscale on hover if you want color, or keep it for pure B&W */
+    filter: grayscale(0%);
     transform: scale(1.05);
 }
 
+/* Play Icon Overlay */
 .play-overlay {
     position: absolute;
     top: 50%;
@@ -254,6 +263,7 @@ nav {
     align-items: center;
     justify-content: center;
     opacity: 0;
+    z-index: 3; /* Sit above image */
     transition: 0.4s;
     pointer-events: none;
 }
@@ -275,6 +285,8 @@ nav {
     justify-content: space-between;
     align-items: center;
     background: var(--bg);
+    position: relative;
+    z-index: 4; /* Ensure info sits above media if overlap occurs */
 }
 
 .card-title {
@@ -295,7 +307,7 @@ nav {
 .ar-9-16 { aspect-ratio: 9 / 16; }
 .ar-1-1 { aspect-ratio: 1 / 1; }
 
-/* ABOUT / SERVICES */
+/* ABOUT SECTION */
 .about-section {
     padding: 5rem 0;
     border-top: 1px solid var(--border);
@@ -387,5 +399,5 @@ footer {
     .grid { grid-template-columns: 1fr; }
     .about-grid { grid-template-columns: 1fr; }
     .section-title { font-size: 2.5rem; }
-    .nav-links { display: none; } /* Add JS toggle if needed, or keep hidden for absolute minimalism */
+    .nav-links { display: none; }
 }
