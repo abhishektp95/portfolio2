@@ -1,133 +1,527 @@
-/* --- RESET & BASIC STYLES --- */
+/* =========================================
+   1. CORE VARIABLES & RESET
+   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+    --bg: #050505;
+    --surface: #111111;
+    --text-main: #ffffff;
+    --text-muted: #888888;
+    --accent: #ffffff;
+    --border: #222222;
+    
+    --font-main: 'Inter', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+    
+    --gap: 20px;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    background-color: #111; /* Dark background for video focus */
-    color: #fff;
-    font-family: sans-serif;
-    padding: 20px;
+    background-color: var(--bg);
+    color: var(--text-main);
+    font-family: var(--font-main);
+    line-height: 1.5;
+    overflow-x: hidden;
 }
 
-.section-title {
-    margin: 40px 0 10px;
-    font-size: 1.2rem;
-    color: #888;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-/* Common Container Settings */
-.container {
+/* NOISE OVERLAY */
+.noise-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    max-width: 1000px; /* Limits width on large screens */
-    height: 500px;     /* Fixed height for the showcase area */
-    margin-bottom: 50px;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+}
+
+/* UTILITIES */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--gap);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: 0.3s;
+}
+
+ul {
+    list-style: none;
+}
+
+/* TYPOGRAPHY */
+h1, h2, h3 {
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+}
+
+.mono {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+}
+
+/* NAVIGATION */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 2rem var(--gap);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    background: linear-gradient(to bottom, rgba(5,5,5,0.9), transparent);
+    backdrop-filter: blur(2px);
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: -0.03em;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    position: relative;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.nav-links a:hover {
+    color: var(--text-main);
+}
+
+/* HERO SECTION */
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    padding-top: 60px;
+}
+
+.hero-title {
+    font-size: clamp(3rem, 11vw, 9rem);
+    mix-blend-mode: exclusion;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-title span {
+    display: block;
+    -webkit-text-stroke: 0px;
+    color: var(--text-main);
+}
+
+.hero-title span.outline {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--text-muted);
+    transition: 0.5s;
+}
+
+.hero:hover span.outline {
+    color: var(--text-main);
+    -webkit-text-stroke: 0;
+}
+
+.hero-footer {
+    position: absolute;
+    bottom: 2rem;
+    width: calc(100% - (var(--gap) * 2));
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.scroll-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.line {
+    width: 1px;
+    height: 60px;
+    background-color: var(--text-muted);
+    animation: scrollGrow 2s infinite ease-in-out;
+    transform-origin: top;
+}
+
+@keyframes scrollGrow {
+    0% { transform: scaleY(0); }
+    50% { transform: scaleY(1); }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* PORTFOLIO GRID */
+.portfolio {
+    padding: 10rem 0;
+}
+
+.section-header {
+    margin-bottom: 4rem;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: var(--gap);
+}
+
+.card {
+    position: relative;
+    background: var(--surface);
+    overflow: hidden;
+    border-radius: 0; 
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.card-media {
+    position: relative;
+    width: 100%;
+    background: #000;
+    overflow: hidden;
+}
+
+.card-media video, 
+.card-media img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0.7;
+    filter: grayscale(100%);
+    transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.card-media img { z-index: 2; }
+.card-media video { z-index: 1; }
+
+.card:hover .card-media video, 
+.card:hover .card-media img {
+    opacity: 1;
+    filter: grayscale(0%);
+    transform: scale(1.05);
+}
+
+.play-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    width: 60px;
+    height: 60px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    z-index: 3;
+    transition: 0.4s;
+    pointer-events: none;
+}
+
+.play-overlay i {
+    color: black;
+    font-size: 1.2rem;
+}
+
+.card:hover .play-overlay {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.card-info {
+    padding: 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg);
+    position: relative;
+    z-index: 4;
+}
+
+.card-title {
+    font-family: var(--font-main);
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+}
+
+.card-tags {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.ar-16-9 { aspect-ratio: 16 / 9; }
+.ar-9-16 { aspect-ratio: 9 / 16; }
+.ar-1-1 { aspect-ratio: 1 / 1; }
+
+/* ABOUT SECTION */
+.about-section {
+    padding: 5rem 0;
+    border-top: 1px solid var(--border);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 4rem;
+}
+
+.about-text p {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+}
+
+.about-text strong {
+    color: var(--text-main);
+    font-weight: 400;
+}
+
+.service-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.pill {
+    padding: 10px 20px;
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    transition: 0.3s;
+}
+
+.pill:hover {
+    background: white;
+    color: black;
+    border-color: white;
+}
+
+/* FOOTER */
+footer {
+    padding: 8rem 0 4rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+}
+
+.footer-email {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--text-main);
+    transition: 0.3s;
+}
+
+.footer-email:hover {
+    color: var(--text-muted);
+}
+
+.footer-socials {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.footer-socials a {
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    transition: color 0.3s;
+}
+
+.footer-socials a:hover {
+    color: white;
+}
+
+.copyright {
+    margin-top: 4rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: #444;
+}
+
+
+/* =========================================
+   2. NEW SHOWCASE LAYOUTS (ADDED)
+   ========================================= */
+
+/* Common Wrapper for specific showcases */
+.showcase-box {
+    width: 100%;
+    height: 600px; /* Tall height for impact */
+    margin-bottom: 4rem;
     background: #000;
     position: relative;
-    overflow: hidden; /* Keeps everything inside the box */
+    overflow: hidden;
+    border: 1px solid var(--border); /* Matches your theme */
 }
 
-/* Makes sure videos fill their wrappers properly */
-.video-wrapper {
+/* Video Wrapper inside showcase */
+.vid-wrap {
     width: 100%;
     height: 100%;
     overflow: hidden;
     position: relative;
+    background: #000;
 }
 
-video {
+.vid-wrap video {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Crucial: crops video to fill space without stretching */
+    object-fit: cover;
     display: block;
+    opacity: 0.8;
+    transition: opacity 0.4s ease, transform 0.6s ease;
+    filter: grayscale(100%); /* Keeps your black/white theme */
 }
 
+/* Hover Effects */
+.showcase-box:hover video {
+    opacity: 1;
+    filter: grayscale(0%); /* Color on hover */
+    transform: scale(1.02);
+}
 
-/* --- LAYOUT 1: VERTICAL SPLIT (Flexbox) --- */
+/* --- LAYOUT 1: VERTICAL SPLIT --- */
 .layout-1 {
     display: flex;
 }
 
-.layout-1 .video-wrapper {
-    flex: 1; /* Each video takes equal width */
-    border-right: 2px solid #111; /* Tiny separator line */
+.layout-1 .vid-wrap {
+    flex: 1;
+    border-right: 1px solid var(--bg); /* Separator line */
 }
-
-.layout-1 .video-wrapper:last-child {
+.layout-1 .vid-wrap:last-child {
     border-right: none;
 }
 
-
-/* --- LAYOUT 2: HERO GRID (CSS Grid) --- */
+/* --- LAYOUT 2: HERO GRID --- */
 .layout-2 {
     display: grid;
-    grid-template-columns: 2fr 1fr; /* Left column is 2x wider */
-    grid-template-rows: 1fr 1fr;    /* Two equal rows */
-    gap: 4px; /* Gap between videos */
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 4px; /* Small gap between grids */
+    background: var(--bg);
 }
 
-.layout-2 .hero {
-    grid-column: 1 / 2; /* First column */
-    grid-row: 1 / 3;    /* Spans both rows */
+.layout-2 .hero-area {
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
 }
-
 .layout-2 .sub-1 {
     grid-column: 2 / 3;
     grid-row: 1 / 2;
 }
-
 .layout-2 .sub-2 {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
 }
 
-
-/* --- LAYOUT 3: DYNAMIC SLANT (Absolute + Clip-Path) --- */
+/* --- LAYOUT 3: DYNAMIC SLANT --- */
 .layout-3 {
     position: relative;
 }
 
-.layout-3 .video-wrapper {
+.layout-3 .vid-wrap {
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 100%; /* They stack on top of each other */
+    width: 100%;
     height: 100%;
-    transition: transform 0.3s ease; /* Smooth hover effect optional */
+    transition: transform 0.4s ease, filter 0.4s ease;
+    filter: grayscale(100%) brightness(0.8);
 }
 
-/* Clip-path creates the shapes. 
-   Coordinates are: Top-Left, Top-Right, Bottom-Right, Bottom-Left 
-*/
-
-/* Left Slice */
+/* Clip Paths for Slants */
 .layout-3 .slant-1 {
     z-index: 1;
     clip-path: polygon(0 0, 40% 0, 25% 100%, 0 100%);
-    background: #222; /* Fallback color */
 }
-
-/* Center Slice */
 .layout-3 .slant-2 {
     z-index: 2;
     clip-path: polygon(40.5% 0, 75% 0, 60% 100%, 25.5% 100%);
-    /* Note: The .5% offset creates a small gap/border effect */
 }
-
-/* Right Slice */
 .layout-3 .slant-3 {
     z-index: 3;
     clip-path: polygon(75.5% 0, 100% 0, 100% 100%, 60.5% 100%);
 }
 
-/* Optional: Hover effect for Layout 3 to reveal more */
-.layout-3 .slant-1:hover,
-.layout-3 .slant-2:hover,
+/* Specific Hover for Slants */
+.layout-3 .slant-1:hover, 
+.layout-3 .slant-2:hover, 
 .layout-3 .slant-3:hover {
-    z-index: 10; /* Bring hovered item to front if you want, or just add brightness */
-    filter: brightness(1.2);
+    z-index: 10;
+    filter: grayscale(0%) brightness(1.1);
+}
+
+/* Responsive adjustments for layouts */
+@media (max-width: 768px) {
+    .showcase-box { height: 400px; }
+    
+    /* Stack vertical split on mobile? */
+    .layout-1 { flex-direction: column; }
+    .layout-1 .vid-wrap { border-right: none; border-bottom: 1px solid var(--bg); }
+    
+    /* Simplify grid on mobile */
+    .layout-2 { grid-template-columns: 1fr; grid-template-rows: repeat(3, 1fr); }
+    .layout-2 .hero-area { grid-column: 1; grid-row: 1; }
+    .layout-2 .sub-1 { grid-column: 1; grid-row: 2; }
+    .layout-2 .sub-2 { grid-column: 1; grid-row: 3; }
+    
+    /* Slants might look weird on mobile, switching to stack */
+    .layout-3 .vid-wrap {
+        position: relative; 
+        clip-path: none; 
+        height: 33.33%;
+    }
+    
+    .grid { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .section-title { font-size: 2.5rem; }
+    .nav-links { display: none; }
 }
